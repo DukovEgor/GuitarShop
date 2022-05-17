@@ -6,7 +6,7 @@ import App from './components/app/app';
 import 'react-toastify/dist/ReactToastify.css';
 import { store } from './store';
 
-const container = document.getElementById('app');
+const container = document.getElementById('root');
 const root = createRoot(container!);
 
 root.render(

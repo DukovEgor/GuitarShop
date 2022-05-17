@@ -1,5 +1,5 @@
-import { toast } from 'react-toastify';
 import request from 'axios';
+import { toast } from 'react-toastify';
 import { ErrorType } from '../types/error';
 import { HTTP_CODE } from '../utils/const';
 
@@ -13,10 +13,10 @@ export const errorHandle = (error: ErrorType): void => {
   if (response) {
     switch (response.status) {
       case HTTP_CODE.BAD_REQUEST:
-        toast.info(response.data.error);
+        toast.info(error.message);
         break;
       case HTTP_CODE.NOT_FOUND:
-        toast.info(response.data.error);
+        toast.info(error.message);
         break;
     }
   }
