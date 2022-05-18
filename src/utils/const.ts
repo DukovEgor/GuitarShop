@@ -12,3 +12,8 @@ export enum APIRoute {
   User = 'fit/new-user?site_id=1',
   Login = 'fit/new-user',
 }
+
+export enum AppRoutes {
+  Root = '/',
+  Product = '/product',
+}
