@@ -1,0 +1,52 @@
+:root {
+  --blue: #0e0620;
+  --white: #fff;
+  --lightblue: #0099ff;
+}
+.notfound-wrapper {
+  font-family: 'Arial';
+}
+.return-text {
+  margin: 0 0 40px 0;
+}
+.btn {
+  z-index: 1;
+  overflow: hidden;
+  background: transparent;
+  position: relative;
+  padding: 8px 50px;
+  border-radius: 30px;
+  cursor: pointer;
+  font-size: 1em;
+  letter-spacing: 2px;
+  transition: 0.2s ease;
+  font-weight: bold;
+  margin: 5px 0px;
+}
+.btn.lightblue {
+  border: 4px solid var(--lightblue);
+  color: var(--blue);
+  border-radius: 30px;
+}
+.btn.lightblue:before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 0%;
+  height: 100%;
+  background: var(--lightblue);
+  z-index: -1;
+  transition: 0.3s ease;
+  border-radius: 30px;
+}
+.btn.lightblue:hover {
+  color: var(--white);
+  background: var(--lightblue);
+  transition: 0.3s ease;
+  border-radius: 30px;
+}
+.btn.lightblue:hover:before {
+  width: 100%;
+  border-radius: 30px;
+}
