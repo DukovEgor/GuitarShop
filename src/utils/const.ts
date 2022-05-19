@@ -9,8 +9,11 @@ export enum NameSpace {
 }
 
 export enum APIRoute {
-  User = 'fit/new-user?site_id=1',
-  Login = 'fit/new-user',
+  Products = '/guitars?_limit=27',
+  Product = '/guitars',
+  Comments = '/comments',
+  Coupons = '/coupons',
+  Orders = '/orders',
 }
 
 export enum AppRoutes {
