@@ -18,5 +18,8 @@ export enum APIRoute {
 
 export enum AppRoutes {
   Root = '/',
-  Product = '/product',
+  Catalog = 'catalog',
+  Product = 'product',
 }
+
+export const PRUDUCTS_TO_SHOW = 9;

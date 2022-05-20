@@ -1,9 +1,11 @@
-import { useAppSelector } from '../../hooks';
-import { IProduct } from '../../interfaces/product';
+import { IProduct, Products } from '../../interfaces/product';
 import ProductItem from '../product-item/product-item';
 
-export default function ProductList() {
-  const { products } = useAppSelector(({ DATA }) => DATA);
+interface ProudctsListProps {
+  products: Products;
+}
+
+export default function ProductList({ products }: ProudctsListProps) {
   return (
     <div className='cards catalog__cards'>
       {products.map((product: IProduct) => (
