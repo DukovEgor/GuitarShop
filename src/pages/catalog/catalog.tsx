@@ -1,6 +1,21 @@
+import { Link, useParams } from 'react-router-dom';
+import Pagination from '../../components/pagination/pagintation';
 import ProductList from '../../components/product-list/product-list';
+import { useAppSelector } from '../../hooks';
+import { PRUDUCTS_TO_SHOW } from '../../utils/const';
 
 export default function Catalog() {
+  const { products } = useAppSelector(({ DATA }) => DATA);
+
+  const { counter } = useParams();
+  const currentPage = Number(counter ? counter : 1);
+
+  const lastIndex = currentPage * PRUDUCTS_TO_SHOW;
+
+  const firstIndex = lastIndex - PRUDUCTS_TO_SHOW;
+
+  const currentProducts = products.slice(firstIndex, lastIndex);
+
   return (
     <main className='page-content'>
       <div className='container'>
@@ -9,9 +24,9 @@ export default function Catalog() {
         </h1>
         <ul className='breadcrumbs page-content__breadcrumbs'>
           <li className='breadcrumbs__item'>
-            <a className='link' href='./main.html'>
+            <Link className='link' to='/'>
               Главная
-            </a>
+            </Link>
           </li>
           <li className='breadcrumbs__item'>
             <a href='/' className='link'>
@@ -157,31 +172,8 @@ export default function Catalog() {
               />
             </div>
           </div>
-          <ProductList />
-          <div className='pagination page-content__pagination'>
-            <ul className='pagination__list'>
-              <li className='pagination__page pagination__page--active'>
-                <a className='link pagination__page-link' href='/'>
-                  1
-                </a>
-              </li>
-              <li className='pagination__page'>
-                <a className='link pagination__page-link' href='/'>
-                  2
-                </a>
-              </li>
-              <li className='pagination__page'>
-                <a className='link pagination__page-link' href='/'>
-                  3
-                </a>
-              </li>
-              <li className='pagination__page pagination__page--next' id='next'>
-                <a className='link pagination__page-link' href='/'>
-                  Далее
-                </a>
-              </li>
-            </ul>
-          </div>
+          <ProductList products={currentProducts} />
+          <Pagination products={products} />
         </div>
       </div>
     </main>

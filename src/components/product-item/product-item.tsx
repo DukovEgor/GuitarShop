@@ -1,7 +1,9 @@
-import axios from 'axios';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { IProduct } from '../../interfaces/product';
 import { errorHandle } from '../../services/error-handle';
+import { api } from '../../store';
+import { APIRoute, AppRoutes } from '../../utils/const';
 import { RatingVocabulary } from '../../utils/vocabularies';
 import RatingStars from '../rating-stars/rating-stars';
 
@@ -14,17 +16,15 @@ export default function ProductItem({ product }: ProductItemProps) {
 
   const RatingInt = Math.round(rating);
 
-  let comments = [];
+  const [comments, setComments] = useState(0);
 
-  const getComments = () => {
-    axios
-      .get('https://guitar-shop.accelerator.pages.academy/guitars/1/comments')
-      .then((response) => {
-        comments = response.data;
-      })
-      .catch((error) => {
-        errorHandle(error);
-      });
+  const getComments = async () => {
+    try {
+      const { data } = await api.get(`${APIRoute.Product}/${id}/comments`);
+      setComments(data.length);
+    } catch (error) {
+      errorHandle(error);
+    }
   };
 
   useEffect(() => {
@@ -34,7 +34,7 @@ export default function ProductItem({ product }: ProductItemProps) {
   return (
     <div className='product-card' key={id}>
       <img
-        src={`img/content/${previewImg}`}
+        src={`/img/content/${previewImg}`}
         width={75}
         height={190}
         alt={name}
@@ -47,7 +47,7 @@ export default function ProductItem({ product }: ProductItemProps) {
           </p>
           <p className='rate__count'>
             <span className='visually-hidden'>Всего оценок:</span>
-            {comments.length}
+            {comments}
           </p>
         </div>
         <p className='product-card__title'>{name}</p>
@@ -57,9 +57,12 @@ export default function ProductItem({ product }: ProductItemProps) {
         </p>
       </div>
       <div className='product-card__buttons'>
-        <a className='button button--mini' href='/'>
+        <Link
+          className='button button--mini'
+          to={`/${AppRoutes.Product}/${id}`}
+        >
           Подробнее
-        </a>
+        </Link>
         <a
           className='button button--red button--mini button--add-to-cart'
           href='/'

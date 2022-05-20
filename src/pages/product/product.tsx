@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 export default function Product() {
   return (
     <main className='page-content'>
@@ -5,14 +7,14 @@ export default function Product() {
         <h1 className='page-content__title title title--bigger'>Товар</h1>
         <ul className='breadcrumbs page-content__breadcrumbs'>
           <li className='breadcrumbs__item'>
-            <a className='link' href='./main.html'>
+            <Link className='link' to='/'>
               Главная
-            </a>
+            </Link>
           </li>
           <li className='breadcrumbs__item'>
-            <a className='link' href='./main.html'>
+            <Link className='link' to='/catalog/page_1'>
               Каталог
-            </a>
+            </Link>
           </li>
           <li className='breadcrumbs__item'>
             <a href='/' className='link'>
