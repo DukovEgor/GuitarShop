@@ -1,4 +1,7 @@
+import axios from 'axios';
+import { useEffect } from 'react';
 import { IProduct } from '../../interfaces/product';
+import { errorHandle } from '../../services/error-handle';
 import { RatingVocabulary } from '../../utils/vocabularies';
 import RatingStars from '../rating-stars/rating-stars';
 
@@ -10,6 +13,23 @@ export default function ProductItem({ product }: ProductItemProps) {
   const { id, name, price, rating, previewImg } = product;
 
   const RatingInt = Math.round(rating);
+
+  let comments = [];
+
+  const getComments = () => {
+    axios
+      .get('https://guitar-shop.accelerator.pages.academy/guitars/1/comments')
+      .then((response) => {
+        comments = response.data;
+      })
+      .catch((error) => {
+        errorHandle(error);
+      });
+  };
+
+  useEffect(() => {
+    getComments();
+  });
 
   return (
     <div className='product-card' key={id}>
@@ -27,6 +47,7 @@ export default function ProductItem({ product }: ProductItemProps) {
           </p>
           <p className='rate__count'>
             <span className='visually-hidden'>Всего оценок:</span>
+            {comments.length}
           </p>
         </div>
         <p className='product-card__title'>{name}</p>
