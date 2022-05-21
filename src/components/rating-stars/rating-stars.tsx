@@ -10,11 +10,13 @@ export default function RatingStars({
   let width = 12;
   let height = 11;
 
-  if (className !== 'product-card__rate') {
+  if (className === 'review__rating-panel') {
     width = 16;
     height = 16;
+  } else if (className === 'product-container__rating') {
+    width = 14;
+    height = 14;
   }
-
   return (
     <>
       {Array.from({ length: RatingInt }).map(() => (

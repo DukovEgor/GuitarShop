@@ -6,3 +6,9 @@ export const RatingVocabulary = {
   '4': 'Хорошо',
   '5': 'Отлично',
 };
+
+export const GuitarTypeVocabulary = {
+  electric: 'Электрогитара',
+  acoustic: 'Акустическая гитара',
+  ukulele: 'Укулеле',
+};

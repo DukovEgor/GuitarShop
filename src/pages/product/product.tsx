@@ -1,57 +1,69 @@
-import { Link } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import Breadcrumps from '../../components/breadcrumps/breadcrumps';
+import RatingStars from '../../components/rating-stars/rating-stars';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { fetchProductAction } from '../../store/api-actions';
+import {
+  GuitarTypeVocabulary,
+  RatingVocabulary,
+} from '../../utils/vocabularies';
+import LoadingScreen from '../loading-screen/loading-screen';
 
 export default function Product() {
+  const [loading, setLoading] = useState(true);
+  const { id } = useParams();
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(fetchProductAction(Number(id)));
+    setLoading(false);
+  }, [dispatch, id]);
+
+  const { product } = useAppSelector(({ DATA }) => DATA);
+
+  if (loading) {
+    return <LoadingScreen />;
+  }
+
+  const {
+    name,
+    vendorCode,
+    price,
+    type,
+    description,
+    previewImg,
+    stringCount,
+    rating,
+  } = product;
+
+  const ratingInt = Math.round(rating);
+
   return (
     <main className='page-content'>
       <div className='container'>
-        <h1 className='page-content__title title title--bigger'>Товар</h1>
-        <ul className='breadcrumbs page-content__breadcrumbs'>
-          <li className='breadcrumbs__item'>
-            <Link className='link' to='/'>
-              Главная
-            </Link>
-          </li>
-          <li className='breadcrumbs__item'>
-            <Link className='link' to='/catalog/page_1'>
-              Каталог
-            </Link>
-          </li>
-          <li className='breadcrumbs__item'>
-            <a href='/' className='link'>
-              Товар
-            </a>
-          </li>
-        </ul>
+        <h1 className='page-content__title title title--bigger'>{name}</h1>
+        <Breadcrumps name={name} />
         <div className='product-container'>
           <img
             className='product-container__img'
-            src='img/content/catalog-product-2.jpg'
-            srcSet='img/content/catalog-product-2@2x.jpg 2x'
+            src={`/img/content/${previewImg}`}
             width={90}
             height={235}
-            alt=''
+            alt={name}
           />
           <div className='product-container__info-wrapper'>
             <h2 className='product-container__title title title--big title--uppercase'>
-              СURT Z30 Plus
+              {name}
             </h2>
             <div className='rate product-container__rating'>
-              <svg width={14} height={14} aria-hidden='true'>
-                <use xlinkHref='#icon-full-star' />
-              </svg>
-              <svg width={14} height={14} aria-hidden='true'>
-                <use xlinkHref='#icon-full-star' />
-              </svg>
-              <svg width={14} height={14} aria-hidden='true'>
-                <use xlinkHref='#icon-full-star' />
-              </svg>
-              <svg width={14} height={14} aria-hidden='true'>
-                <use xlinkHref='#icon-full-star' />
-              </svg>
-              <svg width={14} height={14} aria-hidden='true'>
-                <use xlinkHref='#icon-star' />
-              </svg>
-              <p className='visually-hidden'>Оценка: Хорошо</p>
+              <RatingStars
+                RatingInt={ratingInt}
+                className={'product-container__rating'}
+              />
+              <p className='visually-hidden'>
+                Оценка: {RatingVocabulary[ratingInt]}
+              </p>
             </div>
             <div className='tabs'>
               <a
@@ -71,24 +83,22 @@ export default function Product() {
                   <tbody>
                     <tr className='tabs__table-row'>
                       <td className='tabs__title'>Артикул:</td>
-                      <td className='tabs__value'>SO754565</td>
+                      <td className='tabs__value'>{vendorCode}</td>
                     </tr>
                     <tr className='tabs__table-row'>
                       <td className='tabs__title'>Тип:</td>
-                      <td className='tabs__value'>Электрогитара</td>
+                      <td className='tabs__value'>
+                        {GuitarTypeVocabulary[type]}
+                      </td>
                     </tr>
                     <tr className='tabs__table-row'>
                       <td className='tabs__title'>Количество струн:</td>
-                      <td className='tabs__value'>6 струнная</td>
+                      <td className='tabs__value'>{stringCount} струнная</td>
                     </tr>
                   </tbody>
                 </table>
                 <p className='tabs__product-description hidden'>
-                  Гитара подходит как для старта обучения, так и для домашних
-                  занятий или использования в полевых условиях, например, в
-                  походах или для проведения уличных выступлений. Доступная
-                  стоимость, качество и надежная конструкция, а также приятный
-                  внешний вид, который сделает вас звездой вечеринки.
+                  {description}
                 </p>
               </div>
             </div>
@@ -98,7 +108,7 @@ export default function Product() {
               Цена:
             </p>
             <p className='product-container__price-info product-container__price-info--value'>
-              52 000 ₽
+              {price?.toLocaleString('ru')} ₽
             </p>
             <a
               className='button button--red button--big product-container__button'

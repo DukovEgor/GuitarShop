@@ -1,4 +1,5 @@
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
+import Breadcrumps from '../../components/breadcrumps/breadcrumps';
 import Pagination from '../../components/pagination/pagintation';
 import ProductList from '../../components/product-list/product-list';
 import { useAppSelector } from '../../hooks';
@@ -22,18 +23,7 @@ export default function Catalog() {
         <h1 className='page-content__title title title--bigger'>
           Каталог гитар
         </h1>
-        <ul className='breadcrumbs page-content__breadcrumbs'>
-          <li className='breadcrumbs__item'>
-            <Link className='link' to='/'>
-              Главная
-            </Link>
-          </li>
-          <li className='breadcrumbs__item'>
-            <a href='/' className='link'>
-              Каталог
-            </a>
-          </li>
-        </ul>
+        <Breadcrumps />
         <div className='catalog'>
           <form className='catalog-filter'>
             <h2 className='title title--bigger catalog-filter__title'>
