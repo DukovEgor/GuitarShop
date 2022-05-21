@@ -15,6 +15,7 @@ const initialState: InitialData = {
     rating: 0,
     price: 0,
   },
+  comments: [],
   isDataLoaded: false,
 };
 
@@ -29,7 +30,10 @@ export const appData = createSlice({
     loadProduct: (state, action) => {
       state.product = action.payload;
     },
+    loadComments: (state, action) => {
+      state.comments = action.payload;
+    },
   },
 });
 
-export const { loadProducts, loadProduct } = appData.actions;
+export const { loadProducts, loadProduct, loadComments } = appData.actions;

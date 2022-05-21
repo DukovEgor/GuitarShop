@@ -23,3 +23,4 @@ export enum AppRoutes {
 }
 
 export const PRUDUCTS_TO_SHOW = 9;
+export const REVIEWS_TO_SHOW = 3;
