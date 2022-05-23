@@ -1,9 +1,10 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import { Dispatch, SetStateAction } from 'react';
 import { api, store } from '.';
 import { IReview } from '../interfaces/review';
 import { errorHandle } from '../services/error-handle';
 import { APIRoute } from '../utils/const';
-import { loadComments, loadProduct, loadProducts } from './app-data';
+import { addComment, loadComments, loadProduct, loadProducts } from './app-data';
 
 export const fetchProductsAction = createAsyncThunk('data/fetchProducts', async () => {
   try {
@@ -32,14 +33,15 @@ export const fetchCommentstAction = createAsyncThunk('data/fetchComments', async
   }
 });
 
-export const fetchReviewAction = createAsyncThunk('api/fetchReview', async (formData: IReview) => {
+export const fetchReviewAction = createAsyncThunk('api/fetchReview', async ([formData, onSuccess]: [formData: IReview, onSuccess: Dispatch<SetStateAction<boolean>>]) => {
   const { rating, ...rest } = formData;
 
   try {
-    const response = await api.post(`${APIRoute.Comments}`, { ...rest, rating: Number(rating) });
-    // eslint-disable-next-line no-console
-    console.log(response);
+    const { data } = await api.post(`${APIRoute.Comments}`, { ...rest, rating: Number(rating) });
+    store.dispatch(addComment(data));
+    onSuccess(true);
   } catch (error) {
     errorHandle(error);
+    onSuccess(false);
   }
 });

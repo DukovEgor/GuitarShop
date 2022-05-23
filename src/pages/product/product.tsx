@@ -45,6 +45,10 @@ export default function Product() {
             <div className='rate product-container__rating'>
               <RatingStars RatingInt={ratingInt} className={'product-container__rating'} />
               <p className='visually-hidden'>Оценка: {RatingVocabulary[ratingInt]}</p>
+              <p className='rate__count'>
+                <span className='visually-hidden'>Всего оценок:</span>
+                {comments.length}
+              </p>
             </div>
             <ProductTabs vendorCode={vendorCode} type={type} description={description} stringCount={stringCount} />
           </div>

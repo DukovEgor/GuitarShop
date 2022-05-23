@@ -33,7 +33,10 @@ export const appData = createSlice({
     loadComments: (state, action) => {
       state.comments = action.payload;
     },
+    addComment: (state, action) => {
+      state.comments.push(action.payload);
+    },
   },
 });
 
-export const { loadProducts, loadProduct, loadComments } = appData.actions;
+export const { loadProducts, loadProduct, loadComments, addComment } = appData.actions;
