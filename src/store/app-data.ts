@@ -4,6 +4,18 @@ import { NameSpace } from '../utils/const';
 
 const initialState: InitialData = {
   products: [],
+  product: {
+    id: 0,
+    name: '',
+    vendorCode: '',
+    type: '',
+    description: '',
+    previewImg: '',
+    stringCount: 0,
+    rating: 0,
+    price: 0,
+  },
+  comments: [],
   isDataLoaded: false,
 };
 
@@ -15,7 +27,16 @@ export const appData = createSlice({
       state.products = action.payload;
       state.isDataLoaded = true;
     },
+    loadProduct: (state, action) => {
+      state.product = action.payload;
+    },
+    loadComments: (state, action) => {
+      state.comments = action.payload;
+    },
+    addComment: (state, action) => {
+      state.comments.push(action.payload);
+    },
   },
 });
 
-export const { loadProducts } = appData.actions;
+export const { loadProducts, loadProduct, loadComments, addComment } = appData.actions;

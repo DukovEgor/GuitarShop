@@ -404,8 +404,7 @@ template {
   font-style: normal;
 
   font-display: swap;
-  src: url('../fonts/open-sans.woff2') format('woff2'),
-    url('../fonts/open-sans.woff') format('woff');
+  src: url('../fonts/open-sans.woff2') format('woff2'), url('../fonts/open-sans.woff') format('woff');
 }
 
 @font-face {
@@ -414,8 +413,7 @@ template {
   font-style: normal;
 
   font-display: swap;
-  src: url('../fonts/open-sans-700.woff2') format('woff2'),
-    url('../fonts/open-sans-700.woff') format('woff');
+  src: url('../fonts/open-sans-700.woff2') format('woff2'), url('../fonts/open-sans-700.woff') format('woff');
 }
 
 @font-face {
@@ -424,8 +422,7 @@ template {
   font-style: normal;
 
   font-display: swap;
-  src: url('../fonts/droid-sans.woff2') format('woff2'),
-    url('../fonts/droid-sans.woff') format('woff');
+  src: url('../fonts/droid-sans.woff2') format('woff2'), url('../fonts/droid-sans.woff') format('woff');
 }
 
 @font-face {
@@ -434,8 +431,7 @@ template {
   font-style: normal;
 
   font-display: swap;
-  src: url('../fonts/droid-sans-700.woff2') format('woff2'),
-    url('../fonts/droid-sans-700.woff') format('woff');
+  src: url('../fonts/droid-sans-700.woff2') format('woff2'), url('../fonts/droid-sans-700.woff') format('woff');
 }
 
 *,
@@ -928,18 +924,10 @@ button,
   opacity: 0;
   background-color: rgba(0, 0, 0, 0.8);
 
-  -webkit-transition: opacity 0.6s cubic-bezier(0.55, 0, 0.1, 1),
-    visibility 0.6s cubic-bezier(0.55, 0, 0.1, 1),
-    -webkit-transform 0.6s cubic-bezier(0.55, 0, 0.1, 1);
-  transition: opacity 0.6s cubic-bezier(0.55, 0, 0.1, 1),
-    visibility 0.6s cubic-bezier(0.55, 0, 0.1, 1),
-    -webkit-transform 0.6s cubic-bezier(0.55, 0, 0.1, 1);
-  transition: opacity 0.6s cubic-bezier(0.55, 0, 0.1, 1),
-    transform 0.6s cubic-bezier(0.55, 0, 0.1, 1),
-    visibility 0.6s cubic-bezier(0.55, 0, 0.1, 1);
-  transition: opacity 0.6s cubic-bezier(0.55, 0, 0.1, 1),
-    transform 0.6s cubic-bezier(0.55, 0, 0.1, 1),
-    visibility 0.6s cubic-bezier(0.55, 0, 0.1, 1),
+  -webkit-transition: opacity 0.6s cubic-bezier(0.55, 0, 0.1, 1), visibility 0.6s cubic-bezier(0.55, 0, 0.1, 1), -webkit-transform 0.6s cubic-bezier(0.55, 0, 0.1, 1);
+  transition: opacity 0.6s cubic-bezier(0.55, 0, 0.1, 1), visibility 0.6s cubic-bezier(0.55, 0, 0.1, 1), -webkit-transform 0.6s cubic-bezier(0.55, 0, 0.1, 1);
+  transition: opacity 0.6s cubic-bezier(0.55, 0, 0.1, 1), transform 0.6s cubic-bezier(0.55, 0, 0.1, 1), visibility 0.6s cubic-bezier(0.55, 0, 0.1, 1);
+  transition: opacity 0.6s cubic-bezier(0.55, 0, 0.1, 1), transform 0.6s cubic-bezier(0.55, 0, 0.1, 1), visibility 0.6s cubic-bezier(0.55, 0, 0.1, 1),
     -webkit-transform 0.6s cubic-bezier(0.55, 0, 0.1, 1);
   -webkit-transform: scale(1.2);
   transform: scale(1.2);
@@ -1325,10 +1313,8 @@ button,
   background-color: #131212;
 
   cursor: pointer;
-  -webkit-transition: background-image 0.3s ease, background-color 0.3s ease,
-    color 0.3s ease, border 0.3s ease;
-  transition: background-image 0.3s ease, background-color 0.3s ease,
-    color 0.3s ease, border 0.3s ease;
+  -webkit-transition: background-image 0.3s ease, background-color 0.3s ease, color 0.3s ease, border 0.3s ease;
+  transition: background-image 0.3s ease, background-color 0.3s ease, color 0.3s ease, border 0.3s ease;
   text-align: center;
   letter-spacing: 0.05em;
 
@@ -2797,6 +2783,7 @@ button,
 .reviews__up-button {
   right: 0;
   bottom: -51px;
+  z-index: 50;
   position: absolute;
 }
 
@@ -3265,9 +3252,7 @@ button,
   letter-spacing: 0.05em;
 }
 
-@media (-webkit-min-device-pixel-ratio: 1.5),
-  (min-resolution: 144dpi),
-  (min-resolution: 1.5dppx) {
+@media (-webkit-min-device-pixel-ratio: 1.5), (min-resolution: 144dpi), (min-resolution: 1.5dppx) {
   .modal--success .modal__content {
     background-image: url('../img/sprite/bg_modal@2x.png');
   }

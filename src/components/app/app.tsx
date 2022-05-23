@@ -5,7 +5,6 @@ import Catalog from '../../pages/catalog/catalog';
 import LoadingScreen from '../../pages/loading-screen/loading-screen';
 import Main from '../../pages/main/main';
 import Product from '../../pages/product/product';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import Redirect from '../../pages/redirect/redirect';
 import { AppRoutes } from '../../utils/const';
 
@@ -20,12 +19,8 @@ function App(): JSX.Element {
     <BrowserRouter>
       <Routes>
         <Route path='/' element={<Main />}>
-          {/* <Route index element={<Redirect />} /> */}
-          <Route index element={<Catalog />} />
-          <Route
-            path={`${AppRoutes.Catalog}/page_:counter`}
-            element={<Catalog />}
-          />
+          <Route index element={<Redirect />} />
+          <Route path={`${AppRoutes.Catalog}/page_:counter`} element={<Catalog />} />
           <Route path={`${AppRoutes.Product}/:id`} element={<Product />} />
         </Route>
         <Route path='*' element={<NotFound />} />
