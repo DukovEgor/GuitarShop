@@ -5,3 +5,4 @@ export const sortByDate: (a: IComment, b: IComment) => number = (a, b) => {
   const secondDate = new Date(b.createAt).getTime();
   return secondDate - firstDate;
 };
+export const capitalize = (s: string) => s && s[0].toUpperCase() + s.slice(1);

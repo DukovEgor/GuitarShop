@@ -1,11 +1,10 @@
-export enum HTTP_CODE {
-  BAD_REQUEST = 400,
-  NOT_FOUND = 404,
+export enum HttpCode {
+  BadRequest = 400,
+  NotFound = 404,
 }
 
 export enum NameSpace {
-  data = 'DATA',
-  app = 'APP',
+  Data = 'DATA',
 }
 
 export enum APIRoute {

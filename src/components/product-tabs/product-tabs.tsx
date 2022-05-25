@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { IProductTabs } from '../../interfaces/product';
+import { capitalize } from '../../utils/utils';
 import { GuitarTypeVocabulary } from '../../utils/vocabularies';
 
 export default function ProductTabs({ vendorCode, type, stringCount, description }: IProductTabs) {
@@ -30,7 +31,7 @@ export default function ProductTabs({ vendorCode, type, stringCount, description
               </tr>
               <tr className='tabs__table-row'>
                 <td className='tabs__title'>Тип:</td>
-                <td className='tabs__value'>{GuitarTypeVocabulary[type]}</td>
+                <td className='tabs__value'>{GuitarTypeVocabulary[capitalize(type)]}</td>
               </tr>
               <tr className='tabs__table-row'>
                 <td className='tabs__title'>Количество струн:</td>

@@ -20,7 +20,7 @@ const initialState: InitialData = {
 };
 
 export const appData = createSlice({
-  name: NameSpace.data,
+  name: NameSpace.Data,
   initialState,
   reducers: {
     loadProducts: (state, action) => {
