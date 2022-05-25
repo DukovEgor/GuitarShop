@@ -27,8 +27,17 @@ export const fetchProductAction = createAsyncThunk(ApiActions.Product, async (id
 
 export const fetchCommentstAction = createAsyncThunk(ApiActions.Comments, async (id: number) => {
   try {
-    const { data } = await api.get(`${APIRoute.Product}/${id}/comments`);
+    const { data } = await api.get(`${APIRoute.Product}/${id}${APIRoute.Comments}`);
     store.dispatch(loadComments(data));
+  } catch (error) {
+    errorHandle(error);
+  }
+});
+
+export const getComments = createAsyncThunk(ApiActions.Comments, async ([id, onLoad]: [id: number, onLoad: Dispatch<SetStateAction<number>>]) => {
+  try {
+    const { data } = await api.get(`${APIRoute.Product}/${id}${APIRoute.Comments}`);
+    onLoad(data.length);
   } catch (error) {
     errorHandle(error);
   }
