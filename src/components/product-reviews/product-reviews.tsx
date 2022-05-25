@@ -1,9 +1,9 @@
 import { useState } from 'react';
-import useBodyLock from '../../hooks/useBodyLock';
 import { Comments, IComment } from '../../interfaces/comment';
 import { REVIEWS_TO_SHOW } from '../../utils/const';
 import { sortByDate } from '../../utils/utils';
 import ProductModalReview from '../product-modal-review/product-modal-review';
+import ProductModalSuccess from '../product-modal-success/product-modal-success';
 import ProductReview from '../product-review/product-review';
 
 interface ProductReviewsProps {
@@ -13,8 +13,8 @@ interface ProductReviewsProps {
 function ProductReviews({ comments, name }: ProductReviewsProps) {
   const [commentsQuantity, setCommentsQuantity] = useState(REVIEWS_TO_SHOW);
   const [isModalOpened, setIsModalOpened] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
 
-  useBodyLock(isModalOpened);
   const sortedComments = comments.slice().sort(sortByDate);
 
   const handleShowMore = () => {
@@ -45,7 +45,10 @@ function ProductReviews({ comments, name }: ProductReviewsProps) {
       <button className='button button--up button--red-border button--big reviews__up-button' onClick={handleButtonUp}>
         Наверх
       </button>
-      {<ProductModalReview isModalOpened={isModalOpened} onModalClose={setIsModalOpened} name={name} />}
+      <div className={`modal ${isSuccess ? 'modal--success' : 'modal--review'} ${isModalOpened && 'is-active'}`}>
+        <ProductModalReview isModalOpened={isModalOpened} onModalClose={setIsModalOpened} onSuccess={setIsSuccess} name={name} isSuccess={isSuccess} />
+        <ProductModalSuccess isModalOpened={isModalOpened} onModalClose={setIsModalOpened} isSuccess={isSuccess} onModalRemove={setIsSuccess} />
+      </div>
     </section>
   );
 }

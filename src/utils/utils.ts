@@ -6,3 +6,11 @@ export const sortByDate: (a: IComment, b: IComment) => number = (a, b) => {
   return secondDate - firstDate;
 };
 export const capitalize = (s: string) => s && s[0].toUpperCase() + s.slice(1);
+
+export default function toggleBodyLock(isModalOpened: boolean) {
+  if (isModalOpened) {
+    document.body.classList.add('lock');
+  } else {
+    document.body.classList.remove('lock');
+  }
+}
