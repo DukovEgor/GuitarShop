@@ -1,23 +1,24 @@
 import { useState } from 'react';
-import useBodyLock from '../../hooks/useBodyLock';
 import { Comments, IComment } from '../../interfaces/comment';
+import { REVIEWS_TO_SHOW } from '../../utils/const';
 import { sortByDate } from '../../utils/utils';
 import ProductModalReview from '../product-modal-review/product-modal-review';
+import ProductModalSuccess from '../product-modal-success/product-modal-success';
 import ProductReview from '../product-review/product-review';
 
 interface ProductReviewsProps {
   comments: Comments;
   name: string;
 }
-export default function ProductReviews({ comments, name }: ProductReviewsProps) {
-  const [commentsQuantity, setCommentsQuantity] = useState(3);
+function ProductReviews({ comments, name }: ProductReviewsProps) {
+  const [commentsQuantity, setCommentsQuantity] = useState(REVIEWS_TO_SHOW);
   const [isModalOpened, setIsModalOpened] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
 
-  useBodyLock(isModalOpened);
   const sortedComments = comments.slice().sort(sortByDate);
 
   const handleShowMore = () => {
-    setCommentsQuantity((prevState) => prevState + 3);
+    setCommentsQuantity((prevState) => prevState + REVIEWS_TO_SHOW);
   };
 
   const handleButtonUp = () => {
@@ -36,7 +37,7 @@ export default function ProductReviews({ comments, name }: ProductReviewsProps) 
       {sortedComments.slice(0, commentsQuantity).map((comment: IComment) => (
         <ProductReview key={comment.id} review={comment} />
       ))}
-      {(commentsQuantity + 3 === sortedComments.length || commentsQuantity < sortedComments.length) && (
+      {(commentsQuantity + REVIEWS_TO_SHOW === sortedComments.length || commentsQuantity < sortedComments.length) && (
         <button className='button button--medium reviews__more-button' onClick={handleShowMore}>
           Показать еще отзывы
         </button>
@@ -44,7 +45,12 @@ export default function ProductReviews({ comments, name }: ProductReviewsProps) 
       <button className='button button--up button--red-border button--big reviews__up-button' onClick={handleButtonUp}>
         Наверх
       </button>
-      {<ProductModalReview isModalOpened={isModalOpened} setIsModalOpened={setIsModalOpened} name={name} />}
+      <div className={`modal ${isSuccess ? 'modal--success' : 'modal--review'} ${isModalOpened && 'is-active'}`}>
+        <ProductModalReview isModalOpened={isModalOpened} onModalClose={setIsModalOpened} onSuccess={setIsSuccess} name={name} isSuccess={isSuccess} />
+        <ProductModalSuccess isModalOpened={isModalOpened} onModalClose={setIsModalOpened} isSuccess={isSuccess} onModalRemove={setIsSuccess} />
+      </div>
     </section>
   );
 }
+
+export default ProductReviews;

@@ -8,7 +8,7 @@ export const RatingVocabulary = {
 };
 
 export const GuitarTypeVocabulary = {
-  electric: 'Электрогитара',
-  acoustic: 'Акустическая гитара',
-  ukulele: 'Укулеле',
+  Electric: 'Электрогитара',
+  Acoustic: 'Акустическая гитара',
+  Ukulele: 'Укулеле',
 };

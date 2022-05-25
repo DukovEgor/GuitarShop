@@ -1,11 +1,10 @@
-export enum HTTP_CODE {
-  BAD_REQUEST = 400,
-  NOT_FOUND = 404,
+export enum HttpCode {
+  BadRequest = 400,
+  NotFound = 404,
 }
 
 export enum NameSpace {
-  data = 'DATA',
-  app = 'APP',
+  Data = 'DATA',
 }
 
 export enum APIRoute {
@@ -20,6 +19,10 @@ export enum AppRoutes {
   Root = '/',
   Catalog = 'catalog',
   Product = 'product',
+  Page = '/page_',
+  DefaultPage = '/page_1',
+  Characteristics = 'characteristics',
+  Description = 'description',
 }
 
 export const PRUDUCTS_TO_SHOW = 9;

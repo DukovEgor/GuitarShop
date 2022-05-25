@@ -1,27 +1,25 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import Breadcrumps from '../../components/breadcrumps/breadcrumps';
-import ProductReviews from '../../components/product-reviews/product-reviews';
-import ProductTabs from '../../components/product-tabs/product-tabs';
-import RatingStars from '../../components/rating-stars/rating-stars';
+import { useNavigate, useParams } from 'react-router-dom';
+import Breadcrumps from '../breadcrumps/breadcrumps';
+import ProductReviews from '../product-reviews/product-reviews';
+import ProductTabs from '../product-tabs/product-tabs';
+import RatingStars from '../rating-stars/rating-stars';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { fetchCommentstAction, fetchProductAction } from '../../store/api-actions';
 import { RatingVocabulary } from '../../utils/vocabularies';
 import LoadingScreen from '../loading-screen/loading-screen';
 
-export default function Product() {
+function Product() {
   const [loading, setLoading] = useState(true);
   const { id } = useParams();
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(fetchProductAction(Number(id)));
-  }, [dispatch, id]);
-
-  useEffect(() => {
+    dispatch(fetchProductAction([Number(id), navigate]));
     dispatch(fetchCommentstAction(Number(id)));
     setLoading(false);
-  }, [dispatch, id]);
+  }, [dispatch, id, navigate]);
 
   const { product, comments } = useAppSelector(({ DATA }) => DATA);
 
@@ -65,3 +63,5 @@ export default function Product() {
     </main>
   );
 }
+
+export default Product;

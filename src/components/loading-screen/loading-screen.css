@@ -1,0 +1,13 @@
+.loading__screen {
+  height: 100vh;
+  background-color: #c8975a;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  font-family: Arial;
+  font-weight: 700;
+  font-size: 24px;
+  font-style: italic;
+}

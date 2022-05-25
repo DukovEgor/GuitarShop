@@ -1,10 +1,7 @@
-export default function SvgSprite() {
+function SvgSprite() {
   return (
     <div className='visually-hidden'>
-      <svg
-        xmlns='http://www.w3.org/2000/svg'
-        xmlnsXlink='http://www.w3.org/1999/xlink'
-      >
+      <svg xmlns='http://www.w3.org/2000/svg' xmlnsXlink='http://www.w3.org/1999/xlink'>
         <symbol id='icon-arrow-up' viewBox='0 0 9 16'>
           <path
             fillRule='evenodd'
@@ -44,13 +41,7 @@ export default function SvgSprite() {
           />
         </symbol>
         <symbol id='icon-minus' viewBox='0 0 9 1'>
-          <line
-            x1='8.58536'
-            y1='0.5'
-            x2='0.780479'
-            y2='0.5'
-            stroke='currentcolor'
-          />
+          <line x1='8.58536' y1='0.5' x2='0.780479' y2='0.5' stroke='currentcolor' />
         </symbol>
         <symbol id='icon-phone' viewBox='0 0 8 8'>
           <path
@@ -65,13 +56,7 @@ export default function SvgSprite() {
           />
         </symbol>
         <symbol id='icon-plus' viewBox='0 0 9 8'>
-          <line
-            x1='8.2439'
-            y1='4.11829'
-            x2='0.439018'
-            y2='4.11829'
-            stroke='currentcolor'
-          />
+          <line x1='8.2439' y1='4.11829' x2='0.439018' y2='4.11829' stroke='currentcolor' />
           <line x1='4.1785' y1={8} x2='4.1785' stroke='currentcolor' />
         </symbol>
         <symbol id='icon-search' viewBox='0 0 14 15'>
@@ -110,3 +95,5 @@ export default function SvgSprite() {
     </div>
   );
 }
+
+export default SvgSprite;
