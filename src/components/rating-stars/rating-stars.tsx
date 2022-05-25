@@ -3,10 +3,7 @@ interface RatingStarsProps {
   className: string;
 }
 
-export default function RatingStars({
-  RatingInt,
-  className,
-}: RatingStarsProps) {
+function RatingStars({ RatingInt, className }: RatingStarsProps) {
   let width = 12;
   let height = 11;
 
@@ -20,25 +17,17 @@ export default function RatingStars({
   return (
     <>
       {Array.from({ length: RatingInt }).map(() => (
-        <svg
-          key={Math.random()}
-          width={width}
-          height={height}
-          aria-hidden='true'
-        >
+        <svg key={Math.random()} width={width} height={height} aria-hidden='true'>
           <use xlinkHref='#icon-full-star' />
         </svg>
       ))}
       {Array.from({ length: 5 - RatingInt }).map(() => (
-        <svg
-          key={Math.random()}
-          width={width}
-          height={height}
-          aria-hidden='true'
-        >
+        <svg key={Math.random()} width={width} height={height} aria-hidden='true'>
           <use xlinkHref='#icon-star' />
         </svg>
       ))}
     </>
   );
 }
+
+export default RatingStars;

@@ -10,7 +10,7 @@ interface ProductReviewsProps {
   comments: Comments;
   name: string;
 }
-export default function ProductReviews({ comments, name }: ProductReviewsProps) {
+function ProductReviews({ comments, name }: ProductReviewsProps) {
   const [commentsQuantity, setCommentsQuantity] = useState(REVIEWS_TO_SHOW);
   const [isModalOpened, setIsModalOpened] = useState(false);
 
@@ -45,7 +45,9 @@ export default function ProductReviews({ comments, name }: ProductReviewsProps) 
       <button className='button button--up button--red-border button--big reviews__up-button' onClick={handleButtonUp}>
         Наверх
       </button>
-      {<ProductModalReview isModalOpened={isModalOpened} setIsModalOpened={setIsModalOpened} name={name} />}
+      {<ProductModalReview isModalOpened={isModalOpened} onModalClose={setIsModalOpened} name={name} />}
     </section>
   );
 }
+
+export default ProductReviews;

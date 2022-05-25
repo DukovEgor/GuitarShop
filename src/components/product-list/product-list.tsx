@@ -5,7 +5,7 @@ interface ProudctsListProps {
   products: Products;
 }
 
-export default function ProductList({ products }: ProudctsListProps) {
+function ProductList({ products }: ProudctsListProps) {
   return (
     <div className='cards catalog__cards'>
       {products.map((product: IProduct) => (
@@ -14,3 +14,5 @@ export default function ProductList({ products }: ProudctsListProps) {
     </div>
   );
 }
+
+export default ProductList;

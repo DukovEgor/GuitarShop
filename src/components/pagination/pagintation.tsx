@@ -6,7 +6,7 @@ interface PaginationProps {
   products: Products;
 }
 
-export default function Pagination({ products }: PaginationProps) {
+function Pagination({ products }: PaginationProps) {
   const { counter } = useParams();
 
   const currentPage = counter ? Number(counter) : 1;
@@ -41,3 +41,5 @@ export default function Pagination({ products }: PaginationProps) {
     </div>
   );
 }
+
+export default Pagination;

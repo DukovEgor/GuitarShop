@@ -6,9 +6,8 @@ interface ProductReviewProps {
   review: IComment;
 }
 
-export default function ProductReview({ review }: ProductReviewProps) {
-  const { userName, advantage, disadvantage, comment, rating, createAt } =
-    review;
+function ProductReview({ review }: ProductReviewProps) {
+  const { userName, advantage, disadvantage, comment, rating, createAt } = review;
 
   const rawDate = new Date(createAt);
 
@@ -21,9 +20,7 @@ export default function ProductReview({ review }: ProductReviewProps) {
   return (
     <div className='review'>
       <div className='review__wrapper'>
-        <h4 className='review__title review__title--author title title--lesser'>
-          {userName}
-        </h4>
+        <h4 className='review__title review__title--author title title--lesser'>{userName}</h4>
         <span className='review__date'>{commentDate}</span>
       </div>
       <div className='rate review__rating-panel'>
@@ -39,3 +36,5 @@ export default function ProductReview({ review }: ProductReviewProps) {
     </div>
   );
 }
+
+export default ProductReview;

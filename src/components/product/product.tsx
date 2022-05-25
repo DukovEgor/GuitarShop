@@ -9,7 +9,7 @@ import { fetchCommentstAction, fetchProductAction } from '../../store/api-action
 import { RatingVocabulary } from '../../utils/vocabularies';
 import LoadingScreen from '../loading-screen/loading-screen';
 
-export default function Product() {
+function Product() {
   const [loading, setLoading] = useState(true);
   const { id } = useParams();
   const dispatch = useAppDispatch();
@@ -65,3 +65,5 @@ export default function Product() {
     </main>
   );
 }
+
+export default Product;

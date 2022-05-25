@@ -5,7 +5,7 @@ interface OptionalRouteProps {
   children: JSX.Element;
 }
 
-export default function OptionalRoute({ children }: OptionalRouteProps) {
+function OptionalRoute({ children }: OptionalRouteProps) {
   const { id } = useParams();
   const pageId = Number(id);
 
@@ -13,3 +13,5 @@ export default function OptionalRoute({ children }: OptionalRouteProps) {
 
   return products.some((product) => product.id === pageId) ? children : <Navigate to={'*'} />;
 }
+
+export default OptionalRoute;

@@ -11,7 +11,7 @@ interface ProductItemProps {
   product: IProduct;
 }
 
-export default function ProductItem({ product }: ProductItemProps) {
+function ProductItem({ product }: ProductItemProps) {
   const { id, name, price, rating, previewImg } = product;
 
   const RatingInt = Math.round(rating);
@@ -52,3 +52,5 @@ export default function ProductItem({ product }: ProductItemProps) {
     </div>
   );
 }
+
+export default ProductItem;

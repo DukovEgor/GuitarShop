@@ -3,7 +3,7 @@ import Footer from '../footer/footer';
 import Header from '../header/header';
 import SvgSprite from '../svg-sprite/svg-sprite';
 
-export default function Main() {
+function Main() {
   return (
     <div className='wrapper'>
       <SvgSprite />
@@ -13,3 +13,5 @@ export default function Main() {
     </div>
   );
 }
+
+export default Main;

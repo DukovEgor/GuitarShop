@@ -5,7 +5,7 @@ interface BreadcrumpsProps {
   name?: string;
 }
 
-export default function Breadcrumps({ name }: BreadcrumpsProps) {
+function Breadcrumps({ name }: BreadcrumpsProps) {
   const productLocation = useMatch(`${AppRoutes.Product}/:id`);
   const catalogLocation = useMatch(`${AppRoutes.Catalog}${AppRoutes.Page}:counter`);
 
@@ -33,3 +33,5 @@ export default function Breadcrumps({ name }: BreadcrumpsProps) {
     </ul>
   );
 }
+
+export default Breadcrumps;

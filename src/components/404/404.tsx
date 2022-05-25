@@ -1,7 +1,7 @@
 import './404.css';
 import { Link } from 'react-router-dom';
 
-export default function NotFound(): JSX.Element {
+function NotFound(): JSX.Element {
   return (
     <div>
       <main className='notfound-wrapper'>
@@ -360,3 +360,5 @@ export default function NotFound(): JSX.Element {
     </div>
   );
 }
+
+export default NotFound;

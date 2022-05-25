@@ -5,7 +5,7 @@ import ProductList from '../product-list/product-list';
 import { useAppSelector } from '../../hooks';
 import { PRUDUCTS_TO_SHOW } from '../../utils/const';
 
-export default function Catalog() {
+function Catalog() {
   const { products } = useAppSelector(({ DATA }) => DATA);
 
   const { counter } = useParams();
@@ -98,3 +98,5 @@ export default function Catalog() {
     </main>
   );
 }
+
+export default Catalog;

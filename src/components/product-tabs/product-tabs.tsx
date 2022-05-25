@@ -4,7 +4,7 @@ import { IProductTabs } from '../../interfaces/product';
 import { capitalize } from '../../utils/utils';
 import { GuitarTypeVocabulary } from '../../utils/vocabularies';
 
-export default function ProductTabs({ vendorCode, type, stringCount, description }: IProductTabs) {
+function ProductTabs({ vendorCode, type, stringCount, description }: IProductTabs) {
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -45,3 +45,5 @@ export default function ProductTabs({ vendorCode, type, stringCount, description
     </div>
   );
 }
+
+export default ProductTabs;
