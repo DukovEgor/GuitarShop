@@ -20,7 +20,7 @@ function App(): JSX.Element {
       <Routes>
         <Route path='/' element={<Main />}>
           <Route index element={<Redirect />} />
-          <Route path={`${AppRoutes.Catalog}/page_:counter`} element={<Catalog />} />
+          <Route path={`${AppRoutes.Catalog}${AppRoutes.Page}:counter`} element={<Catalog />} />
           <Route path={`${AppRoutes.Product}/:id`} element={<Product />} />
         </Route>
         <Route path='*' element={<NotFound />} />

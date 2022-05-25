@@ -204,7 +204,7 @@ export default function ProductModalReview({ isModalOpened, setIsModalOpened, na
                   className='button button--small modal__button modal__button--review'
                   onClick={async () => {
                     await setIsModalOpened(false);
-                    navigate(`/${AppRoutes.Catalog}/page_1`);
+                    navigate(`/${AppRoutes.Catalog}${AppRoutes.DefaultPage}`);
                   }}
                 >
                   К покупкам!

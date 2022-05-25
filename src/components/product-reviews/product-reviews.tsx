@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import useBodyLock from '../../hooks/useBodyLock';
 import { Comments, IComment } from '../../interfaces/comment';
+import { REVIEWS_TO_SHOW } from '../../utils/const';
 import { sortByDate } from '../../utils/utils';
 import ProductModalReview from '../product-modal-review/product-modal-review';
 import ProductReview from '../product-review/product-review';
@@ -10,14 +11,14 @@ interface ProductReviewsProps {
   name: string;
 }
 export default function ProductReviews({ comments, name }: ProductReviewsProps) {
-  const [commentsQuantity, setCommentsQuantity] = useState(3);
+  const [commentsQuantity, setCommentsQuantity] = useState(REVIEWS_TO_SHOW);
   const [isModalOpened, setIsModalOpened] = useState(false);
 
   useBodyLock(isModalOpened);
   const sortedComments = comments.slice().sort(sortByDate);
 
   const handleShowMore = () => {
-    setCommentsQuantity((prevState) => prevState + 3);
+    setCommentsQuantity((prevState) => prevState + REVIEWS_TO_SHOW);
   };
 
   const handleButtonUp = () => {
@@ -36,7 +37,7 @@ export default function ProductReviews({ comments, name }: ProductReviewsProps) 
       {sortedComments.slice(0, commentsQuantity).map((comment: IComment) => (
         <ProductReview key={comment.id} review={comment} />
       ))}
-      {(commentsQuantity + 3 === sortedComments.length || commentsQuantity < sortedComments.length) && (
+      {(commentsQuantity + REVIEWS_TO_SHOW === sortedComments.length || commentsQuantity < sortedComments.length) && (
         <button className='button button--medium reviews__more-button' onClick={handleShowMore}>
           Показать еще отзывы
         </button>

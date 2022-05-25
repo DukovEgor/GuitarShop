@@ -4,9 +4,10 @@ import { api, store } from '.';
 import { IReview } from '../interfaces/review';
 import { errorHandle } from '../services/error-handle';
 import { APIRoute } from '../utils/const';
+import { ApiActions } from '../utils/reducers';
 import { addComment, loadComments, loadProduct, loadProducts } from './app-data';
 
-export const fetchProductsAction = createAsyncThunk('data/fetchProducts', async () => {
+export const fetchProductsAction = createAsyncThunk(ApiActions.Products, async () => {
   try {
     const { data } = await api.get(APIRoute.Products);
     store.dispatch(loadProducts(data));
@@ -15,7 +16,7 @@ export const fetchProductsAction = createAsyncThunk('data/fetchProducts', async 
   }
 });
 
-export const fetchProductAction = createAsyncThunk('data/fetchProduct', async (id: number) => {
+export const fetchProductAction = createAsyncThunk(ApiActions.Product, async (id: number) => {
   try {
     const { data } = await api.get(`${APIRoute.Product}/${id}`);
     store.dispatch(loadProduct(data));
@@ -24,7 +25,7 @@ export const fetchProductAction = createAsyncThunk('data/fetchProduct', async (i
   }
 });
 
-export const fetchCommentstAction = createAsyncThunk('data/fetchComments', async (id: number) => {
+export const fetchCommentstAction = createAsyncThunk(ApiActions.Comments, async (id: number) => {
   try {
     const { data } = await api.get(`${APIRoute.Product}/${id}/comments`);
     store.dispatch(loadComments(data));
@@ -33,7 +34,7 @@ export const fetchCommentstAction = createAsyncThunk('data/fetchComments', async
   }
 });
 
-export const fetchReviewAction = createAsyncThunk('api/fetchReview', async ([formData, onSuccess]: [formData: IReview, onSuccess: Dispatch<SetStateAction<boolean>>]) => {
+export const fetchReviewAction = createAsyncThunk(ApiActions.NewReview, async ([formData, onSuccess]: [formData: IReview, onSuccess: Dispatch<SetStateAction<boolean>>]) => {
   const { rating, ...rest } = formData;
 
   try {

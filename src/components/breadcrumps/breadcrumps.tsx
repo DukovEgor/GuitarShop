@@ -7,7 +7,7 @@ interface BreadcrumpsProps {
 
 export default function Breadcrumps({ name }: BreadcrumpsProps) {
   const productLocation = useMatch(`${AppRoutes.Product}/:id`);
-  const catalogLocation = useMatch(`${AppRoutes.Catalog}/page_:counter`);
+  const catalogLocation = useMatch(`${AppRoutes.Catalog}${AppRoutes.Page}:counter`);
 
   return (
     <ul className='breadcrumbs page-content__breadcrumbs'>
@@ -18,7 +18,7 @@ export default function Breadcrumps({ name }: BreadcrumpsProps) {
       </li>
       {(catalogLocation || productLocation) && (
         <li className='breadcrumbs__item'>
-          <Link className='link' to='/catalog/page_1'>
+          <Link className='link' to={`/${AppRoutes.Catalog}${AppRoutes.DefaultPage}`}>
             Каталог
           </Link>
         </li>
