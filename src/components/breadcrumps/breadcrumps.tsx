@@ -6,7 +6,7 @@ interface BreadcrumpsProps {
 }
 
 function Breadcrumps({ name }: BreadcrumpsProps) {
-  const productLocation = useMatch(`${AppRoutes.Product}/:id`);
+  const productLocation = useMatch(`${AppRoutes.Product}/:id/:tab`);
   const catalogLocation = useMatch(`${AppRoutes.Catalog}${AppRoutes.Page}:counter`);
 
   return (

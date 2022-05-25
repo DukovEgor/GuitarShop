@@ -7,7 +7,6 @@ import Main from '../main/main';
 import Product from '../product/product';
 import Redirect from '../redirect/redirect';
 import { AppRoutes } from '../../utils/const';
-import OptionalRoute from '../optional-route/optinal-route';
 
 function App(): JSX.Element {
   const { isDataLoaded } = useAppSelector(({ DATA }) => DATA);
@@ -22,14 +21,7 @@ function App(): JSX.Element {
         <Route path='/' element={<Main />}>
           <Route index element={<Redirect />} />
           <Route path={`${AppRoutes.Catalog}${AppRoutes.Page}:counter`} element={<Catalog />} />
-          <Route
-            path={`${AppRoutes.Product}/:id`}
-            element={
-              <OptionalRoute>
-                <Product />
-              </OptionalRoute>
-            }
-          />
+          <Route path={`${AppRoutes.Product}/:id/:tab/*`} element={<Product />} />
         </Route>
         <Route path='*' element={<NotFound />} />
       </Routes>

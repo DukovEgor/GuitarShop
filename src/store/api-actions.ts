@@ -1,5 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { Dispatch, SetStateAction } from 'react';
+import { NavigateFunction } from 'react-router-dom';
 import { api, store } from '.';
 import { IReview } from '../interfaces/review';
 import { errorHandle } from '../services/error-handle';
@@ -16,12 +17,13 @@ export const fetchProductsAction = createAsyncThunk(ApiActions.Products, async (
   }
 });
 
-export const fetchProductAction = createAsyncThunk(ApiActions.Product, async (id: number) => {
+export const fetchProductAction = createAsyncThunk(ApiActions.Product, async ([id, onBadRequest]: [id: number, onBadRequest: NavigateFunction]) => {
   try {
     const { data } = await api.get(`${APIRoute.Product}/${id}`);
     store.dispatch(loadProduct(data));
   } catch (error) {
     errorHandle(error);
+    onBadRequest('*', { replace: true });
   }
 });
 

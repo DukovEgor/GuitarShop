@@ -42,7 +42,7 @@ function ProductItem({ product }: ProductItemProps) {
         </p>
       </div>
       <div className='product-card__buttons'>
-        <Link className='button button--mini' to={`/${AppRoutes.Product}/${id}`}>
+        <Link className='button button--mini' to={`/${AppRoutes.Product}/${id}/${AppRoutes.Characteristics}`}>
           Подробнее
         </Link>
         <a className='button button--red button--mini button--add-to-cart' href='/'>

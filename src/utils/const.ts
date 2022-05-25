@@ -21,6 +21,8 @@ export enum AppRoutes {
   Product = 'product',
   Page = '/page_',
   DefaultPage = '/page_1',
+  Characteristics = 'characteristics',
+  Description = 'description',
 }
 
 export const PRUDUCTS_TO_SHOW = 9;

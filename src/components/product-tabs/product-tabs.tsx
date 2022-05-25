@@ -1,46 +1,25 @@
-import { useEffect } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { IProductTabs } from '../../interfaces/product';
-import { capitalize } from '../../utils/utils';
-import { GuitarTypeVocabulary } from '../../utils/vocabularies';
+import { AppRoutes } from '../../utils/const';
+import ProductCharacteristics from '../product-characteristics/product-characteristics';
 
 function ProductTabs({ vendorCode, type, stringCount, description }: IProductTabs) {
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    navigate('#characteristics', { replace: false });
-  }, [navigate]);
-
-  const { hash = '#characteristics' } = useLocation();
+  const { tab, id } = useParams();
 
   return (
     <div className='tabs'>
-      <Link className={`button button--medium tabs__button ${hash !== '#characteristics' && 'button--black-border'}`} to='#characteristics'>
+      <Link className={`button button--medium tabs__button ${tab === 'description' && 'button--black-border'}`} to={`/${AppRoutes.Product}/${id}/${AppRoutes.Characteristics}`}>
         Характеристики
       </Link>
-      <Link className={`button button--medium tabs__button ${hash !== '#description' && 'button--black-border'}`} to='#description'>
+      <Link
+        className={`button button--medium tabs__button ${tab === AppRoutes.Characteristics && 'button--black-border'}`}
+        to={`/${AppRoutes.Product}/${id}/${AppRoutes.Description}`}
+      >
         Описание
       </Link>
-      <div className={`tabs__content ${hash !== '#characteristics' && 'hiden'}`} id='characteristics'>
-        {hash === '#characteristics' && (
-          <table className='tabs__table'>
-            <tbody>
-              <tr className='tabs__table-row'>
-                <td className='tabs__title'>Артикул:</td>
-                <td className='tabs__value'>{vendorCode}</td>
-              </tr>
-              <tr className='tabs__table-row'>
-                <td className='tabs__title'>Тип:</td>
-                <td className='tabs__value'>{GuitarTypeVocabulary[capitalize(type)]}</td>
-              </tr>
-              <tr className='tabs__table-row'>
-                <td className='tabs__title'>Количество струн:</td>
-                <td className='tabs__value'>{stringCount} струнная</td>
-              </tr>
-            </tbody>
-          </table>
-        )}
-        {hash === '#description' && <p className={`tabs__product-description ${hash !== '#description' && 'hiden'}`}>{description}</p>}
+      <div className={'tabs__content'} id='characteristics'>
+        {tab === AppRoutes.Characteristics && <ProductCharacteristics vendorCode={vendorCode} type={type} description={''} stringCount={stringCount} />}
+        {tab === AppRoutes.Description && <p className='tabs__product-description'>{description}</p>}
       </div>
     </div>
   );
