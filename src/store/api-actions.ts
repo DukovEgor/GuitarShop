@@ -6,7 +6,7 @@ import { IReview } from '../interfaces/review';
 import { errorHandle } from '../services/error-handle';
 import { APIRoute } from '../utils/const';
 import { ApiActions } from '../utils/reducers';
-import { addComment, loadComments, loadProduct, loadProducts } from './app-data';
+import { addComment, loadComments, loadProduct, loadProducts } from './app-data/app-data';
 
 export const fetchProductsAction = createAsyncThunk(ApiActions.Products, async () => {
   try {

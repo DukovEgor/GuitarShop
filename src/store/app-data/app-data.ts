@@ -1,20 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { InitialData } from '../interfaces/initial-data';
-import { NameSpace } from '../utils/const';
+import { InitialData } from '../../interfaces/initial-data';
+import { INITIAL_PRODUCT, NameSpace } from '../../utils/const';
 
 const initialState: InitialData = {
   products: [],
-  product: {
-    id: 0,
-    name: '',
-    vendorCode: '',
-    type: '',
-    description: '',
-    previewImg: '',
-    stringCount: 0,
-    rating: 0,
-    price: 0,
-  },
+  product: INITIAL_PRODUCT,
   comments: [],
   isDataLoaded: false,
 };
