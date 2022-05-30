@@ -1,6 +1,7 @@
 import { IProduct } from '../interfaces/product';
 import { faker } from '@faker-js/faker';
 import { IComment } from '../interfaces/comment';
+import { IReview } from '../interfaces/review';
 
 export const makeFakeProduct = (): IProduct => ({
   id: Number(faker.random.numeric(2)),
@@ -23,4 +24,12 @@ export const makeFakeComment = (): IComment => ({
   rating: Number(faker.random.numeric(1)),
   createAt: faker.date.future(),
   guitarId: Number(faker.random.numeric(2)),
+});
+export const makeFakeReview = (): IReview => ({
+  guitarId: Number(faker.random.numeric(2)),
+  userName: faker.commerce.product(),
+  advantage: faker.commerce.productDescription(),
+  disadvantage: faker.commerce.productDescription(),
+  comment: faker.commerce.productDescription(),
+  rating: Number(faker.random.numeric(1)),
 });

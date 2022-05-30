@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import { useAppSelector } from '../../hooks';
 import NotFound from '../404/404';
 import Catalog from '../catalog/catalog';
@@ -16,16 +16,14 @@ function App(): JSX.Element {
   }
 
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path='/' element={<Main />}>
-          <Route index element={<Redirect />} />
-          <Route path={`${AppRoutes.Catalog}${AppRoutes.Page}:counter`} element={<Catalog />} />
-          <Route path={`${AppRoutes.Product}/:id/:tab/*`} element={<Product />} />
-        </Route>
-        <Route path='*' element={<NotFound />} />
-      </Routes>
-    </BrowserRouter>
+    <Routes>
+      <Route path='/' element={<Main />}>
+        <Route index element={<Redirect />} />
+        <Route path={`${AppRoutes.Catalog}${AppRoutes.Page}:counter`} element={<Catalog />} />
+        <Route path={`${AppRoutes.Product}/:id/:tab/*`} element={<Product />} />
+      </Route>
+      <Route path='*' element={<NotFound />} />
+    </Routes>
   );
 }
 
