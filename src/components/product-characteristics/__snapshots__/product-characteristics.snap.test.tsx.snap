@@ -1,0 +1,55 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Component: ProductCharacteristics should render correctly 1`] = `
+<div>
+  <table
+    class="tabs__table"
+  >
+    <tbody>
+      <tr
+        class="tabs__table-row"
+      >
+        <td
+          class="tabs__title"
+        >
+          Артикул:
+        </td>
+        <td
+          class="tabs__value"
+        >
+          123f
+        </td>
+      </tr>
+      <tr
+        class="tabs__table-row"
+      >
+        <td
+          class="tabs__title"
+        >
+          Тип:
+        </td>
+        <td
+          class="tabs__value"
+        >
+          Электрогитара
+        </td>
+      </tr>
+      <tr
+        class="tabs__table-row"
+      >
+        <td
+          class="tabs__title"
+        >
+          Количество струн:
+        </td>
+        <td
+          class="tabs__value"
+        >
+          7
+           струнная
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+`;

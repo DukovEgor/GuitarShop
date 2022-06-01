@@ -1,10 +1,10 @@
 import { configureMockStore } from '@jedmao/redux-mock-store';
 import { Provider } from 'react-redux';
-import { BrowserRouter } from 'react-router-dom';
 import { AppRoutes } from '../../utils/const';
 import App from './app';
 import { render, screen } from '@testing-library/react';
 import { createMemoryHistory } from 'history';
+import HistoryRouter from '../history-router/history-router';
 
 const mockStore = configureMockStore();
 
@@ -16,9 +16,9 @@ const history = createMemoryHistory();
 
 const fakeApp = (
   <Provider store={store}>
-    <BrowserRouter>
+    <HistoryRouter history={history}>
       <App />
-    </BrowserRouter>
+    </HistoryRouter>
   </Provider>
 );
 

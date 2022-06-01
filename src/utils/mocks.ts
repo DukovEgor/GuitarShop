@@ -2,6 +2,7 @@ import { IProduct } from '../interfaces/product';
 import { faker } from '@faker-js/faker';
 import { IComment } from '../interfaces/comment';
 import { IReview } from '../interfaces/review';
+import { InitialData } from '../interfaces/initial-data';
 
 export const makeFakeProduct = (): IProduct => ({
   id: Number(faker.random.numeric(2)),
@@ -33,3 +34,10 @@ export const makeFakeReview = (): IReview => ({
   comment: faker.commerce.productDescription(),
   rating: Number(faker.random.numeric(1)),
 });
+
+export const INITIAL_STATE: InitialData = {
+  products: Array.from({ length: 10 }, makeFakeProduct),
+  product: makeFakeProduct(),
+  comments: Array.from({ length: 10 }, makeFakeComment),
+  isDataLoaded: true,
+};

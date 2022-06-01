@@ -40,6 +40,7 @@ function ProductModalSuccess({ isModalOpened, onModalClose, isSuccess, onModalRe
       <div
         className='modal__overlay'
         data-close-modal
+        aria-label='Скрыть'
         onClick={() => {
           onModalClose(false);
         }}
@@ -52,6 +53,7 @@ function ProductModalSuccess({ isModalOpened, onModalClose, isSuccess, onModalRe
         <div className='modal__button-container modal__button-container--review'>
           <button
             className='button button--small modal__button modal__button--review'
+            aria-label='Каталог'
             onClick={async () => {
               await onModalClose(false);
               browserHistory.push(`/${AppRoutes.Catalog}${AppRoutes.DefaultPage}`);

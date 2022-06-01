@@ -1,13 +1,15 @@
 import { render, screen } from '@testing-library/react';
-import { BrowserRouter } from 'react-router-dom';
+import { createMemoryHistory } from 'history';
+import HistoryRouter from '../history-router/history-router';
 import NotFound from './404';
 
+const history = createMemoryHistory();
 describe('Component: NotFoundScreen', () => {
   it('should render correctly', () => {
     render(
-      <BrowserRouter>
+      <HistoryRouter history={history}>
         <NotFound />
-      </BrowserRouter>
+      </HistoryRouter>
     );
 
     const headerElement = screen.getByText('404');
