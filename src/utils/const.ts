@@ -4,7 +4,7 @@ export enum HttpCode {
 }
 
 export enum NameSpace {
-  Data = 'DATA',
+  Data = 'data',
 }
 
 export enum APIRoute {

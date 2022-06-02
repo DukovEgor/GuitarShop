@@ -6,7 +6,7 @@ import { useAppSelector } from '../../hooks';
 import { PRUDUCTS_TO_SHOW } from '../../utils/const';
 
 function Catalog() {
-  const { products } = useAppSelector(({ DATA }) => DATA);
+  const { products } = useAppSelector(({ data }) => data);
 
   const { counter } = useParams();
   const currentPage = Number(counter ? counter : 1);

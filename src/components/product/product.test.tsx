@@ -4,7 +4,8 @@ import { Provider } from 'react-redux';
 import { INITIAL_STATE } from '../../utils/mocks';
 import Product from './product';
 
-const store = configureMockStore()(INITIAL_STATE);
+const mockStore = configureMockStore();
+const store = mockStore({ data: INITIAL_STATE });
 
 describe('Component: Product', () => {
   it('should render correctly', () => {

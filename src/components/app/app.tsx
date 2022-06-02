@@ -9,7 +9,7 @@ import Redirect from '../redirect/redirect';
 import { AppRoutes } from '../../utils/const';
 
 function App(): JSX.Element {
-  const { isDataLoaded } = useAppSelector(({ DATA }) => DATA);
+  const { isDataLoaded } = useAppSelector(({ data }) => data);
 
   if (!isDataLoaded) {
     return <LoadingScreen />;

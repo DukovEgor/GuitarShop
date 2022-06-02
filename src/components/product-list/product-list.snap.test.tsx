@@ -5,7 +5,8 @@ import { INITIAL_STATE, makeFakeProduct } from '../../utils/mocks';
 import ProductList from './product-list';
 
 const products = Array.from({ length: 10 }, makeFakeProduct);
-const store = configureMockStore()(INITIAL_STATE);
+const mockStore = configureMockStore();
+const store = mockStore({ data: INITIAL_STATE });
 
 describe('Component: ProductList', () => {
   test('should render correctly', () => {

@@ -7,7 +7,8 @@ import HistoryRouter from '../history-router/history-router';
 import ProductItem from './product-item';
 
 const product = makeFakeProduct();
-const store = configureMockStore()(INITIAL_STATE);
+const mockStore = configureMockStore();
+const store = mockStore({ data: INITIAL_STATE });
 const history = createMemoryHistory();
 
 describe('Component: ProductItem', () => {

@@ -4,7 +4,8 @@ import { Provider } from 'react-redux';
 import { INITIAL_STATE } from '../../utils/mocks';
 import Catalog from './catalog';
 
-const store = configureMockStore()(INITIAL_STATE);
+const mockStore = configureMockStore();
+const store = mockStore({ data: INITIAL_STATE });
 
 describe('Component: Catalog', () => {
   test('should render correctly', () => {

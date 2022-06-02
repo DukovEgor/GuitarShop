@@ -20,7 +20,7 @@ function Product() {
     setLoading(false);
   }, [dispatch, id]);
 
-  const { product, comments } = useAppSelector(({ DATA }) => DATA);
+  const { product, comments } = useAppSelector(({ data }) => data);
 
   if (loading) {
     return <LoadingScreen />;

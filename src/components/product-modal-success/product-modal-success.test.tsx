@@ -4,7 +4,8 @@ import { Provider } from 'react-redux';
 import { INITIAL_STATE } from '../../utils/mocks';
 import ProductModalSuccess from './product-modal-success';
 
-const store = configureMockStore()(INITIAL_STATE);
+const mockStore = configureMockStore();
+const store = mockStore({ data: INITIAL_STATE });
 
 describe('component: "ProductModalSuccess"', () => {
   it('should render correctly', () => {
