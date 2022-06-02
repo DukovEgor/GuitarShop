@@ -6,6 +6,8 @@ import App from './components/app/app';
 import 'react-toastify/dist/ReactToastify.css';
 import { store } from './store';
 import { fetchProductsAction } from './store/api-actions';
+import HistoryRouter from './components/history-router/history-router';
+import browserHistory from './browser-history';
 
 const rootElement = document.getElementById('root');
 if (!rootElement) {
@@ -18,8 +20,10 @@ store.dispatch(fetchProductsAction());
 root.render(
   <StrictMode>
     <Provider store={store}>
-      <ToastContainer />
-      <App />
+      <HistoryRouter history={browserHistory}>
+        <ToastContainer />
+        <App />
+      </HistoryRouter>
     </Provider>
   </StrictMode>
 );

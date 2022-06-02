@@ -1,25 +1,24 @@
 import { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import Breadcrumps from '../breadcrumps/breadcrumps';
 import ProductReviews from '../product-reviews/product-reviews';
 import ProductTabs from '../product-tabs/product-tabs';
 import RatingStars from '../rating-stars/rating-stars';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { fetchCommentstAction, fetchProductAction } from '../../store/api-actions';
+import { fetchProductDataAction } from '../../store/api-actions';
 import { RatingVocabulary } from '../../utils/vocabularies';
 import LoadingScreen from '../loading-screen/loading-screen';
 
 function Product() {
   const [loading, setLoading] = useState(true);
   const { id } = useParams();
-  const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(fetchProductAction([Number(id), navigate]));
-    dispatch(fetchCommentstAction(Number(id)));
+    setLoading(true);
+    dispatch(fetchProductDataAction(Number(id)));
     setLoading(false);
-  }, [dispatch, id, navigate]);
+  }, [dispatch, id]);
 
   const { product, comments } = useAppSelector(({ DATA }) => DATA);
 
@@ -30,6 +29,11 @@ function Product() {
   const { name, vendorCode, price, type, description, previewImg, stringCount, rating } = product;
 
   const ratingInt = Math.round(rating);
+
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth',
+  });
 
   return (
     <main className='page-content'>

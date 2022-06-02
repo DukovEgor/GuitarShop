@@ -1,6 +1,6 @@
 interface RatingStarsProps {
   RatingInt: number;
-  className: string;
+  className?: string;
 }
 
 function RatingStars({ RatingInt, className }: RatingStarsProps) {

@@ -31,18 +31,18 @@ function ProductReviews({ comments, name }: ProductReviewsProps) {
   return (
     <section className='reviews'>
       <h3 className='reviews__title title title--bigger'>Отзывы</h3>
-      <button className='button button--red-border button--big reviews__sumbit-button' onClick={() => setIsModalOpened(true)}>
+      <button className='button button--red-border button--big reviews__sumbit-button' data-testid='review-button-close' onClick={() => setIsModalOpened(true)}>
         Оставить отзыв
       </button>
       {sortedComments.slice(0, commentsQuantity).map((comment: IComment) => (
         <ProductReview key={comment.id} review={comment} />
       ))}
       {(commentsQuantity + REVIEWS_TO_SHOW === sortedComments.length || commentsQuantity < sortedComments.length) && (
-        <button className='button button--medium reviews__more-button' onClick={handleShowMore}>
+        <button className='button button--medium reviews__more-button' data-testid='review-button-more' onClick={handleShowMore}>
           Показать еще отзывы
         </button>
       )}
-      <button className='button button--up button--red-border button--big reviews__up-button' onClick={handleButtonUp}>
+      <button className='button button--up button--red-border button--big reviews__up-button' data-testid='review-button-up' onClick={handleButtonUp}>
         Наверх
       </button>
       <div className={`modal ${isSuccess ? 'modal--success' : 'modal--review'} ${isModalOpened && 'is-active'}`}>

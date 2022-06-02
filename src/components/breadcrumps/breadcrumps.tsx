@@ -6,7 +6,6 @@ interface BreadcrumpsProps {
 }
 
 function Breadcrumps({ name }: BreadcrumpsProps) {
-  const productLocation = useMatch(`${AppRoutes.Product}/:id/:tab`);
   const catalogLocation = useMatch(`${AppRoutes.Catalog}${AppRoutes.Page}:counter`);
 
   return (
@@ -16,14 +15,14 @@ function Breadcrumps({ name }: BreadcrumpsProps) {
           Главная
         </Link>
       </li>
-      {(catalogLocation || productLocation) && (
+      {(catalogLocation || name) && (
         <li className='breadcrumbs__item'>
           <Link className='link' to={`/${AppRoutes.Catalog}${AppRoutes.DefaultPage}`}>
             Каталог
           </Link>
         </li>
       )}
-      {productLocation && (
+      {name && (
         <li className='breadcrumbs__item'>
           <a href='/' className='link'>
             {name}

@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction, useCallback, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import browserHistory from '../../browser-history';
 import { AppRoutes } from '../../utils/const';
 import toggleBodyLock from '../../utils/utils';
 
@@ -11,8 +11,6 @@ interface ProductModalSuccessProps {
 }
 
 function ProductModalSuccess({ isModalOpened, onModalClose, isSuccess, onModalRemove }: ProductModalSuccessProps): JSX.Element {
-  const navigate = useNavigate();
-
   const handleEscape = useCallback(
     (event: { keyCode: number }) => {
       if (event.keyCode === 27) {
@@ -42,6 +40,7 @@ function ProductModalSuccess({ isModalOpened, onModalClose, isSuccess, onModalRe
       <div
         className='modal__overlay'
         data-close-modal
+        aria-label='Скрыть'
         onClick={() => {
           onModalClose(false);
         }}
@@ -54,9 +53,10 @@ function ProductModalSuccess({ isModalOpened, onModalClose, isSuccess, onModalRe
         <div className='modal__button-container modal__button-container--review'>
           <button
             className='button button--small modal__button modal__button--review'
+            aria-label='Каталог'
             onClick={async () => {
               await onModalClose(false);
-              navigate(`/${AppRoutes.Catalog}${AppRoutes.DefaultPage}`);
+              browserHistory.push(`/${AppRoutes.Catalog}${AppRoutes.DefaultPage}`);
             }}
           >
             К покупкам!

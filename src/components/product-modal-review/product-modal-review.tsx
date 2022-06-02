@@ -59,7 +59,7 @@ function ProductModalReview({ isModalOpened, onModalClose, isSuccess, onSuccess,
 
   return (
     <div className='modal__wrapper'>
-      <div className='modal__overlay' data-close-modal onClick={() => onModalClose(false)} />
+      <div className='modal__overlay' data-close-modal aria-label='Скрыть' onClick={() => onModalClose(false)} />
       <div className='modal__content'>
         <h2 className='modal__header modal__header--review title title--medium'>Оставить отзыв</h2>
         <h3 className='modal__product-name title title--medium-20 title--uppercase'>{name}</h3>
@@ -84,6 +84,7 @@ function ProductModalReview({ isModalOpened, onModalClose, isSuccess, onSuccess,
               <span className='form-review__label form-review__label--required'>Ваша Оценка</span>
               <div className='rate rate--reverse'>
                 <input
+                  data-testid='test-star'
                   className='visually-hidden'
                   id='star-5'
                   type='radio'
@@ -177,7 +178,7 @@ function ProductModalReview({ isModalOpened, onModalClose, isSuccess, onSuccess,
             defaultValue={''}
           />
           {comment && <p className='form-review__warning'>Заполните поле</p>}
-          <button tabIndex={0} className='button button--medium-20 form-review__button' type='submit' disabled={isDisabled}>
+          <button tabIndex={0} className='button button--medium-20 form-review__button' type='submit' aria-label='Отправить' disabled={isDisabled}>
             Отправить отзыв
           </button>
         </form>

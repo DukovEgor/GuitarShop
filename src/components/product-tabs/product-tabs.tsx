@@ -8,11 +8,16 @@ function ProductTabs({ vendorCode, type, stringCount, description }: IProductTab
 
   return (
     <div className='tabs'>
-      <Link className={`button button--medium tabs__button ${tab === 'description' && 'button--black-border'}`} to={`/${AppRoutes.Product}/${id}/${AppRoutes.Characteristics}`}>
+      <Link
+        className={`button button--medium tabs__button  ${tab === 'description' && 'button--black-border'}`}
+        data-testid='tabs-link-characteristics'
+        to={`/${AppRoutes.Product}/${id}/${AppRoutes.Characteristics}`}
+      >
         Характеристики
       </Link>
       <Link
         className={`button button--medium tabs__button ${tab === AppRoutes.Characteristics && 'button--black-border'}`}
+        data-testid='tabs-link-description'
         to={`/${AppRoutes.Product}/${id}/${AppRoutes.Description}`}
       >
         Описание

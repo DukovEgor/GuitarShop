@@ -1,0 +1,151 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Component: RatingStars should render correctly 3 red stars of 5 because rating is 3 1`] = `
+<div>
+  <svg
+    aria-hidden="true"
+    height="11"
+    width="12"
+  >
+    <use
+      xlink:href="#icon-full-star"
+    />
+  </svg>
+  <svg
+    aria-hidden="true"
+    height="11"
+    width="12"
+  >
+    <use
+      xlink:href="#icon-full-star"
+    />
+  </svg>
+  <svg
+    aria-hidden="true"
+    height="11"
+    width="12"
+  >
+    <use
+      xlink:href="#icon-full-star"
+    />
+  </svg>
+  <svg
+    aria-hidden="true"
+    height="11"
+    width="12"
+  >
+    <use
+      xlink:href="#icon-star"
+    />
+  </svg>
+  <svg
+    aria-hidden="true"
+    height="11"
+    width="12"
+  >
+    <use
+      xlink:href="#icon-star"
+    />
+  </svg>
+</div>
+`;
+
+exports[`Component: RatingStars should render correctly width of stars with different className 1`] = `
+<div>
+  <svg
+    aria-hidden="true"
+    height="16"
+    width="16"
+  >
+    <use
+      xlink:href="#icon-full-star"
+    />
+  </svg>
+  <svg
+    aria-hidden="true"
+    height="16"
+    width="16"
+  >
+    <use
+      xlink:href="#icon-full-star"
+    />
+  </svg>
+  <svg
+    aria-hidden="true"
+    height="16"
+    width="16"
+  >
+    <use
+      xlink:href="#icon-full-star"
+    />
+  </svg>
+  <svg
+    aria-hidden="true"
+    height="16"
+    width="16"
+  >
+    <use
+      xlink:href="#icon-star"
+    />
+  </svg>
+  <svg
+    aria-hidden="true"
+    height="16"
+    width="16"
+  >
+    <use
+      xlink:href="#icon-star"
+    />
+  </svg>
+</div>
+`;
+
+exports[`Component: RatingStars should render correctly without additional props 1`] = `
+<div>
+  <svg
+    aria-hidden="true"
+    height="11"
+    width="12"
+  >
+    <use
+      xlink:href="#icon-star"
+    />
+  </svg>
+  <svg
+    aria-hidden="true"
+    height="11"
+    width="12"
+  >
+    <use
+      xlink:href="#icon-star"
+    />
+  </svg>
+  <svg
+    aria-hidden="true"
+    height="11"
+    width="12"
+  >
+    <use
+      xlink:href="#icon-star"
+    />
+  </svg>
+  <svg
+    aria-hidden="true"
+    height="11"
+    width="12"
+  >
+    <use
+      xlink:href="#icon-star"
+    />
+  </svg>
+  <svg
+    aria-hidden="true"
+    height="11"
+    width="12"
+  >
+    <use
+      xlink:href="#icon-star"
+    />
+  </svg>
+</div>
+`;
