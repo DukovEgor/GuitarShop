@@ -1,0 +1,121 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Component: ProductList should render correctly 1`] = `
+<div>
+  <div
+    class="cards catalog__cards"
+  >
+    <div
+      class="product-card"
+    >
+      <img
+        alt="Chester"
+        height="190"
+        src="/img/content/https://assets.htmlacademy.ru/img/logo.v2.svg"
+        width="75"
+      />
+      <div
+        class="product-card__info"
+      >
+        <div
+          class="rate product-card__rate"
+        >
+          <svg
+            aria-hidden="true"
+            height="11"
+            width="12"
+          >
+            <use
+              xlink:href="#icon-full-star"
+            />
+          </svg>
+          <svg
+            aria-hidden="true"
+            height="11"
+            width="12"
+          >
+            <use
+              xlink:href="#icon-full-star"
+            />
+          </svg>
+          <svg
+            aria-hidden="true"
+            height="11"
+            width="12"
+          >
+            <use
+              xlink:href="#icon-full-star"
+            />
+          </svg>
+          <svg
+            aria-hidden="true"
+            height="11"
+            width="12"
+          >
+            <use
+              xlink:href="#icon-full-star"
+            />
+          </svg>
+          <svg
+            aria-hidden="true"
+            height="11"
+            width="12"
+          >
+            <use
+              xlink:href="#icon-star"
+            />
+          </svg>
+          <p
+            class="visually-hidden"
+          >
+            Рейтинг:
+            Хорошо
+          </p>
+          <p
+            class="rate__count"
+          >
+            <span
+              class="visually-hidden"
+            >
+              Всего оценок:
+            </span>
+            0
+          </p>
+        </div>
+        <p
+          class="product-card__title"
+        >
+          Chester
+        </p>
+        <p
+          class="product-card__price"
+        >
+          <span
+            class="visually-hidden"
+          >
+            Цена:
+          </span>
+          400
+           ₽
+        </p>
+      </div>
+      <div
+        class="product-card__buttons"
+      >
+        <a
+          class="button button--mini"
+          href="/product/1/characteristics"
+        >
+          Подробнее
+        </a>
+        <a
+          class="button button--red button--mini button--add-to-cart"
+          href="/"
+        >
+          Купить
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+`;

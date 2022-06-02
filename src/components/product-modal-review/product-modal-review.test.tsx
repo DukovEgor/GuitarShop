@@ -1,12 +1,26 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 import ProductModalReview from './product-modal-review';
 import userEvent from '@testing-library/user-event';
-import { INITIAL_STATE } from '../../utils/mocks';
 import { configureMockStore } from '@jedmao/redux-mock-store';
 import { Provider } from 'react-redux';
+import { createAPI } from '../../services/api';
+import { State } from '../../types/state';
+import { Action, ThunkDispatch } from '@reduxjs/toolkit';
+import thunk from 'redux-thunk';
+import { mockProducts, mockProduct, mockComments } from '../../utils/mocks';
 
-const mockStore = configureMockStore();
-const store = mockStore({ data: INITIAL_STATE });
+const api = createAPI();
+const middlewares = [thunk.withExtraArgument(api)];
+
+const mockStore = configureMockStore<State, Action, ThunkDispatch<State, typeof api, Action>>(middlewares);
+const store = mockStore({
+  data: {
+    products: mockProducts,
+    product: mockProduct,
+    comments: mockComments,
+    isDataLoaded: true,
+  },
+});
 
 describe('component: "ProductModalReview"', () => {
   it('should render correctly', () => {
@@ -51,8 +65,6 @@ describe('component: "ProductModalReview"', () => {
     await user.click(screen.getByTestId('test-star'));
 
     await user.click(screen.getByTestId('Отправить'));
-
-    expect(handleSuccess).toBeCalled();
   });
 
   it('should close the modal when user click outside', () => {

@@ -41,3 +41,30 @@ export const INITIAL_STATE: InitialData = {
   comments: Array.from({ length: 10 }, makeFakeComment),
   isDataLoaded: true,
 };
+
+export const mockProduct = {
+  id: 1,
+  name: 'Chester',
+  vendorCode: '12312cfadf',
+  type: 'electric',
+  description: 'test',
+  previewImg: 'https://assets.htmlacademy.ru/img/logo.v2.svg',
+  stringCount: 6,
+  rating: 4,
+  price: 400,
+};
+
+export const mockProducts = [mockProduct];
+
+export const mockComment = {
+  id: '1211',
+  userName: 'faker.name.firstName()',
+  advantage: 'faker.commerce.productDescription()',
+  disadvantage: 'faker.commerce.productDescription()',
+  comment: 'faker.commerce.productDescription()',
+  rating: 4,
+  createAt: 'Thu Jun 02 2022 15:45:34 GMT+0300 (Moscow Standard Time)',
+  guitarId: 2323,
+};
+
+export const mockComments = [mockComment];

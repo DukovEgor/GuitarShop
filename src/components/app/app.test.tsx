@@ -6,8 +6,15 @@ import { render, screen } from '@testing-library/react';
 import { createMemoryHistory } from 'history';
 import HistoryRouter from '../history-router/history-router';
 import { INITIAL_STATE } from '../../utils/mocks';
+import { createAPI } from '../../services/api';
+import { Action, ThunkDispatch } from '@reduxjs/toolkit';
+import thunk from 'redux-thunk';
+import { State } from '../../types/state';
 
-const mockStore = configureMockStore();
+const api = createAPI();
+const middlewares = [thunk.withExtraArgument(api)];
+
+const mockStore = configureMockStore<State, Action, ThunkDispatch<State, typeof api, Action>>(middlewares);
 const store = mockStore({ data: INITIAL_STATE });
 
 const history = createMemoryHistory();
@@ -35,8 +42,8 @@ describe('Application Routing', () => {
     render(fakeApp);
 
     expect(screen.getByText(/Цена/i)).toBeInTheDocument();
-    expect(screen.getByLabelText(/Отзывы/i)).toBeInTheDocument();
-    expect(screen.getByLabelText(/Оставить отзыв/i)).toBeInTheDocument();
+    expect(screen.getByText('Отзывы')).toBeInTheDocument();
+    expect(screen.getByText(/Добавить в корзину/i)).toBeInTheDocument();
   });
 
   it('should render "404 page" when user navigate to non-existent route', () => {

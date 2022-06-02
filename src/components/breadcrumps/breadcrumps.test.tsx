@@ -24,12 +24,12 @@ describe('Component: Breadcrumps', () => {
     history.push(`${AppRoutes.Catalog}/${AppRoutes.Page}1`);
     render(
       <HistoryRouter history={history}>
-        <Breadcrumps />
+        <Breadcrumps name='test' />
       </HistoryRouter>
     );
 
-    expect(screen.getByText(/Каталог/i)).toBeInTheDocument();
-    expect(screen.getByRole('link')).toBeInTheDocument();
+    expect(screen.getByText('Каталог')).toBeInTheDocument();
+    expect(screen.getAllByRole('link')).toBeTruthy();
   });
 
   it('should render "pageName" if pageName passed as a parameter', () => {
@@ -42,25 +42,25 @@ describe('Component: Breadcrumps', () => {
     );
 
     expect(screen.getByText(new RegExp(pageName, 'i'))).toBeInTheDocument();
-    expect(screen.getByRole('link')).toBeInTheDocument();
+    expect(screen.getAllByRole('link')).toBeTruthy();
   });
 
-  it('should redirect to root url when user clicked to link', () => {
-    history.push('/fake');
+  it('should redirect to root url when user clicked to link', async () => {
+    await history.push('/fake');
 
     render(
       <HistoryRouter history={history}>
         <Routes>
           <Route path='/' element={<h1>This is main page</h1>} />
-          <Route path='*' element={<Breadcrumps />} />
+          <Route path='fake' element={<Breadcrumps />} />
         </Routes>
       </HistoryRouter>
     );
 
-    expect(screen.queryByText(/This is main page/i)).not.toBeInTheDocument();
+    expect(screen.queryByText('This is main page')).not.toBeInTheDocument();
 
-    userEvent.click(screen.getByText('Главная'));
+    await userEvent.click(screen.getByText(/Главная/i));
 
-    expect(screen.getByText(/This is main page/i)).toBeInTheDocument();
+    expect(screen.getByText('This is main page')).toBeInTheDocument();
   });
 });
