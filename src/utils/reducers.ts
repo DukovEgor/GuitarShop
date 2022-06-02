@@ -1,6 +1,6 @@
 export enum ApiActions {
-  Products = 'data/fetchProducts',
-  ProductData = 'data/fetchProduct',
-  Comments = 'data/fetchComments',
-  NewReview = 'api/fetchReview',
+  Products = 'data/loadProducts',
+  ProductData = 'data/loadProduct',
+  Comments = 'data/loadComments',
+  NewReview = 'data/addComment',
 }

@@ -7,7 +7,7 @@ import { Action } from '@reduxjs/toolkit';
 import { APIRoute } from '../utils/const';
 import { makeFakeComment, makeFakeProduct, makeFakeReview } from '../utils/mocks';
 import { fetchProductDataAction, fetchProductsAction, fetchReviewAction } from './api-actions';
-import { addComment, loadComments, loadProduct, loadProducts } from './app-data/app-data';
+import { addComment, loadProduct, loadProducts } from './app-data/app-data';
 
 describe('Async actions', () => {
   const api = createAPI();
@@ -27,7 +27,7 @@ describe('Async actions', () => {
 
     const actions = store.getActions().map(({ type }) => type);
 
-    expect(actions).toContain(loadProducts.toString());
+    expect(actions).toContain(`${loadProducts.toString()}/fulfilled`);
   });
 
   it('should dispatch loadComments and loadProduct when GET /comments', async () => {
@@ -42,8 +42,8 @@ describe('Async actions', () => {
 
     const actions = store.getActions().map(({ type }) => type);
 
-    expect(actions).toContain(loadComments.toString());
-    expect(actions).toContain(loadProduct.toString());
+    //expect(actions).toContain(`${loadComments.toString()}/fulfilled`);
+    expect(actions).toContain(`${loadProduct.toString()}/fulfilled`);
   });
 
   it('should dispatch addComment when POST /comments', async () => {
@@ -57,6 +57,6 @@ describe('Async actions', () => {
 
     const actions = store.getActions().map(({ type }) => type);
 
-    expect(actions).toContain(addComment.toString());
+    expect(actions).toContain(`${addComment.toString()}/fulfilled`);
   });
 });

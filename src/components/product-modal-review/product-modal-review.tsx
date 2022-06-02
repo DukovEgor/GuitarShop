@@ -178,7 +178,7 @@ function ProductModalReview({ isModalOpened, onModalClose, isSuccess, onSuccess,
             defaultValue={''}
           />
           {comment && <p className='form-review__warning'>Заполните поле</p>}
-          <button tabIndex={0} className='button button--medium-20 form-review__button' type='submit' aria-label='Отправить' disabled={isDisabled}>
+          <button tabIndex={0} className='button button--medium-20 form-review__button' type='submit' data-testid='Отправить' disabled={isDisabled}>
             Отправить отзыв
           </button>
         </form>

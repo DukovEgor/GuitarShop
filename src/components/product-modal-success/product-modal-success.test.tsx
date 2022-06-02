@@ -4,7 +4,8 @@ import { Provider } from 'react-redux';
 import { INITIAL_STATE } from '../../utils/mocks';
 import ProductModalSuccess from './product-modal-success';
 
-const store = configureMockStore()(INITIAL_STATE);
+const mockStore = configureMockStore();
+const store = mockStore({ data: INITIAL_STATE });
 
 describe('component: "ProductModalSuccess"', () => {
   it('should render correctly', () => {
@@ -19,7 +20,7 @@ describe('component: "ProductModalSuccess"', () => {
 
     expect(screen.getByText(/Спасибо за ваш отзыв!/i)).toBeInTheDocument();
     expect(screen.getByText(/К покупкам!/i)).toBeInTheDocument();
-    expect(screen.getByRole('button')).toBeInTheDocument();
+    expect(screen.getAllByRole('button')).toBeTruthy();
   });
 
   it('should close the modal when user click outside', () => {
@@ -35,9 +36,6 @@ describe('component: "ProductModalSuccess"', () => {
     fireEvent.click(screen.getByLabelText('Скрыть'));
 
     expect(handleClose).toHaveBeenCalledTimes(1);
-
-    expect(screen.queryByText(/Спасибо за ваш отзыв!/i)).not.toBeInTheDocument();
-    expect(screen.queryByText(/К покупкам!/i)).not.toBeInTheDocument();
   });
 
   it('should close the modal when user click "close button"', () => {
@@ -53,9 +51,6 @@ describe('component: "ProductModalSuccess"', () => {
     fireEvent.click(screen.getByLabelText('Закрыть'));
 
     expect(handleClose).toHaveBeenCalledTimes(1);
-
-    expect(screen.queryByText(/Спасибо за ваш отзыв!/i)).not.toBeInTheDocument();
-    expect(screen.queryByText(/К покупкам!/i)).not.toBeInTheDocument();
   });
 
   it('should close the modal when user click "К покупкам"', () => {
@@ -71,8 +66,5 @@ describe('component: "ProductModalSuccess"', () => {
     fireEvent.click(screen.getByLabelText('Каталог'));
 
     expect(handleClose).toHaveBeenCalledTimes(1);
-
-    expect(screen.queryByText(/Спасибо за ваш отзыв!/i)).not.toBeInTheDocument();
-    expect(screen.queryByText(/К покупкам!/i)).not.toBeInTheDocument();
   });
 });

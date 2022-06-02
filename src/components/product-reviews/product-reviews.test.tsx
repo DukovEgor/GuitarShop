@@ -5,7 +5,8 @@ import { INITIAL_STATE, makeFakeComment } from '../../utils/mocks';
 import ProductReviews from './product-reviews';
 
 const reviews = Array.from({ length: 10 }, makeFakeComment);
-const store = configureMockStore()(INITIAL_STATE);
+const mockStore = configureMockStore();
+const store = mockStore({ data: INITIAL_STATE });
 
 describe('component: "ProductReviews"', () => {
   it('should render correctly', () => {

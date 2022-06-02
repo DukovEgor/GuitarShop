@@ -11,7 +11,7 @@ function Breadcrumps({ name }: BreadcrumpsProps) {
   return (
     <ul className='breadcrumbs page-content__breadcrumbs'>
       <li className='breadcrumbs__item'>
-        <Link className='link' to='/'>
+        <Link className='link' to='/' data-testid='to-main-page'>
           Главная
         </Link>
       </li>
