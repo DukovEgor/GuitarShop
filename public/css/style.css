@@ -2119,7 +2119,7 @@ button,
 
 .form-review__warning {
   display: block;
-
+  opacity: 0;
   margin: 0;
   padding-right: 5px;
 
@@ -2649,6 +2649,7 @@ button,
 }
 
 .rate__message {
+  opacity: 0;
   bottom: -17px;
   left: 7px;
   position: absolute;
