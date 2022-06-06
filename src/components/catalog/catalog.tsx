@@ -7,12 +7,11 @@ import { PRUDUCTS_TO_SHOW } from '../../utils/const';
 
 function Catalog() {
   const { products } = useAppSelector(({ data }) => data);
-
   const { counter } = useParams();
+
   const currentPage = Number(counter ? counter : 1);
 
   const lastIndex = currentPage * PRUDUCTS_TO_SHOW;
-
   const firstIndex = lastIndex - PRUDUCTS_TO_SHOW;
 
   const currentProducts = products.slice(firstIndex, lastIndex);
@@ -79,7 +78,7 @@ function Catalog() {
           <div className='catalog-sort'>
             <h2 className='catalog-sort__title'>Сортировать:</h2>
             <div className='catalog-sort__type'>
-              <button className='catalog-sort__type-button' aria-label='по цене'>
+              <button className='catalog-sort__type-button catalog-sort__type-button--active' aria-label='по цене'>
                 по цене
               </button>
               <button className='catalog-sort__type-button' aria-label='по популярности'>
@@ -87,7 +86,7 @@ function Catalog() {
               </button>
             </div>
             <div className='catalog-sort__order'>
-              <button className='catalog-sort__order-button catalog-sort__order-button--up' aria-label='По возрастанию' />
+              <button className='catalog-sort__order-button catalog-sort__order-button--up catalog-sort__order-button--active' aria-label='По возрастанию' />
               <button className='catalog-sort__order-button catalog-sort__order-button--down' aria-label='По убыванию' />
             </div>
           </div>
