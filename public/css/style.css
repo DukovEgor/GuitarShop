@@ -2266,7 +2266,9 @@ button,
 .form-search__select-list.list-opened + .form-search__reset {
   display: block;
 }
-
+.form-search__select-list--no-match {
+  display: none;
+}
 .form-search__icon {
   top: 50%;
   left: 50%;
