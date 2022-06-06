@@ -1500,6 +1500,9 @@ button {
   -moz-appearance: none;
   appearance: none;
 }
+.form-search__select-list--no-match {
+  display: none;
+}
 .form-search__select-list::-webkit-scrollbar {
   width: 4px;
 }
