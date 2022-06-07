@@ -14,6 +14,7 @@ export const makeFakeProduct = (): IProduct => ({
   stringCount: Number(faker.random.numeric(1)),
   rating: Number(faker.random.numeric(1)),
   price: Number(faker.commerce.price(100, 200, 0)),
+  comments: [makeFakeComment()],
 });
 
 export const makeFakeComment = (): IComment => ({
@@ -40,22 +41,8 @@ export const INITIAL_STATE: InitialData = {
   product: makeFakeProduct(),
   comments: Array.from({ length: 10 }, makeFakeComment),
   isDataLoaded: true,
+  productsCount: 10,
 };
-
-export const mockProduct = {
-  id: 1,
-  name: 'Chester',
-  vendorCode: '12312cfadf',
-  type: 'electric',
-  description: 'test',
-  previewImg: 'https://assets.htmlacademy.ru/img/logo.v2.svg',
-  stringCount: 6,
-  rating: 4,
-  price: 400,
-};
-
-export const mockProducts = [mockProduct];
-
 export const mockComment = {
   id: '1211',
   userName: 'faker.name.firstName()',
@@ -68,3 +55,18 @@ export const mockComment = {
 };
 
 export const mockComments = [mockComment];
+
+export const mockProduct = {
+  id: 1,
+  name: 'Chester',
+  vendorCode: '12312cfadf',
+  type: 'electric',
+  description: 'test',
+  previewImg: 'https://assets.htmlacademy.ru/img/logo.v2.svg',
+  stringCount: 6,
+  rating: 4,
+  price: 400,
+  comments: [mockComment],
+};
+
+export const mockProducts = [mockProduct];

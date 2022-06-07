@@ -8,10 +8,10 @@ import { APIRoute } from '../utils/const';
 import { ApiActions } from '../utils/reducers';
 import { addComment, loadComments, loadProduct, loadProducts } from './app-data/app-data';
 
-export const fetchProductsAction = createAsyncThunk(ApiActions.Products, async () => {
+export const fetchProductsAction = createAsyncThunk(ApiActions.Products, async ([start, end]: number[]) => {
   try {
-    const { data } = await api.get(APIRoute.Products);
-    store.dispatch(loadProducts(data));
+    const { data, headers } = await api.get(`${APIRoute.Products}?_start=${start}&_end=${end}&_embed=comments`);
+    store.dispatch(loadProducts({ data, headers }));
   } catch (error) {
     errorHandle(error);
   }

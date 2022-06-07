@@ -2,22 +2,29 @@ import { useParams, useSearchParams } from 'react-router-dom';
 import Breadcrumps from '../breadcrumps/breadcrumps';
 import Pagination from '../pagination/pagintation';
 import ProductList from '../product-list/product-list';
-import { useAppSelector } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import { PRUDUCTS_TO_SHOW } from '../../utils/const';
 import { IProduct } from '../../interfaces/product';
+import { fetchProductsAction } from '../../store/api-actions';
+import { useEffect } from 'react';
 
 function Catalog() {
-  const { products } = useAppSelector(({ data }) => data);
+  const dispatch = useAppDispatch();
   const { counter } = useParams();
+
+  const currentPage = Number(counter ? counter : 1);
+  const lastIndex = currentPage * PRUDUCTS_TO_SHOW;
+  const firstIndex = lastIndex - PRUDUCTS_TO_SHOW;
+
+  useEffect(() => {
+    dispatch(fetchProductsAction([firstIndex, lastIndex]));
+  }, [dispatch, firstIndex, lastIndex]);
+
+  const { products, productsCount } = useAppSelector(({ data }) => data);
   const [sortParams, setSortParams] = useSearchParams();
 
   const currentSortType = sortParams.get('_sort');
   const currentSortDirection = sortParams.get('_order');
-
-  const currentPage = Number(counter ? counter : 1);
-
-  const lastIndex = currentPage * PRUDUCTS_TO_SHOW;
-  const firstIndex = lastIndex - PRUDUCTS_TO_SHOW;
 
   const sortedProducts = () => {
     const productsSlice = products.slice();
@@ -35,8 +42,6 @@ function Catalog() {
         return productsSlice.sort((a: IProduct, b: IProduct) => a[currentSortType] - b[currentSortType]);
     }
   };
-
-  const currentProducts = sortedProducts().slice(firstIndex, lastIndex);
 
   return (
     <main className='page-content'>
@@ -152,8 +157,8 @@ function Catalog() {
               />
             </div>
           </div>
-          <ProductList products={currentProducts} />
-          <Pagination products={products} />
+          <ProductList products={sortedProducts()} />
+          <Pagination productsCount={productsCount} />
         </div>
       </div>
     </main>

@@ -24,6 +24,7 @@ describe('Reducer: appData', () => {
       isDataLoaded: false,
       product: INITIAL_PRODUCT,
       comments: [],
+      productsCount: 0,
     };
     expect(appData.reducer(state, loadProducts(products))).toEqual({ products, isDataLoaded: true, comments: [], product: INITIAL_PRODUCT });
   });
@@ -34,6 +35,7 @@ describe('Reducer: appData', () => {
       isDataLoaded: false,
       product: INITIAL_PRODUCT,
       comments: [],
+      productsCount: 0,
     };
     expect(appData.reducer(state, loadProduct(product))).toEqual({ products: [], isDataLoaded: false, comments: [], product });
   });
@@ -44,6 +46,7 @@ describe('Reducer: appData', () => {
       isDataLoaded: false,
       product: INITIAL_PRODUCT,
       comments: [],
+      productsCount: 0,
     };
     expect(appData.reducer(state, addComment(comment))).toEqual({ products: [], isDataLoaded: false, comments: [comment], product: INITIAL_PRODUCT });
   });
@@ -54,6 +57,7 @@ describe('Reducer: appData', () => {
       isDataLoaded: false,
       product: INITIAL_PRODUCT,
       comments: [],
+      productsCount: 0,
     };
     expect(appData.reducer(state, loadComments(comments))).toEqual({ products: [], isDataLoaded: false, comments: comments, product: INITIAL_PRODUCT });
   });

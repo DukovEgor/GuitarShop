@@ -1,8 +1,5 @@
-import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useAppDispatch } from '../../hooks';
 import { IProduct } from '../../interfaces/product';
-import { getComments } from '../../store/api-actions';
 import { AppRoutes } from '../../utils/const';
 import { RatingVocabulary } from '../../utils/vocabularies';
 import RatingStars from '../rating-stars/rating-stars';
@@ -12,16 +9,9 @@ interface ProductItemProps {
 }
 
 function ProductItem({ product }: ProductItemProps) {
-  const { id, name, price, rating, previewImg } = product;
+  const { id, name, price, rating, previewImg, comments } = product;
 
   const RatingInt = Math.round(rating);
-
-  const [comments, setComments] = useState(0);
-
-  const dispatch = useAppDispatch();
-  useEffect(() => {
-    dispatch(getComments([id, setComments]));
-  }, [dispatch, id]);
 
   return (
     <div className='product-card' key={id}>
@@ -32,7 +22,7 @@ function ProductItem({ product }: ProductItemProps) {
           <p className='visually-hidden'>Рейтинг:{RatingVocabulary[RatingInt]}</p>
           <p className='rate__count'>
             <span className='visually-hidden'>Всего оценок:</span>
-            {comments}
+            {comments.length}
           </p>
         </div>
         <p className='product-card__title'>{name}</p>

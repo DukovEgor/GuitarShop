@@ -27,7 +27,7 @@ describe('Component: ProductList', () => {
     const { container } = render(
       <Provider store={store}>
         <BrowserRouter>
-          <ProductList products={mockProducts} />
+          <ProductList products={[]} />
         </BrowserRouter>
       </Provider>
     );

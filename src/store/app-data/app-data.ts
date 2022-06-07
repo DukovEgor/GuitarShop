@@ -4,6 +4,7 @@ import { INITIAL_PRODUCT, NameSpace } from '../../utils/const';
 
 const initialState: InitialData = {
   products: [],
+  productsCount: 0,
   product: INITIAL_PRODUCT,
   comments: [],
   isDataLoaded: false,
@@ -14,7 +15,8 @@ export const appData = createSlice({
   initialState,
   reducers: {
     loadProducts: (state, action) => {
-      state.products = action.payload;
+      state.products = action.payload.data;
+      state.productsCount = action.payload.headers['x-total-count'];
       state.isDataLoaded = true;
     },
     loadProduct: (state, action) => {

@@ -1,17 +1,16 @@
 import { Link, useParams } from 'react-router-dom';
-import { Products } from '../../interfaces/product';
 import { AppRoutes, PRUDUCTS_TO_SHOW } from '../../utils/const';
 
 interface PaginationProps {
-  products: Products;
+  productsCount: number;
 }
 
-function Pagination({ products }: PaginationProps) {
+function Pagination({ productsCount }: PaginationProps) {
   const { counter } = useParams();
 
   const currentPage = counter ? Number(counter) : 1;
 
-  const pages = Math.ceil(products.length / PRUDUCTS_TO_SHOW);
+  const pages = Math.ceil(productsCount / PRUDUCTS_TO_SHOW);
 
   return (
     <div className='pagination page-content__pagination'>
