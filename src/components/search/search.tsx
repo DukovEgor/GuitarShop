@@ -1,4 +1,4 @@
-import { ChangeEvent, useCallback, useRef, useState } from 'react';
+import { ChangeEvent, useCallback, useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAppSelector } from '../../hooks';
 import { Products } from '../../interfaces/product';
@@ -9,12 +9,28 @@ function Search() {
   const { products } = useAppSelector(({ data }) => data);
   const [searchResult, setSearchResult] = useState<Products>([]);
   const searchRef = useRef<HTMLFormElement>(null);
+  const searchContainer = useRef<HTMLDivElement>(null);
 
   const resetSearch = () => {
-    setIsEmpty(true);
     setSearchResult([]);
+    setIsEmpty(true);
     searchRef.current?.reset();
   };
+
+  const handleOutsideClick = (evt: Event) => {
+    const target = evt.target as Node;
+    if (searchContainer.current && !searchContainer.current.contains(target)) {
+      resetSearch();
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener('click', handleOutsideClick);
+
+    return () => {
+      document.removeEventListener('click', handleOutsideClick);
+    };
+  });
 
   const handleSearch = useCallback(
     (evt: ChangeEvent<HTMLInputElement>) => {
@@ -25,9 +41,9 @@ function Search() {
   );
 
   return (
-    <div className='form-search'>
+    <div className='form-search' ref={searchContainer}>
       <form className='form-search__form' id='form-search' ref={searchRef}>
-        <button className='form-search__submit' type='submit'>
+        <button className='form-search__submit' type='submit' onClick={(evt) => evt.preventDefault()}>
           <svg className='form-search__icon' width={14} height={15} aria-hidden='true'>
             <use href='#icon-search' />
           </svg>
