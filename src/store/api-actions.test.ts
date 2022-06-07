@@ -23,7 +23,7 @@ describe('Async actions', () => {
 
     const store = mockStore();
 
-    await store.dispatch(fetchProductsAction([0, 9]));
+    await store.dispatch(fetchProductsAction([0, 9, '']));
 
     const actions = store.getActions().map(({ type }) => type);
 

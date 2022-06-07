@@ -4,44 +4,30 @@ import Pagination from '../pagination/pagintation';
 import ProductList from '../product-list/product-list';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { PRUDUCTS_TO_SHOW } from '../../utils/const';
-import { IProduct } from '../../interfaces/product';
 import { fetchProductsAction } from '../../store/api-actions';
 import { useEffect } from 'react';
 
 function Catalog() {
   const dispatch = useAppDispatch();
+
   const { counter } = useParams();
+  const [sortParams, setSortParams] = useSearchParams();
+
+  const currentSortType = sortParams.get('_sort') ? `&_sort=${sortParams.get('_sort')}` : '';
+  const currentSortDirection = sortParams.get('_order') ? `&_order=${sortParams.get('_order')}` : '';
 
   const currentPage = Number(counter ? counter : 1);
+
   const lastIndex = currentPage * PRUDUCTS_TO_SHOW;
   const firstIndex = lastIndex - PRUDUCTS_TO_SHOW;
 
   useEffect(() => {
-    dispatch(fetchProductsAction([firstIndex, lastIndex]));
-  }, [dispatch, firstIndex, lastIndex]);
+    const sortStroke = `${currentSortType}${currentSortDirection}`;
+
+    dispatch(fetchProductsAction([firstIndex, lastIndex, sortStroke]));
+  }, [currentSortDirection, currentSortType, dispatch, firstIndex, lastIndex]);
 
   const { products, productsCount } = useAppSelector(({ data }) => data);
-  const [sortParams, setSortParams] = useSearchParams();
-
-  const currentSortType = sortParams.get('_sort');
-  const currentSortDirection = sortParams.get('_order');
-
-  const sortedProducts = () => {
-    const productsSlice = products.slice();
-
-    if (!currentSortType) {
-      return products;
-    }
-
-    switch (currentSortDirection) {
-      case 'asc':
-        return productsSlice.sort((a: IProduct, b: IProduct) => a[currentSortType] - b[currentSortType]);
-      case 'desc':
-        return productsSlice.sort((a: IProduct, b: IProduct) => b[currentSortType] - a[currentSortType]);
-      default:
-        return productsSlice.sort((a: IProduct, b: IProduct) => a[currentSortType] - b[currentSortType]);
-    }
-  };
 
   return (
     <main className='page-content'>
@@ -106,26 +92,26 @@ function Catalog() {
             <h2 className='catalog-sort__title'>Сортировать:</h2>
             <div className='catalog-sort__type'>
               <button
-                className={`catalog-sort__type-button ${currentSortType === 'price' && 'catalog-sort__type-button--active'}`}
+                className={`catalog-sort__type-button ${sortParams.get('_sort') === 'price' && 'catalog-sort__type-button--active'}`}
                 aria-label='по цене'
                 onClick={() => {
                   if (!currentSortDirection) {
                     setSortParams('_sort=price&_order=asc');
                   } else {
-                    setSortParams(`_sort=price&_order=${currentSortDirection}`);
+                    setSortParams(`_sort=price${currentSortDirection}`);
                   }
                 }}
               >
                 по цене
               </button>
               <button
-                className={`catalog-sort__type-button ${currentSortType === 'rating' && 'catalog-sort__type-button--active'}`}
+                className={`catalog-sort__type-button ${sortParams.get('_sort') === 'rating' && 'catalog-sort__type-button--active'}`}
                 aria-label='по популярности'
                 onClick={() => {
                   if (!currentSortDirection) {
                     setSortParams('_sort=rating&_order=asc');
                   } else {
-                    setSortParams(`_sort=rating&_order=${currentSortDirection}`);
+                    setSortParams(`_sort=rating${currentSortDirection}`);
                   }
                 }}
               >
@@ -134,30 +120,30 @@ function Catalog() {
             </div>
             <div className='catalog-sort__order'>
               <button
-                className={`catalog-sort__order-button catalog-sort__order-button--up ${currentSortDirection === 'asc' && 'catalog-sort__order-button--active'}`}
+                className={`catalog-sort__order-button catalog-sort__order-button--up ${sortParams.get('_order') === 'asc' && 'catalog-sort__order-button--active'}`}
                 aria-label='По возрастанию'
                 onClick={() => {
                   if (!currentSortType) {
                     setSortParams('_sort=price&_order=asc');
                   } else {
-                    setSortParams(`_sort=${currentSortType}&_order=asc`);
+                    setSortParams(`${currentSortType}&_order=asc`);
                   }
                 }}
               />
               <button
-                className={`catalog-sort__order-button catalog-sort__order-button--down ${currentSortDirection === 'desc' && 'catalog-sort__order-button--active'}`}
+                className={`catalog-sort__order-button catalog-sort__order-button--down ${sortParams.get('_order') === 'desc' && 'catalog-sort__order-button--active'}`}
                 aria-label='По убыванию'
                 onClick={() => {
                   if (!currentSortType) {
                     setSortParams('_sort=price&_order=desc');
                   } else {
-                    setSortParams(`_sort=${currentSortType}&_order=desc`);
+                    setSortParams(`${currentSortType}&_order=desc`);
                   }
                 }}
               />
             </div>
           </div>
-          <ProductList products={sortedProducts()} />
+          <ProductList products={products} />
           <Pagination productsCount={productsCount} />
         </div>
       </div>
