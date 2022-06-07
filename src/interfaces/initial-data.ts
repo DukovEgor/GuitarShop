@@ -8,3 +8,7 @@ export interface InitialData {
   comments: Comments;
   isDataLoaded: boolean;
 }
+
+export interface InitialProcess {
+  searchResult: Products;
+}

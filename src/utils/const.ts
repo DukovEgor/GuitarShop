@@ -5,6 +5,7 @@ export enum HttpCode {
 
 export enum NameSpace {
   Data = 'data',
+  Process = 'process',
 }
 
 export enum APIRoute {

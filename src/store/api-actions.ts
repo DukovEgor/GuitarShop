@@ -7,6 +7,7 @@ import { errorHandle } from '../services/error-handle';
 import { APIRoute } from '../utils/const';
 import { ApiActions } from '../utils/reducers';
 import { addComment, loadComments, loadProduct, loadProducts } from './app-data/app-data';
+import { setSearchResult } from './user-process/user-process';
 
 export const fetchProductsAction = createAsyncThunk(ApiActions.Products, async ([start, end]: number[]) => {
   try {
@@ -48,5 +49,16 @@ export const fetchReviewAction = createAsyncThunk(ApiActions.NewReview, async ([
   } catch (error) {
     errorHandle(error);
     onSuccess?.(false);
+  }
+});
+
+export const fetchSearchRequest = createAsyncThunk(ApiActions.SearchRequest, async ([request, onSuccess]: [string, Dispatch<SetStateAction<boolean>>]) => {
+  try {
+    const { data } = await api.get(`${APIRoute.Products}?name_like=${request}`);
+    store.dispatch(setSearchResult(data));
+    onSuccess(false);
+  } catch (error) {
+    errorHandle(error);
+    onSuccess(true);
   }
 });
