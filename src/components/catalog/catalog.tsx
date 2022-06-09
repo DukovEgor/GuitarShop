@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { useParams, useSearchParams } from 'react-router-dom';
 import Breadcrumps from '../breadcrumps/breadcrumps';
 import Pagination from '../pagination/pagintation';
@@ -5,29 +6,70 @@ import ProductList from '../product-list/product-list';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { PRUDUCTS_TO_SHOW } from '../../utils/const';
 import { fetchProductsAction } from '../../store/api-actions';
-import { useEffect } from 'react';
+import { memo, useEffect, useState } from 'react';
+import ProductListLoader from '../product-list-loader/product-list-loader';
 
 function Catalog() {
   const dispatch = useAppDispatch();
 
   const { counter } = useParams();
   const [sortParams, setSortParams] = useSearchParams();
+  const { products, productsCount } = useAppSelector(({ data }) => data);
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  const currentFilterTypes = sortParams.getAll('type');
+  const isDisabled = (strings: number) => {
+    switch (strings) {
+      case 4:
+        return !currentFilterTypes?.includes('ukulele') && !currentFilterTypes?.includes('electric') && currentFilterTypes.length > 0;
+      case 6:
+        return !currentFilterTypes?.includes('electric') && !currentFilterTypes?.includes('acoustic') && currentFilterTypes.length > 0;
+      case 7:
+        return !currentFilterTypes?.includes('electric') && !currentFilterTypes?.includes('acoustic') && currentFilterTypes.length > 0;
+      case 12:
+        return !currentFilterTypes?.includes('acoustic') && currentFilterTypes.length > 0;
+      default:
+        return true;
+    }
+  };
+  //const currentFilterStrings = sortParams.getAll('stringCount');
 
   const currentSortType = sortParams.get('_sort') ? `&_sort=${sortParams.get('_sort')}` : '';
   const currentSortDirection = sortParams.get('_order') ? `&_order=${sortParams.get('_order')}` : '';
+  const sortStroke = `${currentSortType}${currentSortDirection}`;
 
-  const currentPage = Number(counter ? counter : 1);
+  const currentTypeFilter = sortParams.get('type') ? `&type=${currentFilterTypes.join('&type=')}` : '';
+  const currentStringFilter = sortParams.get('stringCount') ? `&stringCount=${sortParams.getAll('stringCount').join('&stringCount=')}` : '';
+  const filterStroke = `${currentTypeFilter}${currentStringFilter}`;
 
-  const lastIndex = currentPage * PRUDUCTS_TO_SHOW;
+  const pages = Math.ceil(productsCount / PRUDUCTS_TO_SHOW);
+  const currentPage = () => {
+    if (!counter) {
+      return 1;
+    }
+    if (pages === 1) {
+      return 1;
+    }
+    if (Number(counter) > pages) {
+      return pages;
+    }
+    return Number(counter);
+  };
+
+  const lastIndex = currentPage() * PRUDUCTS_TO_SHOW;
   const firstIndex = lastIndex - PRUDUCTS_TO_SHOW;
 
   useEffect(() => {
-    const sortStroke = `${currentSortType}${currentSortDirection}`;
+    setIsLoaded(false);
+    const params = `${currentTypeFilter}${currentStringFilter}${currentSortType}${currentSortDirection}`;
 
-    dispatch(fetchProductsAction([firstIndex, lastIndex, sortStroke]));
-  }, [currentSortDirection, currentSortType, dispatch, firstIndex, lastIndex]);
-
-  const { products, productsCount } = useAppSelector(({ data }) => data);
+    dispatch(fetchProductsAction([firstIndex, lastIndex, params, setIsLoaded]));
+  }, [currentSortDirection, currentSortType, currentStringFilter, currentTypeFilter, dispatch, firstIndex, lastIndex]);
+  // const stringVocabulary = {
+  //   acoustic: [6, 7, 12],
+  //   electric: [4, 6, 7],
+  //   ukulele: [4],
+  // };
 
   return (
     <main className='page-content'>
@@ -35,7 +77,12 @@ function Catalog() {
         <h1 className='page-content__title title title--bigger'>Каталог гитар</h1>
         <Breadcrumps />
         <div className='catalog'>
-          <form className='catalog-filter'>
+          <form
+            className='catalog-filter'
+            onChange={(evt) => {
+              console.log(evt.currentTarget.querySelectorAll('input[checked]'));
+            }}
+          >
             <h2 className='title title--bigger catalog-filter__title'>Фильтр</h2>
             <fieldset className='catalog-filter__block'>
               <legend className='catalog-filter__block-title'>Цена, ₽</legend>
@@ -50,37 +97,53 @@ function Catalog() {
                 </div>
               </div>
             </fieldset>
-            <fieldset className='catalog-filter__block'>
+            <fieldset
+              className='catalog-filter__block'
+              onChange={(evt) => {
+                const typeParams = `${Array.from(evt.currentTarget.querySelectorAll('input'))
+                  .map((check) => (check.checked ? check.name : undefined))
+                  .join('&')}`;
+                setSortParams(`${currentStringFilter}${typeParams}${sortStroke}`);
+              }}
+            >
               <legend className='catalog-filter__block-title'>Тип гитар</legend>
               <div className='form-checkbox catalog-filter__block-item'>
-                <input className='visually-hidden' type='checkbox' id='acoustic' name='acoustic' />
+                <input className='visually-hidden' type='checkbox' id='acoustic' name='type=acoustic' defaultChecked={currentTypeFilter.includes('acoustic')} />
                 <label htmlFor='acoustic'>Акустические гитары</label>
               </div>
               <div className='form-checkbox catalog-filter__block-item'>
-                <input className='visually-hidden' type='checkbox' id='electric' name='electric' defaultChecked />
+                <input className='visually-hidden' type='checkbox' id='electric' name='type=electric' defaultChecked={currentTypeFilter.includes('electric')} />
                 <label htmlFor='electric'>Электрогитары</label>
               </div>
               <div className='form-checkbox catalog-filter__block-item'>
-                <input className='visually-hidden' type='checkbox' id='ukulele' name='ukulele' defaultChecked />
+                <input className='visually-hidden' type='checkbox' id='ukulele' name='type=ukulele' defaultChecked={currentTypeFilter.includes('ukulele')} />
                 <label htmlFor='ukulele'>Укулеле</label>
               </div>
             </fieldset>
-            <fieldset className='catalog-filter__block'>
+            <fieldset
+              className='catalog-filter__block'
+              onChange={(evt) => {
+                const typeParams = `${Array.from(evt.currentTarget.querySelectorAll('input'))
+                  .map((check) => (check.checked ? check.name : undefined))
+                  .join('&')}`;
+                setSortParams(`${currentTypeFilter}&${typeParams}${sortStroke}`);
+              }}
+            >
               <legend className='catalog-filter__block-title'>Количество струн</legend>
               <div className='form-checkbox catalog-filter__block-item'>
-                <input className='visually-hidden' type='checkbox' id='4-strings' name='4-strings' defaultChecked />
+                <input className='visually-hidden' type='checkbox' id='4-strings' name='stringCount=4' />
                 <label htmlFor='4-strings'>4</label>
               </div>
               <div className='form-checkbox catalog-filter__block-item'>
-                <input className='visually-hidden' type='checkbox' id='6-strings' name='6-strings' defaultChecked />
+                <input className='visually-hidden' type='checkbox' id='6-strings' name='stringCount=6' />
                 <label htmlFor='6-strings'>6</label>
               </div>
               <div className='form-checkbox catalog-filter__block-item'>
-                <input className='visually-hidden' type='checkbox' id='7-strings' name='7-strings' />
+                <input className='visually-hidden' type='checkbox' id='7-strings' name='stringCount=7' />
                 <label htmlFor='7-strings'>7</label>
               </div>
               <div className='form-checkbox catalog-filter__block-item'>
-                <input className='visually-hidden' type='checkbox' id='12-strings' name='12-strings' disabled />
+                <input className='visually-hidden' type='checkbox' id='12-strings' name='stringCount=12' />
                 <label htmlFor='12-strings'>12</label>
               </div>
             </fieldset>
@@ -96,9 +159,9 @@ function Catalog() {
                 aria-label='по цене'
                 onClick={() => {
                   if (!currentSortDirection) {
-                    setSortParams('_sort=price&_order=asc');
+                    setSortParams(`${filterStroke}&_sort=price&_order=asc`);
                   } else {
-                    setSortParams(`_sort=price${currentSortDirection}`);
+                    setSortParams(`${filterStroke}&_sort=price${currentSortDirection}`);
                   }
                 }}
               >
@@ -109,9 +172,9 @@ function Catalog() {
                 aria-label='по популярности'
                 onClick={() => {
                   if (!currentSortDirection) {
-                    setSortParams('_sort=rating&_order=asc');
+                    setSortParams(`${filterStroke}&_sort=rating&_order=asc`);
                   } else {
-                    setSortParams(`_sort=rating${currentSortDirection}`);
+                    setSortParams(`${filterStroke}&_sort=rating${currentSortDirection}`);
                   }
                 }}
               >
@@ -124,9 +187,9 @@ function Catalog() {
                 aria-label='По возрастанию'
                 onClick={() => {
                   if (!currentSortType) {
-                    setSortParams('_sort=price&_order=asc');
+                    setSortParams(`${filterStroke}&_sort=price&_order=asc`);
                   } else {
-                    setSortParams(`${currentSortType}&_order=asc`);
+                    setSortParams(`${filterStroke}&${currentSortType}&_order=asc`);
                   }
                 }}
               />
@@ -135,20 +198,20 @@ function Catalog() {
                 aria-label='По убыванию'
                 onClick={() => {
                   if (!currentSortType) {
-                    setSortParams('_sort=price&_order=desc');
+                    setSortParams(`${filterStroke}&_sort=price&_order=desc`);
                   } else {
-                    setSortParams(`${currentSortType}&_order=desc`);
+                    setSortParams(`${filterStroke}&${currentSortType}&_order=desc`);
                   }
                 }}
               />
             </div>
           </div>
-          <ProductList products={products} />
-          <Pagination productsCount={productsCount} />
+          {isLoaded ? <ProductList products={products} /> : <ProductListLoader />}
+          <Pagination currentPage={currentPage()} pages={pages} />
         </div>
       </div>
     </main>
   );
 }
 
-export default Catalog;
+export default memo(Catalog);

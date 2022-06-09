@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { Link } from 'react-router-dom';
 import { IProduct } from '../../interfaces/product';
 import { AppRoutes } from '../../utils/const';
@@ -43,4 +44,4 @@ function ProductItem({ product }: ProductItemProps) {
   );
 }
 
-export default ProductItem;
+export default memo(ProductItem);

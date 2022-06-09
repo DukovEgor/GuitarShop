@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { Link } from 'react-router-dom';
 import Search from '../search/search';
 
@@ -40,4 +41,4 @@ function Header() {
   );
 }
 
-export default Header;
+export default memo(Header);

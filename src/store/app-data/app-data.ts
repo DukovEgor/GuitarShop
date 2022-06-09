@@ -6,7 +6,6 @@ const initialState: InitialData = {
   products: [],
   productsCount: 0,
   product: INITIAL_PRODUCT,
-  comments: [],
   isDataLoaded: false,
 };
 
@@ -22,13 +21,10 @@ export const appData = createSlice({
     loadProduct: (state, action) => {
       state.product = action.payload;
     },
-    loadComments: (state, action) => {
-      state.comments = action.payload;
-    },
     addComment: (state, action) => {
-      state.comments.push(action.payload);
+      state.product.comments.push(action.payload);
     },
   },
 });
 
-export const { loadProducts, loadProduct, loadComments, addComment } = appData.actions;
+export const { loadProducts, loadProduct, addComment } = appData.actions;

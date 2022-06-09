@@ -1,41 +1,36 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { Dispatch, SetStateAction } from 'react';
+import { toast } from 'react-toastify';
 import { api, store } from '.';
 import browserHistory from '../browser-history';
 import { IReview } from '../interfaces/review';
 import { errorHandle } from '../services/error-handle';
 import { APIRoute } from '../utils/const';
 import { ApiActions } from '../utils/reducers';
-import { addComment, loadComments, loadProduct, loadProducts } from './app-data/app-data';
+import { addComment, loadProduct, loadProducts } from './app-data/app-data';
 import { setSearchResult } from './user-process/user-process';
 
-export const fetchProductsAction = createAsyncThunk(ApiActions.Products, async ([start, end, sortParams]: [number, number, string]) => {
+export const fetchProductsAction = createAsyncThunk(ApiActions.Products, async ([start, end, sortParams, onLoad]: [number, number, string, Dispatch<SetStateAction<boolean>>?]) => {
   try {
     const { data, headers } = await api.get(`${APIRoute.Products}?_start=${start}&_end=${end}${sortParams}&_embed=comments`);
-    store.dispatch(loadProducts({ data, headers }));
+    await store.dispatch(loadProducts({ data, headers }));
+    onLoad?.(true);
   } catch (error) {
     errorHandle(error);
+    toast.error('Не удалось загрузить товары, попробуйте позднее');
+    onLoad?.(false);
   }
 });
 
 export const fetchProductDataAction = createAsyncThunk(ApiActions.ProductData, async (id: number) => {
   try {
-    const product = await api.get(`${APIRoute.Product}/${id}`);
-    const comments = await api.get(`${APIRoute.Product}/${id}${APIRoute.Comments}`);
-    store.dispatch(loadProduct(product.data));
-    store.dispatch(loadComments(comments.data));
-  } catch (error) {
-    errorHandle(error);
-    browserHistory.push('/*');
-  }
-});
+    const { data } = await api.get(`${APIRoute.Product}/${id}?_embed=comments`);
 
-export const getComments = createAsyncThunk(ApiActions.Comments, async ([id, onLoad]: [id: number, onLoad: Dispatch<SetStateAction<number>>]) => {
-  try {
-    const { data } = await api.get(`${APIRoute.Product}/${id}${APIRoute.Comments}`);
-    onLoad(data.length);
+    store.dispatch(loadProduct(data));
   } catch (error) {
     errorHandle(error);
+    toast.error('Не удалось загрузить товар, попробуйте позднее');
+    browserHistory.push('/*');
   }
 });
 
@@ -48,6 +43,7 @@ export const fetchReviewAction = createAsyncThunk(ApiActions.NewReview, async ([
     onSuccess?.(true);
   } catch (error) {
     errorHandle(error);
+    toast.error('Не удалось отправить отзыв, попробуйте позднее');
     onSuccess?.(false);
   }
 });
@@ -59,6 +55,7 @@ export const fetchSearchRequest = createAsyncThunk(ApiActions.SearchRequest, asy
     onSuccess(false);
   } catch (error) {
     errorHandle(error);
+    toast.error('Сервер не отвечает, попробуйте позднее');
     onSuccess(true);
   }
 });

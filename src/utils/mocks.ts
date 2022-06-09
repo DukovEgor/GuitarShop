@@ -39,7 +39,6 @@ export const makeFakeReview = (): IReview => ({
 export const INITIAL_STATE: InitialData = {
   products: Array.from({ length: 10 }, makeFakeProduct),
   product: makeFakeProduct(),
-  comments: Array.from({ length: 10 }, makeFakeComment),
   isDataLoaded: true,
   productsCount: 10,
 };

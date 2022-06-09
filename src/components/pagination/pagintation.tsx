@@ -1,17 +1,14 @@
-import { Link, useLocation, useParams } from 'react-router-dom';
-import { AppRoutes, PRUDUCTS_TO_SHOW } from '../../utils/const';
+import { memo } from 'react';
+import { Link, useLocation } from 'react-router-dom';
+import { AppRoutes } from '../../utils/const';
 
 interface PaginationProps {
-  productsCount: number;
+  currentPage: number;
+  pages: number;
 }
 
-function Pagination({ productsCount }: PaginationProps) {
-  const { counter } = useParams();
+function Pagination({ currentPage, pages }: PaginationProps) {
   const { search } = useLocation();
-
-  const currentPage = counter ? Number(counter) : 1;
-
-  const pages = Math.ceil(productsCount / PRUDUCTS_TO_SHOW);
 
   return (
     <div className='pagination page-content__pagination'>
@@ -30,16 +27,18 @@ function Pagination({ productsCount }: PaginationProps) {
             </Link>
           </li>
         ))}
-        {pages !== currentPage && (
+        {pages !== currentPage && pages ? (
           <li className='pagination__page pagination__page--next' id='next'>
             <Link className='link pagination__page-link' to={`/${AppRoutes.Catalog}${AppRoutes.Page}${currentPage + 1}${search}`}>
               Далее
             </Link>
           </li>
+        ) : (
+          ''
         )}
       </ul>
     </div>
   );
 }
 
-export default Pagination;
+export default memo(Pagination);

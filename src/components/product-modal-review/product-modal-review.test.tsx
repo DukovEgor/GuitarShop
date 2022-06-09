@@ -7,7 +7,7 @@ import { createAPI } from '../../services/api';
 import { State } from '../../types/state';
 import { Action, ThunkDispatch } from '@reduxjs/toolkit';
 import thunk from 'redux-thunk';
-import { mockProducts, mockProduct, mockComments } from '../../utils/mocks';
+import { mockProducts, mockProduct } from '../../utils/mocks';
 
 const api = createAPI();
 const middlewares = [thunk.withExtraArgument(api)];
@@ -17,7 +17,6 @@ const store = mockStore({
   data: {
     products: mockProducts,
     product: mockProduct,
-    comments: mockComments,
     isDataLoaded: true,
   },
 });

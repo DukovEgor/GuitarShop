@@ -7,13 +7,11 @@ import Pagination from './pagintation';
 describe('Component: Pagination', () => {
   const history = createMemoryHistory();
 
-  const products = 10;
-
   it('should render correctly when user navigates to "/catalog/page_1"', () => {
     history.push(`/${AppRoutes.Catalog}/${AppRoutes.DefaultPage}`);
     render(
       <HistoryRouter history={history}>
-        <Pagination productsCount={products} />
+        <Pagination currentPage={1} pages={2} />
       </HistoryRouter>
     );
 

@@ -1,4 +1,5 @@
-import { Link, useMatch } from 'react-router-dom';
+import { memo } from 'react';
+import { Link } from 'react-router-dom';
 import { AppRoutes } from '../../utils/const';
 
 interface BreadcrumpsProps {
@@ -6,8 +7,6 @@ interface BreadcrumpsProps {
 }
 
 function Breadcrumps({ name }: BreadcrumpsProps) {
-  const catalogLocation = useMatch(`${AppRoutes.Catalog}${AppRoutes.Page}:counter`);
-
   return (
     <ul className='breadcrumbs page-content__breadcrumbs'>
       <li className='breadcrumbs__item'>
@@ -15,13 +14,13 @@ function Breadcrumps({ name }: BreadcrumpsProps) {
           Главная
         </Link>
       </li>
-      {(catalogLocation || name) && (
-        <li className='breadcrumbs__item'>
-          <Link className='link' to={`/${AppRoutes.Catalog}${AppRoutes.DefaultPage}`}>
-            Каталог
-          </Link>
-        </li>
-      )}
+
+      <li className='breadcrumbs__item'>
+        <Link className='link' to={`/${AppRoutes.Catalog}${AppRoutes.DefaultPage}`}>
+          Каталог
+        </Link>
+      </li>
+
       {name && (
         <li className='breadcrumbs__item'>
           <a href='/' className='link'>
@@ -33,4 +32,4 @@ function Breadcrumps({ name }: BreadcrumpsProps) {
   );
 }
 
-export default Breadcrumps;
+export default memo(Breadcrumps);
