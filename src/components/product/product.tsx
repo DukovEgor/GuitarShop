@@ -11,8 +11,10 @@ import LoadingScreen from '../loading-screen/loading-screen';
 
 function Product() {
   const [loading, setLoading] = useState(true);
+
   const { id } = useParams();
   const dispatch = useAppDispatch();
+  const { product } = useAppSelector(({ data }) => data);
 
   useEffect(() => {
     setLoading(true);
@@ -20,15 +22,13 @@ function Product() {
     setLoading(false);
   }, [dispatch, id]);
 
-  const { product, comments } = useAppSelector(({ data }) => data);
+  const { name, vendorCode, price, type, description, previewImg, stringCount, rating, comments } = product;
+
+  const ratingInt = Math.round(rating);
 
   if (loading) {
     return <LoadingScreen />;
   }
-
-  const { name, vendorCode, price, type, description, previewImg, stringCount, rating } = product;
-
-  const ratingInt = Math.round(rating);
 
   window.scrollTo({
     top: 0,

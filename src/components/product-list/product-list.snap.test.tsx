@@ -6,7 +6,7 @@ import { BrowserRouter } from 'react-router-dom';
 import thunk from 'redux-thunk';
 import { createAPI } from '../../services/api';
 import { State } from '../../types/state';
-import { mockComments, mockProduct, mockProducts } from '../../utils/mocks';
+import { mockProduct, mockProducts } from '../../utils/mocks';
 import ProductList from './product-list';
 
 const api = createAPI();
@@ -17,7 +17,6 @@ const store = mockStore({
   data: {
     products: mockProducts,
     product: mockProduct,
-    comments: mockComments,
     isDataLoaded: true,
   },
 });
@@ -27,7 +26,7 @@ describe('Component: ProductList', () => {
     const { container } = render(
       <Provider store={store}>
         <BrowserRouter>
-          <ProductList products={mockProducts} />
+          <ProductList products={[]} />
         </BrowserRouter>
       </Provider>
     );

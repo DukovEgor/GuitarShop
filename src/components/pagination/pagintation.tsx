@@ -1,45 +1,44 @@
-import { Link, useParams } from 'react-router-dom';
-import { Products } from '../../interfaces/product';
-import { AppRoutes, PRUDUCTS_TO_SHOW } from '../../utils/const';
+import { memo } from 'react';
+import { Link, useLocation } from 'react-router-dom';
+import { AppRoutes } from '../../utils/const';
 
 interface PaginationProps {
-  products: Products;
+  currentPage: number;
+  pages: number;
 }
 
-function Pagination({ products }: PaginationProps) {
-  const { counter } = useParams();
-
-  const currentPage = counter ? Number(counter) : 1;
-
-  const pages = Math.ceil(products.length / PRUDUCTS_TO_SHOW);
+function Pagination({ currentPage, pages }: PaginationProps) {
+  const { search } = useLocation();
 
   return (
     <div className='pagination page-content__pagination'>
       <ul className='pagination__list'>
         {currentPage !== 1 && (
           <li className='pagination__page pagination__page--prev' id='prev'>
-            <Link className='link pagination__page-link' to={`/${AppRoutes.Catalog}${AppRoutes.Page}${currentPage - 1}`}>
+            <Link className='link pagination__page-link' to={`/${AppRoutes.Catalog}${AppRoutes.Page}${currentPage - 1}${search}`}>
               Назад
             </Link>
           </li>
         )}
         {Array.from({ length: pages }).map((product, index: number) => (
           <li key={Math.random()} className={`pagination__page ${currentPage === index + 1 && 'pagination__page--active'}`}>
-            <Link className='link pagination__page-link' to={`/${AppRoutes.Catalog}${AppRoutes.Page}${index + 1}`}>
+            <Link className='link pagination__page-link' to={`/${AppRoutes.Catalog}${AppRoutes.Page}${index + 1}${search}`}>
               {index + 1}
             </Link>
           </li>
         ))}
-        {pages !== currentPage && (
+        {pages !== currentPage && pages ? (
           <li className='pagination__page pagination__page--next' id='next'>
-            <Link className='link pagination__page-link' to={`/${AppRoutes.Catalog}${AppRoutes.Page}${currentPage + 1}`}>
+            <Link className='link pagination__page-link' to={`/${AppRoutes.Catalog}${AppRoutes.Page}${currentPage + 1}${search}`}>
               Далее
             </Link>
           </li>
+        ) : (
+          ''
         )}
       </ul>
     </div>
   );
 }
 
-export default Pagination;
+export default memo(Pagination);

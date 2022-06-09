@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { Outlet } from 'react-router-dom';
 import Footer from '../footer/footer';
 import Header from '../header/header';
@@ -14,4 +15,4 @@ function Main() {
   );
 }
 
-export default Main;
+export default memo(Main);

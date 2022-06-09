@@ -5,7 +5,6 @@ import { ToastContainer } from 'react-toastify';
 import App from './components/app/app';
 import 'react-toastify/dist/ReactToastify.css';
 import { store } from './store';
-import { fetchProductsAction } from './store/api-actions';
 import HistoryRouter from './components/history-router/history-router';
 import browserHistory from './browser-history';
 
@@ -14,8 +13,6 @@ if (!rootElement) {
   throw new Error('Failed to find the root element');
 }
 const root = createRoot(rootElement);
-
-store.dispatch(fetchProductsAction());
 
 root.render(
   <StrictMode>

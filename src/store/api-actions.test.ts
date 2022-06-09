@@ -23,14 +23,14 @@ describe('Async actions', () => {
 
     const store = mockStore();
 
-    await store.dispatch(fetchProductsAction());
+    await store.dispatch(fetchProductsAction([0, 9, '', '', '']));
 
     const actions = store.getActions().map(({ type }) => type);
 
     expect(actions).toContain(`${loadProducts.toString()}/fulfilled`);
   });
 
-  it('should dispatch loadComments and loadProduct when GET /comments', async () => {
+  it('should dispatch loadProduct when GET /comments', async () => {
     const mockComments = Array.from({ length: 5 }, makeFakeComment);
     const mockId = 1;
 
@@ -42,7 +42,6 @@ describe('Async actions', () => {
 
     const actions = store.getActions().map(({ type }) => type);
 
-    //expect(actions).toContain(`${loadComments.toString()}/fulfilled`);
     expect(actions).toContain(`${loadProduct.toString()}/fulfilled`);
   });
 

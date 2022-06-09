@@ -1,3 +1,5 @@
+import { Comments } from './comment';
+
 export interface IProductTabs {
   vendorCode: string;
   type: string;
@@ -11,6 +13,7 @@ export interface IProduct extends IProductTabs {
   previewImg: string;
   rating: number;
   price: number;
+  comments: Comments;
 }
 
 export type Products = IProduct[];

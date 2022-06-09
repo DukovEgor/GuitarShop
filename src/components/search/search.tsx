@@ -1,18 +1,17 @@
 import { ChangeEvent, useCallback, useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useAppSelector } from '../../hooks';
-import { Products } from '../../interfaces/product';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { fetchSearchRequest } from '../../store/api-actions';
 import { AppRoutes } from '../../utils/const';
 
 function Search() {
+  const dispatch = useAppDispatch();
   const [isEmpty, setIsEmpty] = useState(true);
-  const { products } = useAppSelector(({ data }) => data);
-  const [searchResult, setSearchResult] = useState<Products>([]);
+  const { searchResult } = useAppSelector(({ process }) => process);
   const searchRef = useRef<HTMLFormElement>(null);
   const searchContainer = useRef<HTMLDivElement>(null);
 
   const resetSearch = () => {
-    setSearchResult([]);
     setIsEmpty(true);
     searchRef.current?.reset();
   };
@@ -34,10 +33,9 @@ function Search() {
 
   const handleSearch = useCallback(
     (evt: ChangeEvent<HTMLInputElement>) => {
-      setIsEmpty(!evt.currentTarget.value);
-      setSearchResult(products.slice().filter((product) => product.name.toLowerCase().includes(evt.currentTarget.value.toLowerCase())));
+      dispatch(fetchSearchRequest([evt.target.value, setIsEmpty]));
     },
-    [products]
+    [dispatch]
   );
 
   return (
@@ -55,8 +53,8 @@ function Search() {
         </label>
       </form>
       {!isEmpty && (
-        <ul className={`form-search__select-list list-opened ${!searchResult.length && 'form-search__select-list--no-match'}`}>
-          {searchResult.map((res) => (
+        <ul className={`form-search__select-list list-opened ${!searchResult?.length ? 'form-search__select-list--no-match' : ''}`}>
+          {searchResult?.map((res) => (
             <Link className='form-search__select-item' key={res.id} to={`/${AppRoutes.Product}/${res.id}/characteristics`} onClick={resetSearch}>
               <li className='form-search__select-item' tabIndex={0}>
                 {res.name}

@@ -1,24 +1,15 @@
 import { Route, Routes } from 'react-router-dom';
-import { useAppSelector } from '../../hooks';
 import NotFound from '../404/404';
-import Catalog from '../catalog/catalog';
-import LoadingScreen from '../loading-screen/loading-screen';
 import Main from '../main/main';
 import Product from '../product/product';
-import Redirect from '../redirect/redirect';
 import { AppRoutes } from '../../utils/const';
+import Catalog from '../catalog/catalog';
 
 function App(): JSX.Element {
-  const { isDataLoaded } = useAppSelector(({ data }) => data);
-
-  if (!isDataLoaded) {
-    return <LoadingScreen />;
-  }
-
   return (
     <Routes>
       <Route path='/' element={<Main />}>
-        <Route index element={<Redirect />} />
+        <Route index element={<Catalog />} />
         <Route path={`${AppRoutes.Catalog}${AppRoutes.Page}:counter`} element={<Catalog />} />
         <Route path={`${AppRoutes.Product}/:id/:tab/*`} element={<Product />} />
       </Route>

@@ -5,10 +5,11 @@ export enum HttpCode {
 
 export enum NameSpace {
   Data = 'data',
+  Process = 'process',
 }
 
 export enum APIRoute {
-  Products = '/guitars?_limit=27',
+  Products = '/guitars',
   Product = '/guitars',
   Comments = '/comments',
   Coupons = '/coupons',
@@ -38,4 +39,5 @@ export const INITIAL_PRODUCT = {
   stringCount: 0,
   rating: 0,
   price: 0,
+  comments: [],
 };
