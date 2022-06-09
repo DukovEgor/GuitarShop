@@ -9,4 +9,5 @@ export interface InitialData {
 
 export interface InitialProcess {
   searchResult: Products;
+  sortedProducts: Products;
 }

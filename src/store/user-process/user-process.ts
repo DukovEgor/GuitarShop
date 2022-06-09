@@ -4,6 +4,7 @@ import { NameSpace } from '../../utils/const';
 
 const initialState: InitialProcess = {
   searchResult: [],
+  sortedProducts: [],
 };
 
 export const userProcess = createSlice({
@@ -13,7 +14,10 @@ export const userProcess = createSlice({
     setSearchResult: (state, action) => {
       state.searchResult = action.payload;
     },
+    setSortedProducts: (state, action) => {
+      state.sortedProducts = action.payload;
+    },
   },
 });
 
-export const { setSearchResult } = userProcess.actions;
+export const { setSearchResult, setSortedProducts } = userProcess.actions;

@@ -16,7 +16,6 @@ export const appData = createSlice({
     loadProducts: (state, action) => {
       state.products = action.payload.data;
       state.productsCount = action.payload.headers['x-total-count'];
-      state.isDataLoaded = true;
     },
     loadProduct: (state, action) => {
       state.product = action.payload;

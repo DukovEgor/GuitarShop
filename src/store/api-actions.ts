@@ -8,19 +8,24 @@ import { errorHandle } from '../services/error-handle';
 import { APIRoute } from '../utils/const';
 import { ApiActions } from '../utils/reducers';
 import { addComment, loadProduct, loadProducts } from './app-data/app-data';
-import { setSearchResult } from './user-process/user-process';
+import { setSearchResult, setSortedProducts } from './user-process/user-process';
 
-export const fetchProductsAction = createAsyncThunk(ApiActions.Products, async ([start, end, sortParams, onLoad]: [number, number, string, Dispatch<SetStateAction<boolean>>?]) => {
-  try {
-    const { data, headers } = await api.get(`${APIRoute.Products}?_start=${start}&_end=${end}${sortParams}&_embed=comments`);
-    await store.dispatch(loadProducts({ data, headers }));
-    onLoad?.(true);
-  } catch (error) {
-    errorHandle(error);
-    toast.error('Не удалось загрузить товары, попробуйте позднее');
-    onLoad?.(false);
+export const fetchProductsAction = createAsyncThunk(
+  ApiActions.Products,
+  async ([start, end, filterParams, sortParams, priceParams, onLoad]: [number, number, string, string, string, Dispatch<SetStateAction<boolean>>?]) => {
+    try {
+      const { data, headers } = await api.get(`${APIRoute.Products}?_start=${start}&_end=${end}${filterParams}${sortParams}${priceParams}&_embed=comments`);
+      const sortedProducts = await api.get(`${APIRoute.Products}?_sort=price${filterParams}`);
+      await store.dispatch(loadProducts({ data, headers }));
+      await store.dispatch(setSortedProducts(sortedProducts.data));
+      onLoad?.(true);
+    } catch (error) {
+      errorHandle(error);
+      toast.error('Не удалось загрузить товары, попробуйте позднее');
+      onLoad?.(false);
+    }
   }
-});
+);
 
 export const fetchProductDataAction = createAsyncThunk(ApiActions.ProductData, async (id: number) => {
   try {

@@ -12,3 +12,9 @@ export const GuitarTypeVocabulary = {
   Acoustic: 'Акустическая гитара',
   Ukulele: 'Укулеле',
 };
+
+export const stringVocabulary = {
+  acoustic: [6, 7, 12],
+  electric: [4, 6, 7],
+  ukulele: [4],
+};
