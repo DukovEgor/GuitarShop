@@ -47,7 +47,7 @@ function Search() {
           </svg>
           <span className='visually-hidden'>Начать поиск</span>
         </button>
-        <input className='form-search__input' id='search' type='text' autoComplete='off' placeholder='что вы ищите?' onChange={handleSearch} />
+        <input className='form-search__input' id='search' type='text' autoComplete='off' placeholder='что вы ищите?' onChange={handleSearch} data-testid='search-input' />
         <label className='visually-hidden' htmlFor='search'>
           Поиск
         </label>
@@ -63,7 +63,7 @@ function Search() {
           ))}
         </ul>
       )}
-      <button className='form-search__reset' type='reset' form='form-search' onClick={() => setIsEmpty(true)}>
+      <button className='form-search__reset' type='reset' form='form-search' data-testid='reset-search' onClick={() => setIsEmpty(true)}>
         <svg className='form-search__icon' width={14} height={15} aria-hidden='true'>
           <use xlinkHref='#icon-close' />
         </svg>

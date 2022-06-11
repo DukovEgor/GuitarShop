@@ -6,7 +6,7 @@ import { BrowserRouter } from 'react-router-dom';
 import thunk from 'redux-thunk';
 import { createAPI } from '../../services/api';
 import { State } from '../../types/state';
-import { mockProduct, mockProducts } from '../../utils/mocks';
+import { mockProduct } from '../../utils/mocks';
 import Catalog from './catalog';
 
 const api = createAPI();
@@ -15,10 +15,10 @@ const middlewares = [thunk.withExtraArgument(api)];
 const mockStore = configureMockStore<State, Action, ThunkDispatch<State, typeof api, Action>>(middlewares);
 const store = mockStore({
   data: {
-    products: mockProducts,
+    products: [mockProduct],
     product: mockProduct,
-    isDataLoaded: true,
   },
+  process: { searchResult: [], sortedProducts: [] },
 });
 
 describe('Component: Catalog', () => {

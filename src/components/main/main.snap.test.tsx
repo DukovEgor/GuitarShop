@@ -6,7 +6,7 @@ import { BrowserRouter } from 'react-router-dom';
 import thunk from 'redux-thunk';
 import { createAPI } from '../../services/api';
 import { State } from '../../types/state';
-import { mockProduct, mockProducts } from '../../utils/mocks';
+import { INITIAL_PROCESS, mockProduct, mockProducts } from '../../utils/mocks';
 import Main from './main';
 
 const api = createAPI();
@@ -17,8 +17,8 @@ const store = mockStore({
   data: {
     products: mockProducts,
     product: mockProduct,
-    isDataLoaded: true,
   },
+  process: INITIAL_PROCESS,
 });
 
 describe('Component: Main', () => {

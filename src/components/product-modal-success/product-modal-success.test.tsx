@@ -1,11 +1,11 @@
 import { configureMockStore } from '@jedmao/redux-mock-store';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { Provider } from 'react-redux';
-import { INITIAL_STATE } from '../../utils/mocks';
+import { INITIAL_DATA } from '../../utils/mocks';
 import ProductModalSuccess from './product-modal-success';
 
 const mockStore = configureMockStore();
-const store = mockStore({ data: INITIAL_STATE });
+const store = mockStore({ data: INITIAL_DATA });
 
 describe('component: "ProductModalSuccess"', () => {
   it('should render correctly', () => {

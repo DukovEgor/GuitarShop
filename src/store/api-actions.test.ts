@@ -6,8 +6,9 @@ import { State } from '../types/state';
 import { Action } from '@reduxjs/toolkit';
 import { APIRoute } from '../utils/const';
 import { makeFakeComment, makeFakeProduct, makeFakeReview } from '../utils/mocks';
-import { fetchProductDataAction, fetchProductsAction, fetchReviewAction } from './api-actions';
+import { fetchProductDataAction, fetchProductsAction, fetchReviewAction, fetchSearchRequest } from './api-actions';
 import { addComment, loadProduct, loadProducts } from './app-data/app-data';
+import { setSearchResult } from './user-process/user-process';
 
 describe('Async actions', () => {
   const api = createAPI();
@@ -30,11 +31,11 @@ describe('Async actions', () => {
     expect(actions).toContain(`${loadProducts.toString()}/fulfilled`);
   });
 
-  it('should dispatch loadProduct when GET /comments', async () => {
-    const mockComments = Array.from({ length: 5 }, makeFakeComment);
+  it('should dispatch loadProduct when GET /product', async () => {
+    const mockProducts = makeFakeProduct();
     const mockId = 1;
 
-    mockAPI.onGet(`${APIRoute.Product}/${mockId}${APIRoute.Comments}`).reply(200, mockComments);
+    mockAPI.onGet(`${APIRoute.Product}/${mockId}?_embed=comments`).reply(200, mockProducts);
 
     const store = mockStore();
 
@@ -57,5 +58,18 @@ describe('Async actions', () => {
     const actions = store.getActions().map(({ type }) => type);
 
     expect(actions).toContain(`${addComment.toString()}/fulfilled`);
+  });
+
+  it('should dispatch setSearchResult when GET /products?name_like=', async () => {
+    const mockProducts = makeFakeProduct();
+
+    mockAPI.onPost(APIRoute.Comments).reply(200, mockProducts);
+
+    const store = mockStore();
+    await store.dispatch(fetchSearchRequest(['fake_name']));
+
+    const actions = store.getActions().map(({ type }) => type);
+
+    expect(actions).toContain(`${setSearchResult.toString()}/fulfilled`);
   });
 });
