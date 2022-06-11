@@ -17,7 +17,6 @@ const store = mockStore({
   data: {
     products: mockProducts,
     product: mockProduct,
-    isDataLoaded: true,
   },
 });
 

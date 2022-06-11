@@ -6,7 +6,6 @@ const initialState: InitialData = {
   products: [],
   productsCount: 0,
   product: INITIAL_PRODUCT,
-  isDataLoaded: false,
 };
 
 export const appData = createSlice({

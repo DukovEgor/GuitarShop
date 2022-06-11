@@ -2,7 +2,7 @@ import { IProduct } from '../interfaces/product';
 import { faker } from '@faker-js/faker';
 import { IComment } from '../interfaces/comment';
 import { IReview } from '../interfaces/review';
-import { InitialData } from '../interfaces/initial-data';
+import { InitialData, InitialProcess } from '../interfaces/initial-data';
 
 export const makeFakeProduct = (): IProduct => ({
   id: Number(faker.random.numeric(2)),
@@ -36,12 +36,17 @@ export const makeFakeReview = (): IReview => ({
   rating: Number(faker.random.numeric(1)),
 });
 
-export const INITIAL_STATE: InitialData = {
+export const INITIAL_DATA: InitialData = {
   products: Array.from({ length: 10 }, makeFakeProduct),
   product: makeFakeProduct(),
-  isDataLoaded: true,
   productsCount: 10,
 };
+
+export const INITIAL_PROCESS: InitialProcess = {
+  searchResult: Array.from({ length: 10 }, makeFakeProduct),
+  sortedProducts: Array.from({ length: 10 }, makeFakeProduct),
+};
+
 export const mockComment = {
   id: '1211',
   userName: 'faker.name.firstName()',

@@ -53,14 +53,14 @@ export const fetchReviewAction = createAsyncThunk(ApiActions.NewReview, async ([
   }
 });
 
-export const fetchSearchRequest = createAsyncThunk(ApiActions.SearchRequest, async ([request, onSuccess]: [string, Dispatch<SetStateAction<boolean>>]) => {
+export const fetchSearchRequest = createAsyncThunk(ApiActions.SearchRequest, async ([request, onSuccess]: [string, Dispatch<SetStateAction<boolean>>?]) => {
   try {
     const { data } = await api.get(`${APIRoute.Products}?name_like=${request}`);
     store.dispatch(setSearchResult(data));
-    onSuccess(false);
+    onSuccess?.(false);
   } catch (error) {
     errorHandle(error);
     toast.error('Сервер не отвечает, попробуйте позднее');
-    onSuccess(true);
+    onSuccess?.(true);
   }
 });

@@ -243,6 +243,7 @@ exports[`Component: Main should render correctly 1`] = `
             <input
               autocomplete="off"
               class="form-search__input"
+              data-testid="search-input"
               id="search"
               placeholder="что вы ищите?"
               type="text"
@@ -254,48 +255,9 @@ exports[`Component: Main should render correctly 1`] = `
               Поиск
             </label>
           </form>
-          <ul
-            class="form-search__select-list hidden"
-          >
-            <li
-              class="form-search__select-item"
-              tabindex="0"
-            >
-              Четстер Plus
-            </li>
-            <li
-              class="form-search__select-item"
-              tabindex="0"
-            >
-              Четстер UX
-            </li>
-            <li
-              class="form-search__select-item"
-              tabindex="0"
-            >
-              Четстер UX2
-            </li>
-            <li
-              class="form-search__select-item"
-              tabindex="0"
-            >
-              Четстер UX3
-            </li>
-            <li
-              class="form-search__select-item"
-              tabindex="0"
-            >
-              Четстер UX4
-            </li>
-            <li
-              class="form-search__select-item"
-              tabindex="0"
-            >
-              Четстер UX5
-            </li>
-          </ul>
           <button
             class="form-search__reset"
+            data-testid="reset-search"
             form="form-search"
             type="reset"
           >
