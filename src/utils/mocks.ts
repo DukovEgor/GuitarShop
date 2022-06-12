@@ -58,8 +58,6 @@ export const mockComment = {
   guitarId: 2323,
 };
 
-export const mockComments = [mockComment];
-
 export const mockProduct = {
   id: 1,
   name: 'Chester',
