@@ -1,5 +1,5 @@
 # Руководство по работе с проектом
-Продакшн-версию можно посмотреть [GuitarShop](https://dukov-guitar-shop.vercel.app/).
+Продакшн-версию можно посмотреть тут [GuitarShop](https://dukov-guitar-shop.vercel.app/).
 
 Данный проект создан с помощью [Create React App](https://github.com/facebook/create-react-app).
 
