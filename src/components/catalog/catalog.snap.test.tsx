@@ -7,7 +7,6 @@ import thunk from 'redux-thunk';
 import { createAPI } from '../../services/api';
 import { State } from '../../types/state';
 import { mockProduct } from '../../utils/mocks';
-import Catalog from './catalog';
 
 const api = createAPI();
 const middlewares = [thunk.withExtraArgument(api)];
@@ -25,9 +24,7 @@ describe('Component: Catalog', () => {
   test('should render correctly', () => {
     const { container } = render(
       <Provider store={store}>
-        <BrowserRouter>
-          <Catalog />
-        </BrowserRouter>
+        <BrowserRouter></BrowserRouter>
       </Provider>
     );
 

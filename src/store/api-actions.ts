@@ -12,10 +12,10 @@ import { setSearchResult, setSortedProducts } from './user-process/user-process'
 
 export const fetchProductsAction = createAsyncThunk(
   ApiActions.Products,
-  async ([start, end, filterParams, sortParams, priceParams, onLoad]: [number, number, string, string, string, Dispatch<SetStateAction<boolean>>?]) => {
+  async ([start, end, params, filter, onLoad]: [number, number, string, string, Dispatch<SetStateAction<boolean>>?]) => {
     try {
-      const { data, headers } = await api.get(`${APIRoute.Products}?_start=${start}&_end=${end}${filterParams}${sortParams}${priceParams}&_embed=comments`);
-      const sortedProducts = await api.get(`${APIRoute.Products}?_sort=price${filterParams}`);
+      const { data, headers } = await api.get(`${APIRoute.Products}?_start=${start}&_end=${end}&${params}&_embed=comments`);
+      const sortedProducts = await api.get(`${APIRoute.Products}?_sort=price&${filter}`);
       await store.dispatch(loadProducts({ data, headers }));
       await store.dispatch(setSortedProducts(sortedProducts.data));
       onLoad?.(true);
