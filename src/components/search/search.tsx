@@ -56,9 +56,7 @@ function Search() {
         <ul className={`form-search__select-list list-opened ${!searchResult?.length ? 'form-search__select-list--no-match' : ''}`}>
           {searchResult?.map((res) => (
             <Link className='form-search__select-item' key={res.id} to={`/${AppRoutes.Product}/${res.id}/characteristics`} onClick={resetSearch}>
-              <li className='form-search__select-item' tabIndex={0}>
-                {res.name}
-              </li>
+              <li className='form-search__select-item'>{res.name}</li>
             </Link>
           ))}
         </ul>
