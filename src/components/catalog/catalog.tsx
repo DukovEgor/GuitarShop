@@ -4,34 +4,48 @@ import Pagination from '../pagination/pagintation';
 import ProductList from '../product-list/product-list';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { PRUDUCTS_TO_SHOW } from '../../utils/const';
-import { fetchProductsAction } from '../../store/api-actions';
-import { memo, useEffect, useRef, useState } from 'react';
+import { FormEvent, memo, useCallback, useEffect, useRef, useState } from 'react';
 import ProductListLoader from '../product-list-loader/product-list-loader';
+import { fetchProductsAction } from '../../store/api-actions';
+import { getCurrentPage } from '../../utils/utils';
 import { stringVocabulary } from '../../utils/vocabularies';
 
-function Catalog() {
+function CatalogTest() {
   const dispatch = useAppDispatch();
 
-  const { counter } = useParams();
-  const [searchParams, setSearchParams] = useSearchParams();
   const { products, productsCount } = useAppSelector(({ data }) => data);
   const { sortedProducts } = useAppSelector(({ process }) => process);
+
+  const { counter } = useParams();
+  const [params, setParams] = useSearchParams();
+
   const [isLoaded, setIsLoaded] = useState(false);
-  const minRef = useRef<HTMLInputElement>(null);
   const maxRef = useRef<HTMLInputElement>(null);
 
-  const currentSortType = searchParams.get('_sort') ? `&_sort=${searchParams.get('_sort')}` : '';
-  const currentSortDirection = searchParams.get('_order') ? `&_order=${searchParams.get('_order')}` : '';
-  const sortStroke = `${currentSortType}${currentSortDirection}`;
+  const pages = Math.ceil(productsCount / PRUDUCTS_TO_SHOW);
+  const currentPage = getCurrentPage(counter, pages);
 
-  const currentMinFilter = searchParams.get('price_gte') ? `&price_gte=${searchParams.get('price_gte')}` : '';
-  const currentMaxFilter = searchParams.get('price_lte') ? `&price_lte=${searchParams.get('price_lte')}` : '';
+  const lastIndex = currentPage * PRUDUCTS_TO_SHOW;
+  const firstIndex = lastIndex - PRUDUCTS_TO_SHOW;
+
+  const currentTypeFilter = params.get('type') ? `&type=${params.getAll('type').join('&type=')}` : '';
+  const currentStringFilter = params.get('stringCount') ? `&stringCount=${params.getAll('stringCount').join('&stringCount=')}` : '';
+
+  useEffect(() => {
+    setIsLoaded(false);
+    dispatch(fetchProductsAction([firstIndex, lastIndex, params.toString(), `${currentTypeFilter}${currentStringFilter}`, setIsLoaded]));
+  }, [currentStringFilter, currentTypeFilter, dispatch, firstIndex, lastIndex, params]);
+
+  const currentSortType = params.get('_sort') ? `&_sort=${params.get('_sort')}` : '';
+  const currentSortDirection = params.get('_order') ? `&_order=${params.get('_order')}` : '';
+  const sortStroke = `${currentSortType}${currentSortDirection}`;
+  const currentMinFilter = params.get('price_gte') ? `&price_gte=${params.get('price_gte')}` : '';
+  const currentMaxFilter = params.get('price_lte') ? `&price_lte=${params.get('price_lte')}` : '';
   const currentPriceFilter = `${currentMinFilter}${currentMaxFilter}`;
-  const currentTypeFilter = searchParams.get('type') ? `&type=${searchParams.getAll('type').join('&type=')}` : '';
-  const currentStringFilter = searchParams.get('stringCount') ? `&stringCount=${searchParams.getAll('stringCount').join('&stringCount=')}` : '';
+
   const currentAvailableStrings = (strings: number) => {
-    if (searchParams.getAll('type').length) {
-      return !searchParams
+    if (params.getAll('type').length) {
+      return !params
         .getAll('type')
         .map((type) => stringVocabulary?.[type])
         .flat()
@@ -41,30 +55,62 @@ function Catalog() {
   };
   const filterStroke = `${currentTypeFilter}${currentStringFilter}${currentPriceFilter}`;
 
-  const pages = Math.ceil(productsCount / PRUDUCTS_TO_SHOW);
-  const currentPage = () => {
-    if (!counter) {
-      return 1;
-    }
-    if (pages === 1) {
-      return 1;
-    }
-    if (Number(counter) > pages) {
-      return pages;
-    }
-    return Number(counter);
-  };
+  const handlePriceFilter = useCallback(
+    (evt: { currentTarget: HTMLInputElement }, filter = 'price_gte') => {
+      const input = evt.currentTarget;
+      const currentMin = Number(params.get('price_gte'));
 
-  const lastIndex = currentPage() * PRUDUCTS_TO_SHOW;
-  const firstIndex = lastIndex - PRUDUCTS_TO_SHOW;
+      if (+input.value < 0) {
+        input.value = '0';
+      }
+      if (+input.value < sortedProducts[0].price) {
+        input.value = `${sortedProducts[0].price}`;
+      }
+      if (+input.value > sortedProducts[sortedProducts.length - 1].price) {
+        input.value = `${sortedProducts[sortedProducts.length - 1].price}`;
+      }
+      if (filter === 'price_lte' && +input.value < currentMin) {
+        input.value = `${currentMin}`;
+      }
+      params.set(filter, input.value);
 
-  useEffect(() => {
-    setIsLoaded(false);
-    const filterParams = `${currentTypeFilter}${currentStringFilter}`;
-    const sortParams = `${currentSortType}${currentSortDirection}`;
+      setParams(params);
+    },
+    [params, setParams, sortedProducts]
+  );
 
-    dispatch(fetchProductsAction([firstIndex, lastIndex, filterParams, sortParams, currentPriceFilter, setIsLoaded]));
-  }, [currentPriceFilter, currentSortDirection, currentSortType, currentStringFilter, currentTypeFilter, dispatch, firstIndex, lastIndex]);
+  const handleFilter = useCallback(
+    (evt: FormEvent) => {
+      const searchInput = evt.target as HTMLInputElement;
+      if (searchInput.type === 'number') {
+        return;
+      }
+      const inputs = Array.from(evt.currentTarget.querySelectorAll('input'));
+
+      const availableStringsCount = new Set(inputs.map((input) => (input.checked ? stringVocabulary[input.id] : null)).flat());
+
+      availableStringsCount.delete(null);
+      availableStringsCount.delete(undefined);
+
+      setParams(
+        `${currentPriceFilter}${inputs
+          .map((input) => {
+            if (!input.checked) {
+              return '';
+            }
+            if (availableStringsCount.size === 0) {
+              return input.name;
+            }
+            if (availableStringsCount.has(parseInt(input.id, 10))) {
+              return input.name;
+            }
+            return input.name.includes('type=') ? input.name : '';
+          })
+          .join('&')}${sortStroke}`
+      );
+    },
+    [currentPriceFilter, setParams, sortStroke]
+  );
 
   return (
     <main className='page-content'>
@@ -72,37 +118,7 @@ function Catalog() {
         <h1 className='page-content__title title title--bigger'>Каталог гитар</h1>
         <Breadcrumps />
         <div className='catalog'>
-          <form
-            className='catalog-filter'
-            onChange={(evt) => {
-              const minFilter = minRef.current?.value ? `&price_gte=${Math.abs(Number(minRef.current.value))}` : '';
-              const maxFilter = maxRef.current?.value ? `&price_lte=${Math.abs(Number(maxRef.current.value))}` : '';
-
-              const availableStringsCount = new Set(
-                Array.from(evt.currentTarget.querySelectorAll('input'))
-                  .map((input) => (input.checked ? stringVocabulary[input.id] : null))
-                  .flat()
-              );
-              availableStringsCount.delete(null);
-              availableStringsCount.delete(undefined);
-              setSearchParams(
-                `${sortStroke}${Array.from(evt.currentTarget.querySelectorAll('input'))
-                  .map((input) => {
-                    if (!input.checked) {
-                      return '';
-                    }
-                    if (availableStringsCount.size === 0) {
-                      return input.name;
-                    }
-                    if (availableStringsCount.has(parseInt(input.id, 10))) {
-                      return input.name;
-                    }
-                    return input.name.includes('type=') ? input.name : '';
-                  })
-                  .join('&')}${minFilter}${maxFilter}`
-              );
-            }}
-          >
+          <form className='catalog-filter' onChange={handleFilter}>
             <h2 className='title title--bigger catalog-filter__title'>Фильтр</h2>
             <fieldset className='catalog-filter__block'>
               <legend className='catalog-filter__block-title'>Цена, ₽</legend>
@@ -110,22 +126,17 @@ function Catalog() {
                 <div className='form-input'>
                   <label className='visually-hidden'>Минимальная цена</label>
                   <input
-                    ref={minRef}
                     type='number'
                     placeholder={`${sortedProducts[0] ? sortedProducts[0].price : 0}`}
                     id='priceMin'
                     name='от'
                     min={sortedProducts[0]?.price || 0}
                     max={sortedProducts[sortedProducts.length - 1]?.price || 0}
-                    onChange={(evt) => {
-                      if (Number(evt.target.value) < 0) {
-                        evt.target.value = String(0);
-                      }
-                      if (Number(evt.target.value) > sortedProducts[sortedProducts.length - 1]?.price) {
-                        evt.target.value = String(sortedProducts[sortedProducts.length - 1]?.price);
-                      }
-                      if (Number(evt.target.value) < sortedProducts[0]?.price) {
-                        evt.target.value = String(sortedProducts[0]?.price);
+                    defaultValue={params ? `${params?.get('price_gte')}` : ''}
+                    onBlur={handlePriceFilter}
+                    onKeyDown={(evt) => {
+                      if (evt.key === 'Enter') {
+                        handlePriceFilter(evt);
                       }
                     }}
                   />
@@ -139,15 +150,11 @@ function Catalog() {
                     id='priceMax'
                     name='до'
                     min={0}
-                    onChange={(evt) => {
-                      if (Number(evt.target.value) < 0) {
-                        evt.target.value = String(0);
-                      }
-                      if (Number(evt.target.value) < sortedProducts[0]?.price) {
-                        evt.target.value = String(sortedProducts[0]?.price);
-                      }
-                      if (Number(evt.target.value) > sortedProducts[sortedProducts.length - 1]?.price) {
-                        evt.target.value = String(sortedProducts[sortedProducts.length - 1]?.price);
+                    defaultValue={params.get('price_lte') || ''}
+                    onBlur={(evt) => handlePriceFilter(evt, 'price_lte')}
+                    onKeyDown={(evt) => {
+                      if (evt.key === 'Enter') {
+                        handlePriceFilter(evt, 'price_lte');
                       }
                     }}
                   />
@@ -216,7 +223,7 @@ function Catalog() {
                 <label htmlFor='12-strings'>12</label>
               </div>
             </fieldset>
-            <button className='catalog-filter__reset-btn button button--black-border button--medium' type='reset' onClick={() => setSearchParams(`${sortStroke}`)}>
+            <button className='catalog-filter__reset-btn button button--black-border button--medium' type='reset' onClick={() => setParams(`${sortStroke}`)}>
               Очистить
             </button>
           </form>
@@ -224,26 +231,26 @@ function Catalog() {
             <h2 className='catalog-sort__title'>Сортировать:</h2>
             <div className='catalog-sort__type'>
               <button
-                className={`catalog-sort__type-button ${searchParams.get('_sort') === 'price' && 'catalog-sort__type-button--active'}`}
+                className={`catalog-sort__type-button ${params.get('_sort') === 'price' && 'catalog-sort__type-button--active'}`}
                 aria-label='по цене'
                 onClick={() => {
                   if (!currentSortDirection) {
-                    setSearchParams(`${filterStroke}&_sort=price&_order=asc`);
+                    setParams(`${filterStroke}&_sort=price&_order=asc`);
                   } else {
-                    setSearchParams(`${filterStroke}&_sort=price${currentSortDirection}`);
+                    setParams(`${filterStroke}&_sort=price${currentSortDirection}`);
                   }
                 }}
               >
                 по цене
               </button>
               <button
-                className={`catalog-sort__type-button ${searchParams.get('_sort') === 'rating' && 'catalog-sort__type-button--active'}`}
+                className={`catalog-sort__type-button ${params.get('_sort') === 'rating' && 'catalog-sort__type-button--active'}`}
                 aria-label='по популярности'
                 onClick={() => {
                   if (!currentSortDirection) {
-                    setSearchParams(`${filterStroke}&_sort=rating&_order=asc`);
+                    setParams(`${filterStroke}&_sort=rating&_order=asc`);
                   } else {
-                    setSearchParams(`${filterStroke}&_sort=rating${currentSortDirection}`);
+                    setParams(`${filterStroke}&_sort=rating${currentSortDirection}`);
                   }
                 }}
               >
@@ -252,35 +259,35 @@ function Catalog() {
             </div>
             <div className='catalog-sort__order'>
               <button
-                className={`catalog-sort__order-button catalog-sort__order-button--up ${searchParams.get('_order') === 'asc' && 'catalog-sort__order-button--active'}`}
+                className={`catalog-sort__order-button catalog-sort__order-button--up ${params.get('_order') === 'asc' && 'catalog-sort__order-button--active'}`}
                 aria-label='По возрастанию'
                 onClick={() => {
                   if (!currentSortType) {
-                    setSearchParams(`${filterStroke}&_sort=price&_order=asc`);
+                    setParams(`${filterStroke}&_sort=price&_order=asc`);
                   } else {
-                    setSearchParams(`${filterStroke}&${currentSortType}&_order=asc`);
+                    setParams(`${filterStroke}&${currentSortType}&_order=asc`);
                   }
                 }}
               />
               <button
-                className={`catalog-sort__order-button catalog-sort__order-button--down ${searchParams.get('_order') === 'desc' && 'catalog-sort__order-button--active'}`}
+                className={`catalog-sort__order-button catalog-sort__order-button--down ${params.get('_order') === 'desc' && 'catalog-sort__order-button--active'}`}
                 aria-label='По убыванию'
                 onClick={() => {
                   if (!currentSortType) {
-                    setSearchParams(`${filterStroke}&_sort=price&_order=desc`);
+                    setParams(`${filterStroke}&_sort=price&_order=desc`);
                   } else {
-                    setSearchParams(`${filterStroke}&${currentSortType}&_order=desc`);
+                    setParams(`${filterStroke}&${currentSortType}&_order=desc`);
                   }
                 }}
               />
             </div>
           </div>
           {isLoaded ? <ProductList products={products} /> : <ProductListLoader />}
-          <Pagination currentPage={currentPage()} pages={pages} />
+          <Pagination currentPage={currentPage} pages={pages} />
         </div>
       </div>
     </main>
   );
 }
 
-export default memo(Catalog);
+export default memo(CatalogTest);

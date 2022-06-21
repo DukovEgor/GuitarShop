@@ -1,4 +1,4 @@
-import { ChangeEvent, useCallback, useEffect, useRef, useState } from 'react';
+import { ChangeEvent, memo, useCallback, useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { fetchSearchRequest } from '../../store/api-actions';
@@ -73,4 +73,4 @@ function Search() {
   );
 }
 
-export default Search;
+export default memo(Search);

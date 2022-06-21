@@ -14,3 +14,16 @@ export default function toggleBodyLock(isModalOpened: boolean) {
     document.body.classList.remove('lock');
   }
 }
+
+export const getCurrentPage = (counter: string | undefined, pages: number) => {
+  if (!counter) {
+    return 1;
+  }
+  if (pages === 1) {
+    return 1;
+  }
+  if (Number(counter) > pages) {
+    return pages;
+  }
+  return Number(counter);
+};
