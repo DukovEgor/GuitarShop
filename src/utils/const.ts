@@ -6,6 +6,7 @@ export enum HttpCode {
 export enum NameSpace {
   Data = 'data',
   Process = 'process',
+  Cart = 'cart',
 }
 
 export enum APIRoute {
@@ -20,6 +21,7 @@ export enum AppRoutes {
   Root = '/',
   Catalog = 'catalog',
   Product = 'product',
+  Cart = 'cart',
   Page = '/page_',
   DefaultPage = '/page_1',
   Characteristics = 'characteristics',

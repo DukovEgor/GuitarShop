@@ -2,11 +2,11 @@ import { memo } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { AppRoutes } from '../../utils/const';
 
-interface BreadcrumpsProps {
+interface BreadcrumbsProps {
   name?: string;
 }
 
-function Breadcrumps({ name }: BreadcrumpsProps) {
+function Breadcrumbs({ name }: BreadcrumbsProps) {
   const { search } = useLocation();
   return (
     <ul className='breadcrumbs page-content__breadcrumbs'>
@@ -33,4 +33,4 @@ function Breadcrumps({ name }: BreadcrumpsProps) {
   );
 }
 
-export default memo(Breadcrumps);
+export default memo(Breadcrumbs);

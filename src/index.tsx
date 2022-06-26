@@ -16,11 +16,11 @@ const root = createRoot(rootElement);
 
 root.render(
   <StrictMode>
-    <Provider store={store}>
-      <HistoryRouter history={browserHistory}>
-        <ToastContainer />
+    <HistoryRouter history={browserHistory}>
+      <ToastContainer />
+      <Provider store={store}>
         <App />
-      </HistoryRouter>
-    </Provider>
+      </Provider>
+    </HistoryRouter>
   </StrictMode>
 );
