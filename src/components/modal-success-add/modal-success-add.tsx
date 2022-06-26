@@ -3,6 +3,7 @@ import browserHistory from '../../browser-history';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { closeModalSuccessAdd } from '../../store/cart-data/cart-data';
 import { AppRoutes } from '../../utils/const';
+import toggleBodyLock from '../../utils/utils';
 
 function ModalSuccessAdd() {
   const { showModalSuccess } = useAppSelector(({ cart }) => cart);
@@ -13,6 +14,8 @@ function ModalSuccessAdd() {
   const refLastFocusable = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
+    toggleBodyLock(true);
+
     const focusableElements = Array.from<HTMLElement>(refOuter.current?.querySelectorAll('[tabindex]') ?? []);
 
     refFirstFocusable.current = focusableElements[0];
@@ -22,6 +25,7 @@ function ModalSuccessAdd() {
   }, []);
 
   const handleSuccessAdd = (route?: string) => {
+    toggleBodyLock(false);
     dispatch(closeModalSuccessAdd());
     route && browserHistory.push(route);
   };

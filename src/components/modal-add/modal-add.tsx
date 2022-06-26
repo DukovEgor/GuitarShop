@@ -2,7 +2,7 @@
 import { useCallback, useEffect, useRef } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { addToCart, closeModalAdd } from '../../store/cart-data/cart-data';
-import { capitalize } from '../../utils/utils';
+import toggleBodyLock, { capitalize } from '../../utils/utils';
 import { GuitarTypeVocabulary } from '../../utils/vocabularies';
 
 function ModalAdd() {
@@ -16,6 +16,7 @@ function ModalAdd() {
   const refLastFocusable = useRef<HTMLElement | null>(null);
 
   const handleClose = useCallback(() => {
+    toggleBodyLock(false);
     dispatch(closeModalAdd());
   }, [dispatch]);
 
@@ -38,6 +39,7 @@ function ModalAdd() {
   );
 
   useEffect(() => {
+    toggleBodyLock(true);
     const focusableElements = Array.from<HTMLElement>(refOuter.current?.querySelectorAll('[tabindex]') ?? []);
     refFirstFocusable.current = focusableElements[0];
     refFirstFocusable.current && refFirstFocusable.current?.focus();
