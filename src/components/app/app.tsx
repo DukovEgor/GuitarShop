@@ -4,6 +4,7 @@ import Main from '../main/main';
 import Product from '../product/product';
 import { AppRoutes } from '../../utils/const';
 import Catalog from '../catalog/catalog';
+import Cart from '../cart/cart';
 
 function App(): JSX.Element {
   return (
@@ -12,6 +13,7 @@ function App(): JSX.Element {
         <Route index element={<Catalog />} />
         <Route path={`${AppRoutes.Catalog}${AppRoutes.Page}:counter`} element={<Catalog />} />
         <Route path={`${AppRoutes.Product}/:id/:tab/*`} element={<Product />} />
+        <Route path={AppRoutes.Cart} element={<Cart />} />
       </Route>
       <Route path='*' element={<NotFound />} />
     </Routes>

@@ -1,26 +1,26 @@
 import { useParams, useSearchParams } from 'react-router-dom';
-import Breadcrumps from '../breadcrumps/breadcrumps';
+import Breadcrumbs from '../breadcrumps/breadcrumps';
 import Pagination from '../pagination/pagintation';
 import ProductList from '../product-list/product-list';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { PRUDUCTS_TO_SHOW } from '../../utils/const';
-import { FormEvent, memo, useCallback, useEffect, useRef, useState } from 'react';
+import { FormEvent, memo, useCallback, useEffect, useState } from 'react';
 import ProductListLoader from '../product-list-loader/product-list-loader';
 import { fetchProductsAction } from '../../store/api-actions';
 import { getCurrentPage } from '../../utils/utils';
 import { stringVocabulary } from '../../utils/vocabularies';
 
-function CatalogTest() {
+function Catalog() {
+  // eslint-disable-next-line no-console
+  console.log('render');
   const dispatch = useAppDispatch();
 
   const { products, productsCount } = useAppSelector(({ data }) => data);
-  const { sortedProducts } = useAppSelector(({ process }) => process);
 
   const { counter } = useParams();
   const [params, setParams] = useSearchParams();
 
   const [isLoaded, setIsLoaded] = useState(false);
-  const maxRef = useRef<HTMLInputElement>(null);
 
   const pages = Math.ceil(productsCount / PRUDUCTS_TO_SHOW);
   const currentPage = getCurrentPage(counter, pages);
@@ -54,6 +54,8 @@ function CatalogTest() {
     return false;
   };
   const filterStroke = `${currentTypeFilter}${currentStringFilter}${currentPriceFilter}`;
+
+  const { sortedProducts } = useAppSelector(({ process }) => process);
 
   const handlePriceFilter = useCallback(
     (evt: { currentTarget: HTMLInputElement }, filter = 'price_gte') => {
@@ -116,7 +118,7 @@ function CatalogTest() {
     <main className='page-content'>
       <div className='container'>
         <h1 className='page-content__title title title--bigger'>Каталог гитар</h1>
-        <Breadcrumps />
+        <Breadcrumbs />
         <div className='catalog'>
           <form className='catalog-filter' onChange={handleFilter}>
             <h2 className='title title--bigger catalog-filter__title'>Фильтр</h2>
@@ -144,7 +146,6 @@ function CatalogTest() {
                 <div className='form-input'>
                   <label className='visually-hidden'>Максимальная цена</label>
                   <input
-                    ref={maxRef}
                     type='number'
                     placeholder={`${sortedProducts[sortedProducts.length - 1] ? sortedProducts[sortedProducts.length - 1]?.price : 0}`}
                     id='priceMax'
@@ -290,4 +291,4 @@ function CatalogTest() {
   );
 }
 
-export default memo(CatalogTest);
+export default memo(Catalog);

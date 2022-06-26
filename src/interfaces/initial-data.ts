@@ -10,3 +10,8 @@ export interface InitialProcess {
   searchResult: Products;
   sortedProducts: Products;
 }
+
+export interface InitialCart {
+  cartProducts: Products;
+  discount: number;
+}

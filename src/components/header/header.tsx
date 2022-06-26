@@ -1,7 +1,11 @@
 import { memo } from 'react';
+import { Link } from 'react-router-dom';
+import { useAppSelector } from '../../hooks';
+import { AppRoutes } from '../../utils/const';
 import Search from '../search/search';
 
 function Header() {
+  const { cartProducts } = useAppSelector(({ cart }) => cart);
   return (
     <header className='header' id='header'>
       <div className='container header__wrapper'>
@@ -28,13 +32,13 @@ function Header() {
           </ul>
         </nav>
         <Search />
-        <a className='header__cart-link' href='/' aria-label='Корзина'>
+        <Link className='header__cart-link' to={AppRoutes.Cart} aria-label='Корзина'>
           <svg className='header__cart-icon' width={14} height={14} aria-hidden='true'>
             <use xlinkHref='#icon-basket' />
           </svg>
           <span className='visually-hidden'>Перейти в корзину</span>
-          <span className='header__cart-count'>2</span>
-        </a>
+          {cartProducts && <span className={`header__cart-count ${!cartProducts.length && 'visually-hidden'}`}>{cartProducts.length}</span>}
+        </Link>
       </div>
     </header>
   );
