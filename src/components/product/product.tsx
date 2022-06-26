@@ -8,6 +8,7 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import { fetchProductDataAction } from '../../store/api-actions';
 import { RatingVocabulary } from '../../utils/vocabularies';
 import LoadingScreen from '../loading-screen/loading-screen';
+import { showModalAdd } from '../../store/cart-data/cart-data';
 
 function Product() {
   const [loading, setLoading] = useState(true);
@@ -57,9 +58,14 @@ function Product() {
           <div className='product-container__price-wrapper'>
             <p className='product-container__price-info product-container__price-info--title'>Цена:</p>
             <p className='product-container__price-info product-container__price-info--value'>{price?.toLocaleString('ru')} ₽</p>
-            <a className='button button--red button--big product-container__button' href='/'>
+            <button
+              className='button button--red button--big product-container__button'
+              onClick={() => {
+                dispatch(showModalAdd(product));
+              }}
+            >
               Добавить в корзину
-            </a>
+            </button>
           </div>
         </div>
         <ProductReviews comments={comments} name={name} />

@@ -14,6 +14,7 @@ function ProductModalSuccess({ isModalOpened, onModalClose, isSuccess, onModalRe
   const refLastFocusable = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
+    toggleBodyLock(isSuccess);
     const focusableElements = Array.from<HTMLElement>(refOuter.current?.querySelectorAll('[tabindex]') ?? []);
 
     refFirstFocusable.current = focusableElements[0];

@@ -33,6 +33,10 @@ function ProductModalReview({ isModalOpened, onModalClose, isSuccess, onSuccess,
 
   const onKeyDown = useCallback(
     (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        onModalClose(false);
+        toggleBodyLock(isModalOpened);
+      }
       if (document.activeElement === refLastFocusable.current && e.key === 'Tab' && !e.shiftKey) {
         e.preventDefault();
         refFirstFocusable.current?.focus();
@@ -40,11 +44,6 @@ function ProductModalReview({ isModalOpened, onModalClose, isSuccess, onSuccess,
       if (document.activeElement === refFirstFocusable.current && e.key === 'Tab' && e.shiftKey) {
         e.preventDefault();
         refLastFocusable.current?.focus();
-      }
-
-      if (e.key === 'Escape') {
-        onModalClose(false);
-        toggleBodyLock(isModalOpened);
       }
     },
     [isModalOpened, onModalClose]
