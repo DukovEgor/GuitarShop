@@ -2,7 +2,7 @@ import { memo } from 'react';
 import { Link } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { IProduct } from '../../interfaces/product';
-import { addToCart } from '../../store/cart-data/cart-data';
+import { showModalAdd } from '../../store/cart-data/cart-data';
 import { selectCartProducts } from '../../store/cart-data/cart-selectors';
 import { AppRoutes } from '../../utils/const';
 import { RatingVocabulary } from '../../utils/vocabularies';
@@ -44,16 +44,14 @@ function ProductItem({ product }: ProductItemProps) {
           Подробнее
         </Link>
         {!cartProducts.some((guitar) => guitar.id === id) ? (
-          <a
+          <button
             className='button button--red button--mini button--add-to-cart'
-            href='/'
-            onClick={(evt) => {
-              evt.preventDefault();
-              dispatch(addToCart(product));
+            onClick={() => {
+              dispatch(showModalAdd(product));
             }}
           >
             Купить
-          </a>
+          </button>
         ) : (
           <Link className='button button--red-border button--mini button--in-cart' to={`/${AppRoutes.Cart}`}>
             В Корзине

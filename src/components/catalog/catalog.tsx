@@ -11,8 +11,6 @@ import { getCurrentPage } from '../../utils/utils';
 import { stringVocabulary } from '../../utils/vocabularies';
 
 function Catalog() {
-  // eslint-disable-next-line no-console
-  console.log('render');
   const dispatch = useAppDispatch();
 
   const { products, productsCount } = useAppSelector(({ data }) => data);
