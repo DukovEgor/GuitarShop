@@ -17,19 +17,19 @@ function CartItem({ product }: cartItemProps) {
   const [number, setNumber] = useState(count);
 
   const handleNumberChange = (evt: ChangeEvent<HTMLInputElement>) => {
-    if (Number(evt.target.value) < 1) {
+    if (+evt.target.value < 1) {
       setNumber(1);
+
       return;
     }
 
-    if (Number(evt.target.value) > 99) {
+    if (+evt.target.value > 99) {
       setNumber(99);
+
       return;
     }
-
     setNumber(Number(evt.target.value));
-
-    dispatch(setProductQuantity({ id, count: Number(evt.target.value) }));
+    dispatch(setProductQuantity({ id, count: +evt.target.value }));
   };
 
   return (
@@ -53,6 +53,7 @@ function CartItem({ product }: cartItemProps) {
         <button
           className='quantity__button'
           aria-label='Уменьшить количество'
+          disabled={number === 1}
           onClick={() => {
             setNumber((prev) => prev - 1);
             dispatch(reduceProductQuantity(product));
@@ -76,6 +77,7 @@ function CartItem({ product }: cartItemProps) {
         <button
           className='quantity__button'
           aria-label='Увеличить количество'
+          disabled={number === 99}
           onClick={() => {
             setNumber((prev) => prev + 1);
             dispatch(raiseProductQuantity(id));
