@@ -14,6 +14,7 @@ export interface IProduct extends IProductTabs {
   rating: number;
   price: number;
   comments: Comments;
+  count: number;
 }
 
 export type Products = IProduct[];

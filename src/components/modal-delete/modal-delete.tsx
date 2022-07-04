@@ -1,14 +1,13 @@
 import { useCallback, useEffect, useRef } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { addToCart, closeModalAdd } from '../../store/cart-data/cart-data';
+import { closeModalDelete, deleteFromCart } from '../../store/cart-data/cart-data';
 import toggleBodyLock, { capitalize } from '../../utils/utils';
 import { GuitarTypeVocabulary } from '../../utils/vocabularies';
 
-function ModalAdd() {
-  const { productToAdd } = useAppSelector(({ cart }) => cart);
+function ModalDelete() {
+  const { productToDelete } = useAppSelector(({ cart }) => cart);
   const dispatch = useAppDispatch();
-
-  const { name, price, previewImg, type, vendorCode, stringCount } = productToAdd;
+  const { name, price, previewImg, type, vendorCode, stringCount, id } = productToDelete;
 
   const refOuter = useRef<HTMLDivElement | null>(null);
   const refFirstFocusable = useRef<HTMLElement | null>(null);
@@ -16,7 +15,7 @@ function ModalAdd() {
 
   const handleClose = useCallback(() => {
     toggleBodyLock(false);
-    dispatch(closeModalAdd());
+    dispatch(closeModalDelete());
   }, [dispatch]);
 
   const onKeyDown = useCallback(
@@ -46,11 +45,11 @@ function ModalAdd() {
   }, []);
 
   return (
-    <div className={'modal is-active'}>
+    <div className='modal is-active modal-for-ui-kit'>
       <div className='modal__wrapper' onKeyDown={onKeyDown}>
         <div className='modal__overlay' data-close-modal onClick={handleClose} />
         <div className='modal__content' ref={refOuter}>
-          <h2 className='modal__header title title--medium'>Добавить товар в корзину</h2>
+          <h2 className='modal__header title title--medium title--red'>Удалить этот товар?</h2>
           <div className='modal__info'>
             <img className='modal__img' src={`/img/content/${previewImg}`} width={67} height={137} alt={name} />
             <div className='modal__info-wrapper'>
@@ -61,16 +60,26 @@ function ModalAdd() {
               </p>
               <p className='modal__price-wrapper'>
                 <span className='modal__price'>Цена:</span>
-                <span className='modal__price'>{price.toLocaleString('ru-RU')} ₽</span>
+                <span className='modal__price'>{price?.toLocaleString('ru-RU')} ₽</span>
               </p>
             </div>
           </div>
           <div className='modal__button-container'>
-            <button className='button button--red button--big modal__button modal__button--add' tabIndex={0} onClick={() => dispatch(addToCart(productToAdd))}>
-              Добавить в корзину
+            <button
+              className='button button--small modal__button'
+              tabIndex={0}
+              onClick={() => {
+                dispatch(deleteFromCart(id));
+                toggleBodyLock(false);
+              }}
+            >
+              Удалить товар
+            </button>
+            <button className='button button--black-border button--small modal__button modal__button--right' tabIndex={0} onClick={() => handleClose()}>
+              Продолжить покупки
             </button>
           </div>
-          <button className='modal__close-btn button-cross' type='button' aria-label='Закрыть' tabIndex={0} onClick={handleClose}>
+          <button className='modal__close-btn button-cross' type='button' aria-label='Закрыть' tabIndex={0} onClick={() => handleClose()}>
             <span className='button-cross__icon' />
             <span className='modal__close-btn-interactive-area' />
           </button>
@@ -80,4 +89,4 @@ function ModalAdd() {
   );
 }
 
-export default ModalAdd;
+export default ModalDelete;
