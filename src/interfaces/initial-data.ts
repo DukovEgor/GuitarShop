@@ -14,7 +14,9 @@ export interface InitialProcess {
 export interface InitialCart {
   cartProducts: Products;
   productToAdd: IProduct;
+  productToDelete: IProduct;
   discount: number;
   showModalAdd: boolean;
+  showModalDelete: boolean;
   showModalSuccess: boolean;
 }

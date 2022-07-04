@@ -1,11 +1,14 @@
 import { memo } from 'react';
 import { Link } from 'react-router-dom';
 import { useAppSelector } from '../../hooks';
+import { selectCartProducts } from '../../store/cart-data/cart-selectors';
 import { AppRoutes } from '../../utils/const';
 import Search from '../search/search';
 
 function Header() {
-  const { cartProducts } = useAppSelector(({ cart }) => cart);
+  const cartProducts = useAppSelector(selectCartProducts);
+  const cartProductsCount = cartProducts.reduce((acc, cur) => acc + cur.count, 0);
+
   return (
     <header className='header' id='header'>
       <div className='container header__wrapper'>
@@ -37,7 +40,7 @@ function Header() {
             <use xlinkHref='#icon-basket' />
           </svg>
           <span className='visually-hidden'>Перейти в корзину</span>
-          {cartProducts && <span className={`header__cart-count ${!cartProducts.length && 'visually-hidden'}`}>{cartProducts.length}</span>}
+          {cartProducts && <span className={`header__cart-count ${!cartProducts.length && 'visually-hidden'}`}>{cartProductsCount}</span>}
         </Link>
       </div>
     </header>

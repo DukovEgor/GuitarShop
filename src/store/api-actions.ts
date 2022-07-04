@@ -8,6 +8,7 @@ import { errorHandle } from '../services/error-handle';
 import { APIRoute } from '../utils/const';
 import { ApiActions } from '../utils/reducers';
 import { addComment, loadProduct, loadProducts } from './app-data/app-data';
+import { setDiscount } from './cart-data/cart-data';
 import { setSearchResult, setSortedProducts } from './user-process/user-process';
 
 export const fetchProductsAction = createAsyncThunk(
@@ -62,5 +63,18 @@ export const fetchSearchRequest = createAsyncThunk(ApiActions.SearchRequest, asy
     errorHandle(error);
     toast.error('Сервер не отвечает, попробуйте позднее');
     onSuccess?.(true);
+  }
+});
+
+export const fetchCoupon = createAsyncThunk(ApiActions.Coupon, async ([coupon, onSuccess]: [string, Dispatch<SetStateAction<string | undefined>>]) => {
+  try {
+    const { data } = await api.post(APIRoute.Coupons, { coupon });
+
+    store.dispatch(setDiscount(data));
+    onSuccess('success');
+  } catch (error) {
+    errorHandle(error);
+    toast.dismiss('Данный купон устарел или не может быть применен');
+    onSuccess('dismiss');
   }
 });

@@ -15,6 +15,7 @@ export const makeFakeProduct = (): IProduct => ({
   rating: Number(faker.random.numeric(1)),
   price: Number(faker.commerce.price(100, 200, 0)),
   comments: [makeFakeComment()],
+  count: 1,
 });
 
 export const makeFakeComment = (): IComment => ({

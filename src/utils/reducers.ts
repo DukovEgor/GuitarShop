@@ -3,4 +3,5 @@ export enum ApiActions {
   ProductData = 'data/loadProduct',
   NewReview = 'data/addComment',
   SearchRequest = 'process/setSearchResult',
+  Coupon = 'cart/fetchCoupon',
 }

@@ -42,4 +42,5 @@ export const INITIAL_PRODUCT = {
   rating: 0,
   price: 0,
   comments: [],
+  count: 0,
 };

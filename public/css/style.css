@@ -1992,14 +1992,17 @@ button,
 
   text-align: right;
   letter-spacing: 0.05em;
+  opacity: 0;
 }
 
 .form-input__message--success {
   color: #07742c;
+  opacity: 100;
 }
 
 .form-input__message--error {
   color: #eb5555;
+  opacity: 100;
 }
 
 .form-review {
