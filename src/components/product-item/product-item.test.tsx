@@ -6,7 +6,7 @@ import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 import { createAPI } from '../../services/api';
 import { State } from '../../types/state';
-import { INITIAL_DATA, makeFakeProduct } from '../../utils/mocks';
+import { INITIAL_CART, INITIAL_DATA, makeFakeProduct } from '../../utils/mocks';
 import HistoryRouter from '../history-router/history-router';
 import ProductItem from './product-item';
 
@@ -14,7 +14,7 @@ const product = makeFakeProduct();
 const api = createAPI();
 const middlewares = [thunk.withExtraArgument(api)];
 const mockStore = configureMockStore<State, Action, ThunkDispatch<State, typeof api, Action>>(middlewares);
-const store = mockStore({ data: INITIAL_DATA });
+const store = mockStore({ data: INITIAL_DATA, cart: INITIAL_CART });
 const history = createMemoryHistory();
 
 describe('Component: ProductItem', () => {

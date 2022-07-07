@@ -1,16 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { InitialCart } from '../../interfaces/initial-data';
-import { INITIAL_PRODUCT, NameSpace } from '../../utils/const';
+import { NameSpace } from '../../utils/const';
+import { INITIAL_CART } from '../../utils/mocks';
 
-const initialState: InitialCart = {
-  cartProducts: [],
-  productToAdd: INITIAL_PRODUCT,
-  productToDelete: INITIAL_PRODUCT,
-  discount: 0,
-  showModalAdd: false,
-  showModalDelete: false,
-  showModalSuccess: false,
-};
+const initialState: InitialCart = INITIAL_CART;
 
 export const cartData = createSlice({
   name: NameSpace.Cart,
@@ -43,7 +36,7 @@ export const cartData = createSlice({
     reduceProductQuantity: (state, action) => {
       const productInCart = state.cartProducts.findIndex((product) => product.id === action.payload.id);
 
-      if (state.cartProducts[productInCart].count === 1) {
+      if (state.cartProducts[productInCart]?.count === 1) {
         state.showModalDelete = true;
         state.productToDelete = action.payload;
       } else {

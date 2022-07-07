@@ -54,6 +54,7 @@ function CartItem({ product }: cartItemProps) {
           className='quantity__button'
           aria-label='Уменьшить количество'
           disabled={number === 1}
+          data-testid='minus-btn'
           onClick={() => {
             setNumber((prev) => prev - 1);
             dispatch(reduceProductQuantity(product));
@@ -71,11 +72,13 @@ function CartItem({ product }: cartItemProps) {
           name='2-count'
           max={99}
           value={number}
+          data-testid='counter'
           onBlur={handleNumberChange}
           onChange={handleNumberChange}
         />
         <button
           className='quantity__button'
+          data-testid='plus-btn'
           aria-label='Увеличить количество'
           disabled={number === 99}
           onClick={() => {

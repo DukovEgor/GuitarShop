@@ -121,7 +121,7 @@ exports[`Component: Header should render correctly 1`] = `
       <a
         aria-label="Корзина"
         class="header__cart-link"
-        href="/"
+        href="/cart"
       >
         <svg
           aria-hidden="true"
@@ -139,9 +139,9 @@ exports[`Component: Header should render correctly 1`] = `
           Перейти в корзину
         </span>
         <span
-          class="header__cart-count"
+          class="header__cart-count visually-hidden"
         >
-          2
+          0
         </span>
       </a>
     </div>

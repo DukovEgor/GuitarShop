@@ -6,9 +6,10 @@ import { State } from '../types/state';
 import { Action } from '@reduxjs/toolkit';
 import { APIRoute } from '../utils/const';
 import { makeFakeComment, makeFakeProduct, makeFakeReview } from '../utils/mocks';
-import { fetchProductDataAction, fetchProductsAction, fetchReviewAction, fetchSearchRequest } from './api-actions';
+import { fetchCoupon, fetchProductDataAction, fetchProductsAction, fetchReviewAction, fetchSearchRequest } from './api-actions';
 import { addComment, loadProduct, loadProducts } from './app-data/app-data';
 import { setSearchResult } from './user-process/user-process';
+import { setDiscount } from './cart-data/cart-data';
 
 describe('Async actions', () => {
   const api = createAPI();
@@ -71,5 +72,18 @@ describe('Async actions', () => {
     const actions = store.getActions().map(({ type }) => type);
 
     expect(actions).toContain(`${setSearchResult.toString()}/fulfilled`);
+  });
+
+  it('should dispatch setDiscount when POST /coupons', async () => {
+    const couponRespone = 15;
+    const coupon = 'light-333';
+    mockAPI.onPost(APIRoute.Coupons).reply(200, couponRespone);
+
+    const store = mockStore();
+    await store.dispatch(fetchCoupon([coupon]));
+
+    const actions = store.getActions().map(({ type }) => type);
+
+    expect(actions).toContain(`${setDiscount.toString()}/fulfilled`);
   });
 });

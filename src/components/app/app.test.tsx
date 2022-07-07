@@ -5,7 +5,7 @@ import App from './app';
 import { render, screen } from '@testing-library/react';
 import { createMemoryHistory } from 'history';
 import HistoryRouter from '../history-router/history-router';
-import { INITIAL_DATA, INITIAL_PROCESS } from '../../utils/mocks';
+import { INITIAL_CART, INITIAL_DATA, INITIAL_PROCESS } from '../../utils/mocks';
 import { createAPI } from '../../services/api';
 import { Action, ThunkDispatch } from '@reduxjs/toolkit';
 import thunk from 'redux-thunk';
@@ -15,7 +15,7 @@ const api = createAPI();
 const middlewares = [thunk.withExtraArgument(api)];
 
 const mockStore = configureMockStore<State, Action, ThunkDispatch<State, typeof api, Action>>(middlewares);
-const store = mockStore({ data: INITIAL_DATA, process: INITIAL_PROCESS });
+const store = mockStore({ data: INITIAL_DATA, process: INITIAL_PROCESS, cart: INITIAL_CART });
 
 const history = createMemoryHistory();
 
