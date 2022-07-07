@@ -53,9 +53,12 @@ function CartItem({ product }: cartItemProps) {
         <button
           className='quantity__button'
           aria-label='Уменьшить количество'
-          disabled={number === 1}
           data-testid='minus-btn'
           onClick={() => {
+            if (number === 1) {
+              dispatch(reduceProductQuantity(product));
+              return;
+            }
             setNumber((prev) => prev - 1);
             dispatch(reduceProductQuantity(product));
           }}
