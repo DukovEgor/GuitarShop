@@ -2,7 +2,8 @@ import { IProduct } from '../interfaces/product';
 import { faker } from '@faker-js/faker';
 import { IComment } from '../interfaces/comment';
 import { IReview } from '../interfaces/review';
-import { InitialData, InitialProcess } from '../interfaces/initial-data';
+import { InitialCart, InitialData, InitialProcess } from '../interfaces/initial-data';
+import { INITIAL_PRODUCT } from './const';
 
 export const makeFakeProduct = (): IProduct => ({
   id: Number(faker.random.numeric(2)),
@@ -48,6 +49,16 @@ export const INITIAL_PROCESS: InitialProcess = {
   sortedProducts: Array.from({ length: 10 }, makeFakeProduct),
 };
 
+export const INITIAL_CART: InitialCart = {
+  cartProducts: [],
+  productToAdd: INITIAL_PRODUCT,
+  productToDelete: INITIAL_PRODUCT,
+  discount: 0,
+  showModalAdd: false,
+  showModalDelete: false,
+  showModalSuccess: false,
+};
+
 export const mockComment = {
   id: '1211',
   userName: 'faker.name.firstName()',
@@ -55,7 +66,7 @@ export const mockComment = {
   disadvantage: 'faker.commerce.productDescription()',
   comment: 'faker.commerce.productDescription()',
   rating: 4,
-  createAt: 'Thu Jun 02 2022 15:45:34 GMT+0300 (Moscow Standard Time)',
+  createAt: 'Thu Jun 02 2022 15:45:34 GMT+0300 (Moscow Standard Time)' as unknown as Date,
   guitarId: 2323,
 };
 
@@ -70,6 +81,7 @@ export const mockProduct = {
   rating: 4,
   price: 400,
   comments: [mockComment],
+  count: 0,
 };
 
 export const mockProducts = [mockProduct];

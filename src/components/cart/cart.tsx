@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { memo, useState } from 'react';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import { useAppDispatch, useAppSelector } from '../../hooks';

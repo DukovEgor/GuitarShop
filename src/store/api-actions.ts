@@ -66,15 +66,15 @@ export const fetchSearchRequest = createAsyncThunk(ApiActions.SearchRequest, asy
   }
 });
 
-export const fetchCoupon = createAsyncThunk(ApiActions.Coupon, async ([coupon, onSuccess]: [string, Dispatch<SetStateAction<string | undefined>>]) => {
+export const fetchCoupon = createAsyncThunk(ApiActions.Coupon, async ([coupon, onSuccess]: [string, Dispatch<SetStateAction<string | undefined>>?]) => {
   try {
     const { data } = await api.post(APIRoute.Coupons, { coupon });
 
     store.dispatch(setDiscount(data));
-    onSuccess('success');
+    onSuccess?.('success');
   } catch (error) {
     errorHandle(error);
     toast.dismiss('Данный купон устарел или не может быть применен');
-    onSuccess('dismiss');
+    onSuccess?.('dismiss');
   }
 });
