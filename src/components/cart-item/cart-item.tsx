@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useRef } from 'react';
 import { useAppDispatch } from '../../hooks';
 import { IProduct } from '../../interfaces/product';
 import { raiseProductQuantity, reduceProductQuantity, setProductQuantity, showModalDelete } from '../../store/cart-data/cart-data';
@@ -14,21 +14,18 @@ function CartItem({ product }: cartItemProps) {
 
   const dispatch = useAppDispatch();
 
-  const [number, setNumber] = useState(count);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const handleNumberChange = (evt: ChangeEvent<HTMLInputElement>) => {
     if (+evt.target.value < 1) {
-      setNumber(1);
-
+      evt.target.value = '1';
+      dispatch(setProductQuantity({ id, count: 1 }));
       return;
     }
 
     if (+evt.target.value > 99) {
-      setNumber(99);
-
       return;
     }
-    setNumber(Number(evt.target.value));
     dispatch(setProductQuantity({ id, count: +evt.target.value }));
   };
 
@@ -55,11 +52,13 @@ function CartItem({ product }: cartItemProps) {
           aria-label='Уменьшить количество'
           data-testid='minus-btn'
           onClick={() => {
-            if (number === 1) {
+            if (Number(inputRef.current?.value) === 1) {
               dispatch(reduceProductQuantity(product));
               return;
             }
-            setNumber((prev) => prev - 1);
+            if (inputRef.current?.value) {
+              inputRef.current.value = `${count - 1}`;
+            }
             dispatch(reduceProductQuantity(product));
           }}
         >
@@ -70,22 +69,24 @@ function CartItem({ product }: cartItemProps) {
         <input
           className='quantity__input'
           type='number'
-          placeholder={String(number)}
+          placeholder={String(count)}
           id='2-count'
           name='2-count'
           max={99}
-          value={number}
+          ref={inputRef}
+          defaultValue={count}
           data-testid='counter'
           onBlur={handleNumberChange}
-          onChange={handleNumberChange}
         />
         <button
           className='quantity__button'
           data-testid='plus-btn'
           aria-label='Увеличить количество'
-          disabled={number === 99}
+          disabled={Number(inputRef.current?.value) === 99}
           onClick={() => {
-            setNumber((prev) => prev + 1);
+            if (inputRef.current?.value) {
+              inputRef.current.value = `${count + 1}`;
+            }
             dispatch(raiseProductQuantity(id));
           }}
         >
