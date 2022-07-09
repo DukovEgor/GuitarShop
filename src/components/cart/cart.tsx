@@ -55,7 +55,9 @@ function Cart() {
               </p>
               <p className='cart__total-item'>
                 <span className='cart__total-value-name'>Скидка:</span>
-                <span className={`cart__total-value ${discount && 'cart__total-value--bonus '}`}>- {discount.toLocaleString('ru-RU')} ₽</span>
+                <span className={`cart__total-value ${discount && 'cart__total-value--bonus '}`}>
+                  {discount > 0 ? '-' : ''} {discount.toLocaleString('ru-RU')} ₽
+                </span>
               </p>
               <p className='cart__total-item'>
                 <span className='cart__total-value-name'>К оплате:</span>

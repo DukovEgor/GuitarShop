@@ -58,7 +58,7 @@ function ModalSuccessAdd() {
             <button className='button button--small modal__button' tabIndex={0} onClick={() => handleSuccessAdd(`/${AppRoutes.Cart}`)}>
               Перейти в корзину
             </button>
-            <button className='button button--black-border button--small modal__button modal__button--right' tabIndex={0} onClick={() => handleSuccessAdd()}>
+            <button className='button button--black-border button--small modal__button modal__button--right' tabIndex={0} onClick={() => handleSuccessAdd('/')}>
               Продолжить покупки
             </button>
           </div>
